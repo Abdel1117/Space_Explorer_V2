@@ -1,6 +1,25 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Connexion() {
+
+  const [form, setForm] = useState([]);
+  
+  const handleChange = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setForm(values => ({...values, [name] : value}))
+
+  }
+  const handleForm = event => {
+    event.prventDefault();
+    console.log(form)
+  }
+
+  useEffect(()=> {
+
+  })
+
   return (
     <div><section class="h-full gradient-form bg-gray-200 md:h-screen">
     <div class="container py-12 px-6 h-full">

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 export default function Inscription() {
 
     const [form, setForm] = useState([])
@@ -13,8 +13,14 @@ export default function Inscription() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form)
-    }
+        console.log(form)        
+            fetch("http://localhost:4000/inscription",{
+                method: "POST",
+                body: JSON.stringify(form),
+                headers: {'Content-Type' : 'application/json'}
+            })}
+
+
   return (
     <div>
 <section class="bg-gray-50 dark:bg-gray-900">
