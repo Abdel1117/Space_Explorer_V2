@@ -5,6 +5,7 @@ import Connexion from './pages/Connexion/Connexion'
 import Inscription from './pages/Inscription/Inscription'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
+import Galerie from './pages/Galerie/Galerie'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/inscription' element={<Inscription />} />
           <Route path='/connexion' element={<Connexion />} />
+          <Route path='/galerie' element={<Galerie />} />
         </Routes>
       </main>
     </>

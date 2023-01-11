@@ -14,20 +14,14 @@ const Home = () => {
             <div className='grid md:grid-cols-12 gap-5 mt-10 relative'>
                 <CardNews />
                 <CardNews />
-
                 <CardNews />
                 <CardNews />
                 <CardNews />
-
-                <div className='col-span-12 lg:col-span-3 sm:flex lg:flex-col sm:justify-between lg:absolute lg:top-0  lg:-right-12 xl:right-2 2xl:right-28'>
+                <div className='col-span-12 lg:col-span-3 sm:flex lg:flex-col sm:justify-between lg:absolute lg:top-0 lg:-right-12 xl:right-2 2xl:right-18'>
                     <NewsLetter />
                     <TagsArticleList />
                 </div>
             </div>
-
-
-
-
         </section>
     );
 }
