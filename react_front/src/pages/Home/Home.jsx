@@ -19,13 +19,13 @@ const Home = () => {
                 <CardNews />
                 <CardNews />
 
-                <div className=' md:col-span-3 flex flex-col md:absolute md:top-0 md:-right-14'>
+                <div className='col-span-12 lg:col-span-3 sm:flex lg:flex-col sm:justify-between lg:absolute lg:top-0  lg:-right-12 xl:right-2 2xl:right-28'>
                     <NewsLetter />
                     <TagsArticleList />
-                </div>               
+                </div>
             </div>
 
-        
+
 
 
         </section>

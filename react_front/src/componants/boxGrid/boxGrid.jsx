@@ -2,13 +2,13 @@ import React from 'react';
 
 const BoxGrid = () => {
     return (
-        <div className='mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10'>
-            
+        <div className='mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
+
             <div className=' min-w-full w-full'>
                 <a href="">
-                    <img  className='w-full max-h-[250px]  object-cover' src="https://via.placeholder.com/250" alt="" />
+                    <img className='w-full md:max-h-[250px] object-cover' src="https://via.placeholder.com/250" alt="" />
                 </a>
-                <div className='mx-auto text-center md:p-4'>
+                <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
                     <div className='mx-auto w-6/12 bg-violet-400 md:px-4 md:py-2 text-white'>
                         Catégorie
                     </div>
@@ -20,9 +20,9 @@ const BoxGrid = () => {
             </div>
             <div className=' min-w-full w-full'>
                 <a href="">
-                <img  className='w-full max-h-[250px]  object-cover' src="https://via.placeholder.com/250" alt="" />
+                    <img className='w-full md:max-h-[250px]  object-cover' src="https://via.placeholder.com/250" alt="" />
                 </a>
-                <div className='mx-auto text-center md:p-4'>
+                <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
                     <div className='mx-auto w-6/12 bg-violet-400 md:px-4 md:py-2 text-white'>
                         Catégorie
                     </div>
@@ -35,9 +35,9 @@ const BoxGrid = () => {
             </div>
             <div className=' min-w-full w-full'>
                 <a href="">
-                <img  className='w-full max-h-[250px]  object-cover' src="https://via.placeholder.com/250" alt="" />
+                    <img className='w-full md:max-h-[250px]  object-cover' src="https://via.placeholder.com/250" alt="" />
                 </a>
-                <div className='mx-auto text-center md:p-4'>
+                <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
                     <div className='mx-auto w-6/12 bg-violet-400 md:px-4 md:py-2 text-white'>
                         Catégorie
                     </div>
