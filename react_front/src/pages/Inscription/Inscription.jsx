@@ -7,10 +7,17 @@ import _ from "lodash/fp";
 import { useState, useEffect } from 'react'
 export default function Inscription() {
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, formState: { errors }, handleSubmit, getValues, watch } = useForm({
+        criteriaMode: 'all',
+    });
     const [form, setForm] = useState([])
+    const [loading, setLoading] = useState();
+    const [loadingEnded, setLoadingEnded] = useState();
+    const [errorsMessages, setErrorsMessages] = useState();
 
-    const onSubmit = data => console.log(data);
+
+
+
     const handleChange = e => {
         e.preventDefault();
         const name = e.target.name;
@@ -18,14 +25,15 @@ export default function Inscription() {
         setForm(values => ({ ...values, [name]: value }))
     }
 
-    const handleForm = (e) => {
-        e.preventDefault();
+    const handleForm = () => {
         console.log(form)
         fetch("http://localhost:4000/inscription", {
             method: "POST",
             body: JSON.stringify(form),
             headers: { 'Content-Type': 'application/json' }
         })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
     }
 
 
@@ -40,7 +48,7 @@ export default function Inscription() {
                 <div className='bg-gradient-to-b from-[#24c6dc] to-[#1a1e96] w-full md:w-6/12 min-h-[600px] flex flex-col items-center justify-center rounded-r-md'>
 
                     <h1 className='text-xl xl:text-2xl animate-pulse text-white mb-10'>Rejoindre la communauté de Space Explorer</h1>
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6 w-9/12 mx-auto" action="#">
+                    <form onSubmit={handleSubmit(handleForm)} method="POST" className="space-y-4 md:space-y-6 w-9/12 mx-auto" >
                         <div>
                             <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
                             <input {...register('emailInput', {
@@ -53,6 +61,7 @@ export default function Inscription() {
                                 onChange={handleChange}
                                 value={form.email}
                                 type="email"
+                                required=""
                                 name="emailInput"
                                 id="email"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 focus:shadow-input_neupho"
@@ -61,7 +70,7 @@ export default function Inscription() {
                             />
                             <ErrorMessage
                                 errors={errors}
-                                name="email"
+                                name="emailInput"
                                 render={({ messages }) =>
                                     messages &&
                                     Object.entries(messages).map(([type, message]) => (
@@ -90,7 +99,7 @@ export default function Inscription() {
                             />
                             <ErrorMessage
                                 errors={errors}
-                                name="password"
+                                name="passwordInput"
                                 render={({ messages }) =>
                                     messages &&
                                     Object.entries(messages).map(([type, message]) => (
@@ -106,7 +115,7 @@ export default function Inscription() {
                                     {
                                         required: "Veuillez remplir ce champs",
                                         validate: (val) => {
-                                            if (watch('password') !== val) {
+                                            if (watch('passwordInput') !== val) {
                                                 return "Vos mots de passe ne match pas !";
                                             }
                                         },
@@ -121,7 +130,7 @@ export default function Inscription() {
                                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 focus:shadow-input_neupho" required="" />
                             <ErrorMessage
                                 errors={errors}
-                                name="repeat_password"
+                                name="confirm_passwordInput"
                                 render={({ messages }) =>
                                     messages &&
                                     Object.entries(messages).map(([type, message]) => (
@@ -133,15 +142,34 @@ export default function Inscription() {
                         </div>
                         <div className="flex items-start">
                             <div className="flex items-center h-5">
-                                <input onChange={handleChange} name="accept" value={form.accept} id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="" />
+                                <input onChange={handleChange} name="accept"
+                                    {...register('accept', {
+                                        required: "Veuillez accepter nos conditions d'utilisation",
+
+                                    })} value={form.accept} id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="" />
+
                             </div>
+
                             <div className="ml-3 text-sm">
                                 <label for="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
                             </div>
+
                         </div>
-                        <button type="submit" className="w-full text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create an account</button>
+                        <div className='relative bottom-4'>
+                            <ErrorMessage
+                                errors={errors}
+                                name="accept"
+                                render={({ messages }) =>
+                                    messages &&
+                                    Object.entries(messages).map(([type, message]) => (
+                                        <p style={{ color: "red" }} key={type}>{message}</p>
+                                    ))
+                                }
+                            />
+                        </div>
+                        <button type="submit" className="w-full text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Crée votre compte</button>
                         <p className="text-sm  text-white ">
-                            Already have an account? <a href="/connexion" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                            Vous possédez déja un compte ? <a href="/connexion" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Connectez vous ici </a>
                         </p>
                     </form>
                 </div>

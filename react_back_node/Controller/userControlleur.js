@@ -2,6 +2,7 @@ const User = require('../Model/userShema');
 const bcrypt = require("bcrypt");
 
 exports.inscriptionHandler = (req, res, next) => {
+    console.log(req.body.email)
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
         const user = new User({
