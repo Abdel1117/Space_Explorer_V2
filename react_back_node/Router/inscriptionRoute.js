@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../Model/userShema")
 const userControlleur = require("../Controller/userControlleur")
+const validator = require("../Functions/RegexFunction/Validation")
 
 /* Router for the user inscription */
-router.post("/inscription", userControlleur.inscriptionHandler)
+router.post("/inscription",validator.createUser, userControlleur.inscriptionHandler)
 
 
 module.exports = router;
