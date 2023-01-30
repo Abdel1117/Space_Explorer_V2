@@ -4,12 +4,13 @@ import { ErrorMessage } from '@hookform/error-message';
 import _ from "lodash/fp";
 import { useState, useEffect } from 'react'
 import Toast_valide from '../../componants/Toast_valide/Toast_valide';
+import Toast_invalide from '../../componants/Toast_invalide/Toast_invalide';
 
 export default function Inscription() {
     const [form, setForm] = useState([])
     const [loading, setLoading] = useState(false);
     const [loadingEnded, setLoadingEnded] = useState(false);
-    const [errorsMessages, setErrorsMessages] = useState({});
+    const [errorsMessages, setErrorsMessages] = useState([]);
     const [message, setMessages] = useState("")
     const [checked, setChecked] = useState(false);
 
@@ -49,15 +50,26 @@ export default function Inscription() {
                         }, 5000);
                     }
                     else {
-                        console.log(res)
-                        setErrorsMessages("Une erreur est survenu")
+
+
+                        const errorsMsg = []
+                        data.errors.forEach(element => {
+                            errorsMsg.push(element.msg)
+                        });
+                        setErrorsMessages(errorsMsg)
+
+
                     }
                 })
             })
 
             .catch(err => console.log(err))
     }
-
+    const deletePopUp = index => {
+        const newState = [...errorsMessages]
+        newState.splice(index, 1)
+        setErrorsMessages(newState)
+    }
 
     return (
         <>
@@ -66,7 +78,20 @@ export default function Inscription() {
                 <Toast_valide message={message} />
 
             }
+            {
+                errorsMessages &&
 
+                <div className='flex flex-col my-1 relative'>
+
+                    {
+                        errorsMessages.map((message, index) =>
+
+                            <Toast_invalide key={index} message={message} deletePopUp={deletePopUp} />
+                        )
+                    }
+
+                </div>
+            }
             <section className="flex flex-col items-center min-h-screen my-5">
 
                 <div className='flex flex-col md:flex-row w-full m-3 md:m-0 md:w-9/12 min-h-[700px] '>
