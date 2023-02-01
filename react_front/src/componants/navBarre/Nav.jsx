@@ -1,12 +1,18 @@
 import React from 'react';
+import { useContext } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
+import userContext, { userConsumer } from '../../Context/userContext';
 
 const Nav = () => {
 
   const [toogle, setToogle] = useState(false);
+  const [userTest, setUser] = useState({});
+  const user = useContext(userContext)
 
-
-
+  useEffect(() => {
+    console.log(user)
+  }, [toogle])
   return (
 
     <nav className="bg-gray-100 font-sans w-full m-0">

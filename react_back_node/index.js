@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const userRoutes = require("./Router/inscriptionRoute");
+const Route = require("./Router/Routes");
 
 mongoose.set('strictQuery', true);
 mongoose.connect("mongodb+srv://abdel1117:Fermetageule14@mern.m90bhsv.mongodb.net/test")
@@ -13,7 +13,7 @@ const app = express();
 app.use(cors())
 app.use(bodyParser.json());
 
-app.use('/',userRoutes)
+app.use('/',Route)
 
 
 module.exports = app 
