@@ -12,7 +12,7 @@ import Toast_invalide from '../../componants/Toast_invalide/Toast_invalide';
 export default function Connexion() {
 
   const [form, setForm] = useState([])
-  const { setUserAuth } = useContext(userContext)
+  const { setUserAuth, userAuth } = useContext(userContext)
   const [loading, setLoading] = useState(false);
   const [loadingEnded, setLoadingEnded] = useState(false);
   const [errorsMessages, setErrorsMessages] = useState([]);
@@ -43,7 +43,7 @@ export default function Connexion() {
         res.json().then(data => {
           if (res.status === 200) {
             setUserAuth(data)
-
+            sessionStorage.setItem("token", data.token)
           }
           else {
 

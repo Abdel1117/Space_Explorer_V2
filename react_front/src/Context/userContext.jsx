@@ -1,14 +1,24 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { createContext } from "react";
-import { setToken } from "../Hooks/checkToken";
+import { checkToken, getToken, setToken } from "../Hooks/checkToken";
 
 
 const userContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [userAuth, setUserAuth] = useState({})
-    setToken(userAuth.token)
+
+    useEffect(() => {
+        const token = getToken('token');
+        if (token != undefined || token != null) {
+            checkToken();
+
+        } else {
+            setUserAuth({})
+        }
+    }, [])
+
     return (
         <userContext.Provider value={{ userAuth, setUserAuth }} >
             {children}

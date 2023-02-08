@@ -1,24 +1,37 @@
-import React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import userContext, { userConsumer } from '../../Context/userContext';
-import { getToken } from '../../Hooks/checkToken';
+import { checkToken, getToken } from '../../Hooks/checkToken';
+
 const Nav = () => {
 
   const [toogle, setToogle] = useState(false);
   const [userTest, setUser] = useState({});
-  const { userAuth } = useContext(userContext)
+  const { userAuth, setUserAuth } = useContext(userContext);
+
+
   const logout = () => {
-    setUser();
+    sessionStorage.setItem("token", null)
+    setUserAuth({})
 
   }
   useEffect(() => {
-    setUser(userAuth)
+    if (sessionStorage.getItem('token') != null || sessionStorage.getItem('token') != undefined) {
+      checkToken()
+        .then((result) => setUser(result))
 
-    let a = getToken("token");
-    console.log(a)
+    }
+    else {
+
+      setUser({})
+    }
+
+
+
+
   }, [toogle])
+
   return (
 
     <nav className="bg-gray-100 font-sans w-full m-0">
@@ -38,16 +51,16 @@ const Nav = () => {
               <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600">Pricing</a>
             </div>
             {
-              userTest ?
+              userTest != undefined ?
 
                 <div className="hidden sm:flex sm:items-center">
-                  <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Mon Profil</a>
-                  <a href="/inscription" className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Se déconnecter</a>
+                  <a href="/" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Mon Profil</a>
+                  <a href="#" onClick={logout()} className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Se Déconnecter</a>
                 </div>
                 :
                 <div className="hidden sm:flex sm:items-center">
-                  <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
-                  <a href="#" onClick={logout()} className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>
+                  <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
+                  <a href="/inscription" className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">S'inscrire</a>
                 </div>
 
             }
