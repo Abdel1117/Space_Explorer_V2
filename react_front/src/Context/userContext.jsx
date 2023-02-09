@@ -11,7 +11,8 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const token = getToken('token');
-        if (token != undefined || token != null) {
+        if (token != null) {
+            console.log(token)
             checkToken();
 
         } else {
