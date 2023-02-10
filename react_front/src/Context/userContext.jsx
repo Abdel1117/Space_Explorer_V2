@@ -12,9 +12,10 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         const token = getToken('token');
         if (token != null) {
-            console.log(token)
-            checkToken();
-
+            checkToken()
+                .then((data) => {
+                    setUserAuth(data)
+                })
         } else {
             setUserAuth({})
         }

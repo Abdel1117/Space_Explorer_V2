@@ -6,6 +6,7 @@ import Inscription from './pages/Inscription/Inscription'
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Galerie from './pages/Galerie/Galerie'
+import { UserDashBoard } from './pages/UserDashBoard/UserDashBoard'
 
 function App() {
 
@@ -18,10 +19,11 @@ function App() {
           <Route path='/inscription' element={<Inscription />} />
           <Route path='/connexion' element={<Connexion />} />
           <Route path='/galerie' element={<Galerie />} />
+          <Route path='/Profil' element={<UserDashBoard />} />
         </Routes>
       </main>
     </>
-    )
+  )
 }
 
 export default App

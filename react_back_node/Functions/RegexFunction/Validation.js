@@ -8,6 +8,7 @@ exports.createUser =  [
   
     check("emailInput")
     .trim()
+    .toLowerCase()
     .isEmail()
     .withMessage("Veuillez renseigner un email valide")
     .isLength({min:3})

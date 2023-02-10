@@ -23,6 +23,9 @@ export const checkToken = async () => {
     if(response.status === 200){
      const data = await response.json();
         return data
+    }else{
+        const errorMessage = await response.json();
+        return errorMessage
     }
 }
 catch(err ) {

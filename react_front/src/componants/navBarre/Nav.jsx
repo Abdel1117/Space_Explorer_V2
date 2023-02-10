@@ -10,29 +10,26 @@ const Nav = () => {
   const [userTest, setUser] = useState({});
   const { userAuth, setUserAuth } = useContext(userContext);
 
-const logout = () => {
-  sessionStorage.removeItem('token');
-}
+  const logout = () => {
+    sessionStorage.removeItem('token');
+    location.href = '/';
+  }
   useEffect(() => {
-     
+
     if (sessionStorage.getItem('token') != null || sessionStorage.getItem('token') != undefined) {
       checkToken()
-      .then((data) => {
-      setUser(data)    
-      console.log(setUser)
-  })
+        .then((data) => {
+          setUser(data)
+        })
 
-      
+
     }
-    else {  
-      console.log("Cest nul")
+    else {
       setUser({})
     }
 
 
-
-
-  }, [toogle])
+  }, [])
 
   return (
 
@@ -60,8 +57,15 @@ const logout = () => {
                 </div>
                 :
                 <div className="hidden sm:flex sm:items-center">
-                  <a href="/" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Mon Profil</a>
-                  <a onClick={logout()}  className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Se Déconnecter</a>
+                  <a href={`/profil/${userTest.userId}`}
+                    className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">
+                    Mon Profil
+                  </a>
+                  <a
+                    onClick={() => logout()}
+                    className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">
+                    Se Déconnecter
+                  </a>
 
 
                 </div>
@@ -80,10 +84,19 @@ const logout = () => {
               <a href="/galerie" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">Galerie</a>
               <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">Partners</a>
               <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">Pricing</a>
-              <div className="flex justify-between items-center border-t-2 pt-2">
-                <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
-                <a href="/inscription" className="text-gray-800 text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>
-              </div>
+              {
+                Object.keys(userTest).length == 0 ?
+                  <div className="flex justify-between items-center border-t-2 pt-2">
+                    <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
+                    <a href="/inscription" className="text-gray-800 text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>
+                  </div>
+                  :
+                  <div className="flex justify-between items-center border-t-2 pt-2">
+                    <a href="/profil/:${userTest.userId}" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Mon Profil</a>
+                    <a onClick={() => logout()} className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">Se Déconnecter</a>
+                  </div>
+              }
+
             </div>
           </div>
         </div>

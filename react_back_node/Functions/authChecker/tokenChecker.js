@@ -11,9 +11,9 @@ module.exports = (req, res, next) => {
         const result = User.findById(decodedToken.userId)
         .then((user,err)=>{
             if(!user){
-                console.log("pas auth")
+                return res.status(401).json({message : "Vous n'êtes pas connecter "})
             }else{
-                console.log(user._id)
+               
                 return res.status(200).json({
                     userId : user._id,
                     tokken : token,
