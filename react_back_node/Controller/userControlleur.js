@@ -30,7 +30,6 @@ exports.inscriptionHandler = (req, res, next) => {
 exports.connexionHandler = (req, res, next) => {
     const email = req.body.emailInput;
     const password = req.body.passwordInput;
-    console.log(email)
     User.findOne({email})
     .then(user => {
         if(!user ){

@@ -10,23 +10,22 @@ const Nav = () => {
   const [userTest, setUser] = useState({});
   const { userAuth, setUserAuth } = useContext(userContext);
 
-
-  const logout = () => {
-    sessionStorage.removeItem("token")
-
-
-  }
+const logout = () => {
+  sessionStorage.removeItem('token');
+}
   useEffect(() => {
-    console.log(userTest)
-    console.log(typeof (userTest))
-    console.log(Object.keys(userTest).length)
+     
     if (sessionStorage.getItem('token') != null || sessionStorage.getItem('token') != undefined) {
-      /* checkToken()
-        .then((result) => setUser(result)) */
+      checkToken()
+      .then((data) => {
+      setUser(data)    
+      console.log(setUser)
+  })
 
+      
     }
-    else {
-
+    else {  
+      console.log("Cest nul")
       setUser({})
     }
 
@@ -62,7 +61,7 @@ const Nav = () => {
                 :
                 <div className="hidden sm:flex sm:items-center">
                   <a href="/" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Mon Profil</a>
-                  <a href="#" onClick={logout()} className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Se Déconnecter</a>
+                  <a onClick={logout()}  className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Se Déconnecter</a>
 
 
                 </div>

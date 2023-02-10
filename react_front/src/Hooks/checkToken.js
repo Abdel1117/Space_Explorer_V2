@@ -10,7 +10,7 @@ export const getToken = (key) => {
     return sessionStorage.getItem(key)    
 }
 export const checkToken = async () => {
-   
+   try{
     const response = await fetch("http://localhost:4000/check", 
     {
         method : "GET", 
@@ -18,18 +18,17 @@ export const checkToken = async () => {
             authorization : `${sessionStorage.getItem("token")}`,
         },
     })
-   .then((res)=>{
+   ;
 
-    if(res.status === 200){
-       return res.json();
+    if(response.status === 200){
+     const data = await response.json();
+        return data
     }
-})
-.then((data) => { console.log(data) 
-    return data 
-})
-.catch(err => console.log(err))
+}
+catch(err ) {
+     console.log(err)
  }
-
+};
 
 
 
