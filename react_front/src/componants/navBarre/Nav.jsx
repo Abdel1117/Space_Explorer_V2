@@ -1,14 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import userContext, { userConsumer } from '../../Context/userContext';
 import { checkToken, getToken } from '../../Hooks/checkToken';
 
 const Nav = () => {
 
   const [toogle, setToogle] = useState(false);
   const [userTest, setUser] = useState({});
-  const { userAuth, setUserAuth } = useContext(userContext);
 
   const logout = () => {
     sessionStorage.removeItem('token');

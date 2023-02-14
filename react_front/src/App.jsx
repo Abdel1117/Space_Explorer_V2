@@ -19,7 +19,7 @@ function App() {
           <Route path='/inscription' element={<Inscription />} />
           <Route path='/connexion' element={<Connexion />} />
           <Route path='/galerie' element={<Galerie />} />
-          <Route path='/Profil' element={<UserDashBoard />} />
+          <Route path='/Profil/:id' element={<UserDashBoard />} />
         </Routes>
       </main>
     </>
