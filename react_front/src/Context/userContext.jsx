@@ -6,9 +6,15 @@ import { checkToken, getToken, setToken } from "../Hooks/checkToken";
 
 const userContext = createContext();
 
+
 export const UserProvider = ({ children }) => {
     const [userAuth, setUserAuth] = useState({})
 
+    const logout = () => {
+        setUserAuth({});
+        sessionStorage.removeItem('token');
+        location.href = '/';
+    }
     useEffect(() => {
         const token = getToken('token');
         if (token != null) {
@@ -17,19 +23,17 @@ export const UserProvider = ({ children }) => {
                     setUserAuth(data)
                 })
         } else {
+
             setUserAuth({})
+
         }
     }, [])
 
     return (
-        <userContext.Provider value={{ userAuth, setUserAuth }} >
+        <userContext.Provider value={{ userAuth, setUserAuth, logout }} >
             {children}
         </userContext.Provider>
     )
-}
-
-export const userConsumer = () => {
-    return useContext(userContext);
 }
 
 export default userContext

@@ -1,33 +1,25 @@
 import React from 'react';
+import { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import userContext from '../../Context/userContext';
 import { checkToken, getToken } from '../../Hooks/checkToken';
 
 const Nav = () => {
-
+  const { userAuth, logout } = useContext(userContext);
   const [toogle, setToogle] = useState(false);
-  const [userTest, setUser] = useState({});
 
-  const logout = () => {
-    sessionStorage.removeItem('token');
-    location.href = '/';
-  }
-  useEffect(() => {
-
-    if (sessionStorage.getItem('token') != null || sessionStorage.getItem('token') != undefined) {
-      checkToken()
-        .then((data) => {
-          setUser(data)
-        })
-
-
-    }
-    else {
-      setUser({})
-    }
-
-
-  }, [])
+  /*  useEffect(() => {
+     if (sessionStorage.getItem('token') != null || sessionStorage.getItem('token') != undefined) {
+       checkToken()
+         .then((data) => {
+           setUser(data)
+         })
+     }
+     else {
+       setUser({})
+     }
+   }, []) */
 
   return (
 
@@ -48,14 +40,14 @@ const Nav = () => {
               <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600">Pricing</a>
             </div>
             {
-              Object.keys(userTest).length == 0 ?
+              Object.keys(userAuth).length == 0 ?
                 <div className="hidden sm:flex sm:items-center">
                   <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
                   <a href="/inscription" className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">S'inscrire</a>
                 </div>
                 :
                 <div className="hidden sm:flex sm:items-center">
-                  <a href={`/profil/${userTest.userId}`}
+                  <a href={`/profil/${userAuth.userId}`}
                     className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">
                     Mon Profil
                   </a>
@@ -83,7 +75,7 @@ const Nav = () => {
               <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">Partners</a>
               <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">Pricing</a>
               {
-                Object.keys(userTest).length == 0 ?
+                Object.keys(userAuth).length == 0 ?
                   <div className="flex justify-between items-center border-t-2 pt-2">
                     <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
                     <a href="/inscription" className="text-gray-800 text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>

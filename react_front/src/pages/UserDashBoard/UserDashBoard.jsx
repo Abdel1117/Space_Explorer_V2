@@ -13,7 +13,7 @@ export const UserDashBoard = () => {
 
     useEffect(() => {
 
-        setIsLoading(!isLoading);
+        setIsLoading(true);
 
         const fetchData = async () => {
             try {
@@ -21,15 +21,12 @@ export const UserDashBoard = () => {
                     method: "GET"
                 })
 
-                const data = await response.json();
-                setData(data);
-                setIsLoading(!isLoading)
+                    .then(data => data.json())
+                    .then(data => setData(data))
+                    .then(setIsLoading(false));
             } catch (error) {
                 console.log(error)
                 setError(error)
-            }
-            finally {
-                setIsLoading(!isLoading)
             }
         }
 
