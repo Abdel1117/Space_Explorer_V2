@@ -55,7 +55,7 @@ exports.connexionHandler = (req, res, next) => {
                                     userId: user._id
                                 },
                                 "RANDOM_TOKEN_SECRET",
-                                { expiresIn: "10s" }
+                                { expiresIn: "1min" }
 
                             )
 

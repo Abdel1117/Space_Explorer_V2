@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { createContext } from "react";
 import { checkToken, getToken, setToken } from "../Hooks/checkToken";
@@ -19,12 +19,24 @@ export const UserProvider = ({ children }) => {
         const token = getToken('token');
         if (token != null) {
             checkToken()
-                .then((data) => {
-                    setUserAuth(data)
+                .then((response) => {
+                    if(response.status === 401){
+                        
+                        setUserAuth({}) 
+                       
+                    }
+                    else{
+                            response.json().then(data => {
+                            console.log(data)
+                            console.log(data.status)
+                        }
+                        ) 
+                    }
                 })
+                .catch(err => console.log(err))
+                
         } else {
 
-            setUserAuth({})
 
         }
     }, [])

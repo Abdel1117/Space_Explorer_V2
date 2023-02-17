@@ -10,18 +10,15 @@ module.exports = async (req, res, next) => {
             const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
             const user = await User.findById(decodedToken.userId);
             if (!user) {
-                return res.status(401).json({ message: "Vous n'êtes pas connecté" });
+                return res.status(401).json();
             }
-
-            
-
-
             req.user = { userId: user._id, token };
+            
             next();
         } else {
-            return res.status(401).json({ message: "Vous n'êtes pas connecté" });
+            return res.status(401).json();
         }
     } catch (error) {
-        return res.status(401).json({ message: "Vous n'êtes pas connecté" });
+        return res.status(401).json();
     }
 };
