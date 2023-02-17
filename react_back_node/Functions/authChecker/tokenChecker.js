@@ -6,17 +6,24 @@ const User = require('../../Model/userShema');
 module.exports = async (req, res, next) => {
     try {
         const token = req.headers.authorization;
+        console.log(token);
         if (token) {
-            const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-            const user = await User.findById(decodedToken.userId);
-            if (!user) {
-                return res.status(401).json();
-            }
-            req.user = { userId: user._id, token };
-            
-            next();
+            const decodedToken = jwt.verify(token, 'HS256', function (err, decoded) {
+                if (err) {
+                    res.status(401).json(
+                        err = {
+                            name: "Tokken Invalide",
+                            message: "Veuillez vous reconnecter"
+                        }
+                    )
+                }
+                req.user = decoded
+                next()
+
+            });
+
         } else {
-            return res.status(401).json();
+            return res.status(401).json("message : Veuillez vous connecter");
         }
     } catch (error) {
         return res.status(401).json();

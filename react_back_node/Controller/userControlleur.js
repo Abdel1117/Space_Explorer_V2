@@ -55,13 +55,20 @@ exports.connexionHandler = (req, res, next) => {
                                     userId: user._id
                                 },
                                 "RANDOM_TOKEN_SECRET",
-                                { expiresIn: "1min" }
+                                { expiresIn: "10min" }
 
+                            ),
+                            refreshToken: jwt.sign(
+                                {
+                                    token: user.password
+
+                                },
+                                "RANDOM_TOKEN_SECRET_REFRESH",
+                                { expiresIn: "3h" },
                             )
-
                         });
                     })
-                    .catch(err => res.status(500).json({ err }));
+                    .catch(err => console.log(err));
             })
 
             .catch(err => res.status(500).json({ err }))

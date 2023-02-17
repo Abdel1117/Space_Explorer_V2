@@ -1,29 +1,29 @@
-import React, {useState, useEffect, useContext} from "react"
+import React, { useState, useEffect, useContext } from "react"
 
 
 export const setToken = (userToken) => {
-   return sessionStorage.setItem("token", userToken)
+    return sessionStorage.setItem("token", userToken)
 }
 
 export const getToken = (key) => {
-    return sessionStorage.getItem(key)    
+    return sessionStorage.getItem(key)
 }
 export const checkToken = async () => {
-   try{
-    const response = await fetch("http://localhost:4000/check", 
-    {
-        method : "GET", 
-        headers : {
-            authorization : `${sessionStorage.getItem("token")}`,
-        },
-    })
-   ;
+    try {
+        const response = await fetch("http://localhost:4000/check",
+            {
+                method: "GET",
+                headers: {
+                    authorization: `${sessionStorage.getItem("token")}`,
+                },
+            })
+            ;
 
-   return response;
-}
-catch(err ) {
-     console.log(err)
- }
+        return response;
+    }
+    catch (err) {
+        console.log(err)
+    }
 };
 
 

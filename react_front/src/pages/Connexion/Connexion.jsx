@@ -33,7 +33,6 @@ export default function Connexion() {
   }
 
   const handleForm = () => {
-    console.log(form)
     fetch("http://localhost:4000/connexion", {
       method: "POST",
       body: JSON.stringify(form),
@@ -45,6 +44,7 @@ export default function Connexion() {
             setUserAuth(data)
             setMessages(data.message)
             sessionStorage.setItem("token", data.token)
+            sessionStorage.setItem('refreshToken', data.refreshToken)
             setTimeout(() => {
               location.href = "/"
             }, 5000);

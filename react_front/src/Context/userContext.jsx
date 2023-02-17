@@ -20,21 +20,21 @@ export const UserProvider = ({ children }) => {
         if (token != null) {
             checkToken()
                 .then((response) => {
-                    if(response.status === 401){
-                        
-                        setUserAuth({}) 
-                       
+                    if (response.status === 401) {
+                        console.log(response.json());
+                        setUserAuth({})
+
                     }
-                    else{
-                            response.json().then(data => {
+                    else {
+                        response.json().then(data => {
                             console.log(data)
                             console.log(data.status)
                         }
-                        ) 
+                        )
                     }
                 })
                 .catch(err => console.log(err))
-                
+
         } else {
 
 

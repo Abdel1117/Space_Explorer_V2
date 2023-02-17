@@ -7,6 +7,6 @@ const validationUser = require('../Functions/RegexFunction/ValidationUserConnexi
 /* Router for the user inscription */
 router.post("/inscription", validator.createUser, userControlleur.inscriptionHandler)
 router.post("/connexion", validationUser.checkUser, userControlleur.connexionHandler);
-router.get("/check", tokenChecker, userControlleur.getInfo);
+router.get("/check", tokenChecker);
 router.get("/userProfil/:id", userControlleur.getInfo)
 module.exports = router;
