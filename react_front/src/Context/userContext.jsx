@@ -27,8 +27,7 @@ export const UserProvider = ({ children }) => {
                     }
                     else {
                         response.json().then(data => {
-                            console.log(data)
-                            console.log(data.status)
+                            setUserAuth(data)
                         }
                         )
                     }

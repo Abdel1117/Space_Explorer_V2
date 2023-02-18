@@ -15,6 +15,7 @@ export const checkToken = async () => {
                 method: "GET",
                 headers: {
                     authorization: `${sessionStorage.getItem("token")}`,
+                    refreshToken: `${sessionStorage.getItem("refreshToken")}`
                 },
             })
             ;
