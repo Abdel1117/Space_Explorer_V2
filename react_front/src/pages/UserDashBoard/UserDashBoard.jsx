@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { checkToken } from '../../Hooks/checkToken'
 import { useParams } from 'react-router-dom'
 import userContext from '../../Context/userContext';
-
+import Aside from '../../componants/aside/Aside';
+import { FcHome, FcBusinessman, FcBusinesswoman, FcConferenceCall, FcFeedback, FcSettings } from "react-icons/fc"
 export const UserDashBoard = () => {
     const userId = useParams();
     const [isAuth, setIsAuth] = useState(false);
@@ -22,7 +23,7 @@ export const UserDashBoard = () => {
                 })
 
                     .then(data => data.json())
-                    .then(data => setData(data))
+                    .then(data => { setData(data) })
                     .then(setIsLoading(false));
             } catch (error) {
                 console.log(error)
@@ -34,20 +35,25 @@ export const UserDashBoard = () => {
 
     }, [])
     return (
-        <section className='mx-auto container border shadow-md rounded-lg'>
-
+        <>
             {isLoading === true ?
 
-                <div>Loading ...</div>
+                <div className='mx-auto w-[200px] h-[200px] p-1 shadow-md mt-5 flex flex-col text-center justify-center '>Loading ...</div>
 
                 :
+                <section className='p-2 md:p-0 flex flex-col  lg:flex-row lg:justify-around'>
 
-                <div>
-                    {data.email}
-                </div>
+                    <Aside data={data} />
+
+                    <div className='w-full md:w-4/6 lg:w-8/12 border shadow-lg h-[700px] mt-5 rounded-lg'>
+
+                    </div>
+
+                </section>
             }
 
+        </>
 
-        </section>
+
     )
 }

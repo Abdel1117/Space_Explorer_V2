@@ -45,9 +45,9 @@ export default function Connexion() {
             setMessages(data.message)
             sessionStorage.setItem("token", data.token)
             sessionStorage.setItem('refreshToken', data.refreshToken)
-            /*  setTimeout(() => {
-               location.href = "/"
-             }, 5000); */
+            setTimeout(() => {
+              location.href = "/"
+            }, 2000);
           }
           else {
 

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Nav from './componants/navBarre/Nav'
+import Footer from './componants/Footer/Footer'
 import Home from './pages/Home/Home'
 import Connexion from './pages/Connexion/Connexion'
 import Inscription from './pages/Inscription/Inscription'
@@ -22,6 +23,7 @@ function App() {
           <Route path='/Profil/:id' element={<UserDashBoard />} />
         </Routes>
       </main>
+      <Footer />
     </>
   )
 }
