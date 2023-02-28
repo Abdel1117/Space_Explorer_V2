@@ -1,7 +1,12 @@
 import React from 'react'
+import FormUser from '../form_User/FormUser'
+const Profil = () => {
+  return (
+    <div>
+        <FormUser />
 
-export default function Profil() {
-    return (
-        <div>Profil</div>
-    )
+    </div>
+  )
 }
+
+export default Profil

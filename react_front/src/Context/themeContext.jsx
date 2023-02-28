@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react"
 
-export const themeContext = createContext("dark")
+export const themeContext = createContext("light")
 
 export const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState('dark');
+    const [theme, setTheme] = useState('light');
     const toogleTheme = () => {
         setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
     }
