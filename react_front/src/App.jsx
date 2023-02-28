@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Nav from './componants/navBarre/Nav'
 import Footer from './componants/Footer/Footer'
 import Home from './pages/Home/Home'
@@ -8,13 +8,20 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Galerie from './pages/Galerie/Galerie'
 import { UserDashBoard } from './pages/UserDashBoard/UserDashBoard'
+import { themeContext } from "./Context/themeContext"
 
 function App() {
+  const { theme, setTheme } = useContext(themeContext);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    theme === "light" ? root.classList.remove("dark") : root.classList.add('dark');
+  }, [theme])
 
   return (
     <>
       <Nav />
-      <main>
+      <main className=' dark:bg-[] transition-all duration-700'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/inscription' element={<Inscription />} />

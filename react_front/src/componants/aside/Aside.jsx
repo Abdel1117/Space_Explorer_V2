@@ -1,14 +1,17 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FcHome, FcBusinessman, FcBusinesswoman, FcConferenceCall, FcFeedback, FcSettings } from "react-icons/fc"
 
 export default function aside(props) {
+
+    const { blockSection, setBlockSection } = props;
+
 
     return (
         <>
             {Object.keys(props.data).length === 0
                 ? (
-                    <div>Loading ... </div>
+                    <div className=' w-full sm:w-3/6 md:w-2/6 lg:w-3/6 xl:w-[350px] border shadow-lg min-h-[500px] md:ml-5 md:mt-5 rounded-lg text-center'>Loading ... </div>
                 )
                 : (
 
@@ -28,7 +31,7 @@ export default function aside(props) {
                                 <div className='flex items-center hover:bg-slate-400 cursor-pointer '>
 
                                     <FcHome size={25} className="ml-2" />
-                                    <li className='my-1 ml-2 '>Accueil</li>
+                                    <li onClick={() => setBlockSection("Accueil")} className='my-1 ml-2 w-full'>Accueil</li>
                                 </div>
                                 <div className='flex items-center hover:bg-slate-400 cursor-pointer '>
 
@@ -41,16 +44,19 @@ export default function aside(props) {
 
 
                                     }
-                                    <li className='my-1 text-base ml-2'>Profil</li>
+                                    <li onClick={() => setBlockSection("Profil")} className='my-1 text-base ml-2 w-full'>Profil</li>
                                 </div>
                                 <div className='flex items-center hover:bg-slate-400 cursor-pointer '>
-                                    <FcConferenceCall size={25} className="ml-2" /> <li className='my-1 text-base ml-2'>Vos amis</li>
+                                    <FcConferenceCall size={25} className="ml-2" />
+                                    <li onClick={() => setBlockSection("Amis")} className='my-1 text-base ml-2 w-full'>Vos amis</li>
                                 </div>
                                 <div className='flex items-center hover:bg-slate-400 cursor-pointer '>
-                                    <FcFeedback size={25} className="ml-2" />  <li className='my-1 text-base ml-2'>Vos messages</li>
+                                    <FcFeedback size={25} className="ml-2" />
+                                    <li onClick={() => setBlockSection("Messages")} className='my-1 text-base ml-2 w-full'>Vos messages</li>
                                 </div>
                                 <div className='flex items-center hover:bg-slate-400 cursor-pointer '>
-                                    <FcSettings size={25} className="ml-2" />   <li className='my-1 text-base ml-2'>Paramètre</li>
+                                    <FcSettings size={25} className="ml-2" />
+                                    <li onClick={() => setBlockSection("Parametre")} className='my-1 text-base ml-2 w-full'>Paramètre</li>
                                 </div>
 
                             </ul>

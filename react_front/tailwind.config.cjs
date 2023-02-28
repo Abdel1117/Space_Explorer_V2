@@ -15,15 +15,16 @@ module.exports = {
           "100%": { opacity: 1 }
         }
       },
-      backgroundImage : {
-        'hero-form' : "url('../src/assets/images/astronaute-.jpg')",
-        'green-gradient' : "linear-gradient(180deg, rgb(124, 252, 115) 0%, rgb(65, 167, 113) 83%);"
+      backgroundImage: {
+        'hero-form': "url('../src/assets/images/astronaute-.jpg')",
+        'green-gradient': "linear-gradient(180deg, rgb(124, 252, 115) 0%, rgb(65, 167, 113) 83%);"
       },
-      boxShadow : {
-        "input_neupho" : "20px 20px 60px #bebebe, -20px -20px 60px #ffffff",
+      boxShadow: {
+        "input_neupho": "20px 20px 60px #bebebe, -20px -20px 60px #ffffff",
       }
 
     },
   },
   plugins: [],
+  darkMode: "class"
 }

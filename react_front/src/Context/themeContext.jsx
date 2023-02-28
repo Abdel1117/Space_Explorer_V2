@@ -4,16 +4,13 @@ export const themeContext = createContext("dark")
 
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('dark');
-    useEffect(() => {
-
-        theme === "dark" ? setTheme("light") : setTheme("dark");
-
-    }, [])
+    const toogleTheme = () => {
+        setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
+    }
 
     return (
-        <themeContext.Provider value={{ theme, setTheme }}>
+        <themeContext.Provider value={{ theme, setTheme, toogleTheme }}>
             {children}
         </themeContext.Provider>
     )
 }
-
