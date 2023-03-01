@@ -57,7 +57,7 @@ export const UserDashBoard = () => {
 
                     <Aside data={data} blockSection={blockSection} setBlockSection={setBlockSection} />
 
-                    <div className='w-full md:w-4/6 lg:w-8/12 border shadow-lg h-[700px] mt-5 rounded-lg'>
+                    <div className='w-full md:w-4/6 lg:w-8/12 border shadow-lg min-h-[700px] mt-5 rounded-lg'>
                         {blockSection != "" ?
 
                             (blockSection === "Accueil") ?

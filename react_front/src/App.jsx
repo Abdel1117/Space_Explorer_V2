@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <Nav />
-      <main className=' dark:bg-[#252525] transition-all duration-700'>
+      <main className=' dark:bg-[#252525]'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/inscription' element={<Inscription />} />
