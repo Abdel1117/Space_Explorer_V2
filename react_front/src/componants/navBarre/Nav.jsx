@@ -24,7 +24,7 @@ const Nav = () => {
   return (
 
     <nav className="bg-gray-100 font-sans w-full m-0">
-      <div className="bg-white shadow">
+      <div className="bg-white dark:bg-[#1C1E21] shadow">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             <div>
@@ -34,26 +34,26 @@ const Nav = () => {
             </div>
 
             <div className="hidden sm:flex sm:items-center">
-              <a href="/" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Accueil</a>
-              <a href="/galerie" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Galerie</a>
-              <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Partners</a>
-              <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600">Pricing</a>
+              <a href="/" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">Accueil</a>
+              <a href="/galerie" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">Galerie</a>
+              <a href="#" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">Partners</a>
+              <a href="#" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600">Pricing</a>
             </div>
             {
               Object.keys(userAuth).length == 0 ?
                 <div className="hidden sm:flex sm:items-center">
-                  <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
-                  <a href="/inscription" className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">S'inscrire</a>
+                  <a href="/connexion" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
+                  <a href="/inscription" className="text-gray-800 dark:text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">S'inscrire</a>
                 </div>
                 :
                 <div className="hidden sm:flex sm:items-center">
                   <a href={`/profil/${userAuth.userId}`}
-                    className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">
+                    className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr- dark:text-white4">
                     Mon Profil
                   </a>
                   <a
                     onClick={() => logout()}
-                    className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">
+                    className="text-gray-800 dark:text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">
                     Se Déconnecter
                   </a>
 

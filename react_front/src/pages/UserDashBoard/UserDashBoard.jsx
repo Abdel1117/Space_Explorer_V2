@@ -53,11 +53,11 @@ export const UserDashBoard = () => {
                 <div className='mx-auto w-[200px] h-[200px] p-1 shadow-md mt-5 flex flex-col text-center justify-center border '>Loading ...</div>
 
                 :
-                <section className='p-2 md:p-0 flex flex-col  lg:flex-row lg:justify-around'>
+                <section className='px-2 md:px-0 py-[50px] flex flex-col lg:flex-row lg:justify-around '>
 
                     <Aside data={data} blockSection={blockSection} setBlockSection={setBlockSection} />
 
-                    <div className='w-full md:w-4/6 lg:w-8/12 border shadow-lg min-h-[700px] mt-5 rounded-lg'>
+                    <div className='w-full md:w-4/6 lg:w-8/12 border shadow-lg min-h-[700px] rounded-lg '>
                         {blockSection != "" ?
 
                             (blockSection === "Accueil") ?
