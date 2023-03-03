@@ -110,7 +110,7 @@ export default function FormUser() {
           </div>
         </div>
                     
-           
+        <button type="submit" className="max-w-[100px] ml-4 text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Envoyer</button>
         </form>
     </div>
     </div>

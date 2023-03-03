@@ -48,7 +48,7 @@ const Nav = () => {
                 :
                 <div className="hidden sm:flex sm:items-center">
                   <a href={`/profil/${userAuth.userId}`}
-                    className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr- dark:text-white4">
+                    className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">
                     Mon Profil
                   </a>
                   <a
