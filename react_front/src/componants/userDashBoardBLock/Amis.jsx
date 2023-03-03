@@ -68,12 +68,12 @@ const User = [
 
 export default function Amis() {
     return (
-        <div className='flex justify-between w-full md:w-3/12 '>
-            <div className='w-full '>
-                
-            <h2 className='dark:text-white'>Votre liste d'amis</h2>
+        <div className='flex flex-wrap lg:flex-nowrap w-full'>
+            
+            <div className='w-full lg:w-5/12 '>
+                <div className='w-full px-2 py-4 flex flex-col border-4'>
+                <h2 className='dark:text-white mb-2'>Votre liste d'amis</h2>
 
-                <div className='w-full px-2 py-4 flex flex-col'>
                     {User.map((user, index) => 
                         <div key={index} className='w-full dark:bg[#252525] border p-2 shadow-md rounded-lg my-1'>
                             <div className='flex flex-wrap '>
@@ -81,15 +81,20 @@ export default function Amis() {
                                     <img src="https://via.placeholder.com/50" alt="" className='rounded-full' />
                                 </div>
                                 <div className='flex flex-col flex-1 ml-2 my-auto'>
-                                    <p className='text-xs my-1'>{user.nom}</p>
-                                    <p className='text-xs'>{user.pseudo}</p>
+                                    <p className='text-xs dark:text-white my-1'>{user.nom}</p>
+                                    <p className='text-xs dark:text-white'>{user.pseudo}</p>
                                 
                                 </div>
                             </div>
                         </div>    
                     )}
                     </div>
+                  
             </div>
+
+            <div className='w-full min-h-[800px] h-auto shadow-lg rounded-lg mt-0 lg:mt-0 border-2 '>
+
+             </div>
         </div>
     )
 }
