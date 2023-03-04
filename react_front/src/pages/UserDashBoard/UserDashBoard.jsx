@@ -44,7 +44,6 @@ export const UserDashBoard = () => {
     }, [])
 
     useEffect(() => {
-        console.log(blockSection)
     }, [blockSection])
     return (
         <>
@@ -53,11 +52,11 @@ export const UserDashBoard = () => {
                 <div className='mx-auto w-[200px] h-[200px] p-1 shadow-md mt-5 flex flex-col text-center justify-center border '>Loading ...</div>
 
                 :
-                <section className='px-2 md:px-0 py-[50px] flex flex-col lg:flex-row lg:justify-around '>
+                <section className='px-2 md:px-0 py-[50px] flex flex-col md:flex-row bg-[#F5F5F5]'>
 
                     <Aside data={data} blockSection={blockSection} setBlockSection={setBlockSection} />
 
-                    <div className='w-full md:w-4/6 lg:w-8/12 border shadow-lg min-h-[700px] rounded-lg '>
+                    <div className='w-full border min-h-[700px] rounded-lg md:mx-2'>
                         {blockSection != "" ?
 
                             (blockSection === "Accueil") ?

@@ -88,7 +88,7 @@ export default function Connexion() {
       {
         errorsMessages &&
 
-        <div className='flex flex-col my-1 relative'>
+        <div className='flex flex-col py-1 relative'>
 
           {
             errorsMessages.map((message, index) =>
@@ -100,7 +100,7 @@ export default function Connexion() {
         </div>
       }
 
-      <section className="flex flex-col items-center min-h-screen my-5">
+      <section className="flex flex-col items-center min-h-screen pt-8">
 
         <div className='flex flex-col md:flex-row-reverse w-full m-3 md:m-0 md:w-9/12 min-h-[700px] '>
 
@@ -112,7 +112,7 @@ export default function Connexion() {
             <h1 className='text-xl xl:text-2xl animate-pulse text-white mb-10'>Ce connecter</h1>
             <form onSubmit={handleSubmit(handleForm)} method="POST" className="space-y-4 md:space-y-6 w-9/12 mx-auto" >
               <div>
-                <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                <label for="email" className="block mb-2 text-sm font-medium text-white">Your email</label>
                 <input {...register('emailInput', {
                   required: "Veuillez remplir ce champs",
                   pattern: {
@@ -142,7 +142,7 @@ export default function Connexion() {
                 />
               </div>
               <div>
-                <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                <label for="password" className="block mb-2 text-sm font-medium text-white">Password</label>
                 <input
                   {...register('passwordInput', {
                     required: "Veuillez remplir ce champs",
