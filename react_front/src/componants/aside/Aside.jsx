@@ -15,7 +15,7 @@ export default function aside(props) {
                 )
                 : (
 
-                    <aside className='w-full md:w-2/6 lg:2/6  xl:w-[350px] shadow-lg border min-h-[500px] md:ml-5 mb-4 md:mb-0 rounded-lg dark:text-white dark:bg-[#252525]'>
+                    <aside className='w-full md:w-2/6 lg:2/6  xl:w-[350px] shadow-lg border min-h-[500px] md:ml-5 mb-4 md:mb-0 rounded-lg dark:text-white bg-[#fafafa ] dark:bg-[#252525]'>
 
                         <div className='flex flex-col lg:flex-row ml-2 mt-2 '>
                             <img src="https://via.placeholder.com/150" alt="image_profil" className='rounded-lg w-20 h-auto x' />

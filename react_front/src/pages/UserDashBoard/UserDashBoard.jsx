@@ -52,11 +52,11 @@ export const UserDashBoard = () => {
                 <div className='mx-auto w-[200px] h-[200px] p-1 shadow-md mt-5 flex flex-col text-center justify-center border '>Loading ...</div>
 
                 :
-                <section className='px-2 md:px-0 py-[50px] flex flex-col md:flex-row bg-[#F5F5F5]'>
+                <section className='px-2 md:px-0 py-[50px] flex flex-col md:flex-row bg-[#F5F5F5] dark:bg-[#252525]'>
 
                     <Aside data={data} blockSection={blockSection} setBlockSection={setBlockSection} />
 
-                    <div className='w-full border min-h-[700px] rounded-lg md:mx-2'>
+                    <div className='w-full border min-h-[700px] rounded-lg md:mx-2 bg-[#F5F5F5] dark:bg[#252525]'>
                         {blockSection != "" ?
 
                             (blockSection === "Accueil") ?
