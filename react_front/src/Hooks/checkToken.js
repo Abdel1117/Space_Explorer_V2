@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 export const setToken = (userToken) => {
     return sessionStorage.setItem("token", userToken)
@@ -10,7 +12,7 @@ export const getToken = (key) => {
 }
 export const checkToken = async () => {
     try {
-        const response = await fetch("http://localhost:4000/check",
+        const response = await fetch(`${apiUrl}/check`,
             {
                 method: "GET",
                 headers: {
@@ -23,7 +25,7 @@ export const checkToken = async () => {
         return response;
     }
     catch (err) {
-        console.log(err)
+       console.log(err)
     }
 };
 

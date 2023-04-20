@@ -75,7 +75,7 @@ export default function Amis() {
                     <h2 className='dark:text-white mb-2'>Votre liste d'amis</h2>
 
                     {User.map((user, index) =>
-                        <div key={index} className='w-full dark:bg[#252525]  p-2 shadow-md rounded-lg my-1'>
+                        <div key={index} className='w-full dark:bg-[#1B1B20]  p-2 shadow-md rounded-lg my-1'>
                             <div className='flex flex-wrap '>
                                 <div>
                                     <img src="https://via.placeholder.com/50" alt="" className='rounded-full' />
@@ -92,7 +92,7 @@ export default function Amis() {
 
             </div>
 
-            <div className='w-full min-h-[800px] h-auto shadow-lg border rounded-lg mt-4 lg:m-4 bg-[#F5F5F5]'>
+            <div className='w-full min-h-[800px] h-auto shadow-lg border rounded-lg mt-4 lg:m-4 bg-[#F5F5F5] dark:bg-[#252525]'>
                 <div>
                 </div>
             </div>

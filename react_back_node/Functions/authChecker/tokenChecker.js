@@ -30,9 +30,10 @@ module.exports = async (req, res, next) => {
                 } else {
                     console.log('ICI 3');
                     req.user = decoded
+                    console.log(req.user)
                     res.status(200).json({
                         userId: decoded.userId,
-                        message: "Authentification réussi",
+                        userRole: decoded.userRole,
                         token: token,
                         refreshToken: refreshToken
                     })

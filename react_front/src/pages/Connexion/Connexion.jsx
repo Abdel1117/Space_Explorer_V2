@@ -17,7 +17,7 @@ export default function Connexion() {
   const [loadingEnded, setLoadingEnded] = useState(false);
   const [errorsMessages, setErrorsMessages] = useState([]);
   const [message, setMessages] = useState("")
-
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
     criteriaMode: 'all',
@@ -33,7 +33,7 @@ export default function Connexion() {
   }
 
   const handleForm = () => {
-    fetch("http://localhost:4000/connexion", {
+    fetch(`${apiUrl}/connexion`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: { 'Content-Type': 'application/json' },
@@ -77,6 +77,9 @@ export default function Connexion() {
     newState.splice(index, 1)
     setErrorsMessages(newState)
   }
+
+
+
   return (
 
     <>
@@ -92,7 +95,6 @@ export default function Connexion() {
 
           {
             errorsMessages.map((message, index) =>
-
               <Toast_invalide key={index} message={message} deletePopUp={deletePopUp} />
             )
           }
@@ -109,10 +111,10 @@ export default function Connexion() {
 
           <div className='bg-gradient-to-b from-[#24c6dc] to-[#1a1e96] w-full md:w-6/12 min-h-[600px] flex flex-col items-center justify-center rounded-l-md'>
 
-            <h1 className='text-xl xl:text-2xl animate-pulse text-white mb-10'>Ce connecter</h1>
+            <h1 className='text-xl xl:text-2xl animate-pulse text-white mb-10'>Se connecter</h1>
             <form onSubmit={handleSubmit(handleForm)} method="POST" className="space-y-4 md:space-y-6 w-9/12 mx-auto" >
               <div>
-                <label for="email" className="block mb-2 text-sm font-medium text-white">Your email</label>
+                <label for="email" className="block mb-2 text-sm font-medium text-white">Votre adresse email</label>
                 <input {...register('emailInput', {
                   required: "Veuillez remplir ce champs",
                   pattern: {
@@ -142,7 +144,7 @@ export default function Connexion() {
                 />
               </div>
               <div>
-                <label for="password" className="block mb-2 text-sm font-medium text-white">Password</label>
+                <label for="password" className="block mb-2 text-sm font-medium text-white">Mot de passe</label>
                 <input
                   {...register('passwordInput', {
                     required: "Veuillez remplir ce champs",

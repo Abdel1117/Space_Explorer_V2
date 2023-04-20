@@ -49,10 +49,12 @@ exports.connexionHandler = (req, res, next) => {
                         }
                         res.status(200).json({
                             userId: user._id,
+                            userRole: user.role,
                             message: "Connexion réussi vous aller être rediriger",
                             token: jwt.sign(
                                 {
-                                    userId: user._id
+                                    userId: user._id,
+                                    userRole: user.role
                                 },
                                 "RANDOM_TOKEN_SECRET",
                                 { expiresIn: "10min" }
@@ -60,7 +62,9 @@ exports.connexionHandler = (req, res, next) => {
                             ),
                             refreshToken: jwt.sign(
                                 {
-                                    token: user.password
+                                    userId: user._id,
+                                    userRole: user.role
+
 
                                 },
                                 "RANDOM_TOKEN_SECRET_REFRESH",

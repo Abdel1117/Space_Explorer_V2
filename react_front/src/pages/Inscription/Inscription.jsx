@@ -13,6 +13,7 @@ export default function Inscription() {
     const [errorsMessages, setErrorsMessages] = useState([]);
     const [message, setMessages] = useState("")
     const [checked, setChecked] = useState(false);
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
         criteriaMode: 'all',
@@ -35,7 +36,7 @@ export default function Inscription() {
 
     const handleForm = () => {
         console.log(form)
-        fetch("http://localhost:4000/inscription", {
+        fetch(`${apiUrl}/inscription`, {
             method: "POST",
             body: JSON.stringify(form),
             headers: { 'Content-Type': 'application/json' },
@@ -92,7 +93,7 @@ export default function Inscription() {
 
                 </div>
             }
-            <section className="flex flex-col items-center min-h-screen my-5">
+            <section className="flex flex-col items-center min-h-screen py-5">
 
                 <div className='flex flex-col md:flex-row w-full m-3 md:m-0 md:w-9/12 min-h-[700px] '>
 
@@ -214,7 +215,7 @@ export default function Inscription() {
                                 </div>
 
                                 <div className="ml-3 text-sm">
-                                    <label for="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
+                                    <label for="terms" className="font-light text-white dark:text-white">J'accepte les <a className="font-medium text-white hover:underline dark:text-white" href="#">Termes et Conditions d'utilisation</a></label>
                                 </div>
 
                             </div>

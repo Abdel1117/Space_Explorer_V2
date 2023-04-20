@@ -21,15 +21,12 @@ export const UserDashBoard = () => {
     const [error, setError] = useState({})
 
     useEffect(() => {
-
         setIsLoading(true);
-
         const fetchData = async () => {
             try {
                 const response = await fetch(`http://localhost:4000/userProfil/${userId.id}`, {
                     method: "GET"
                 })
-
                     .then(data => data.json())
                     .then(data => { setData(data) })
                     .then(setIsLoading(false));
@@ -38,9 +35,7 @@ export const UserDashBoard = () => {
                 setError(error)
             }
         }
-
         fetchData()
-
     }, [])
 
     useEffect(() => {
