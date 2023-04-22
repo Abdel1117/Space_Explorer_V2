@@ -14,6 +14,7 @@ export const UserProvider = ({ children }) => {
     /* Si utilisateur est connécter objet remplie */
     /* Sinon on met Null */
     const [isLoading, setIsLoading] = useState(true)
+    const [isCheckingToken, setIsCheckingToken] = useState(true)
     const navigate = useNavigate();
     const logout = () => {
         setUserAuth(null);
@@ -23,28 +24,35 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const token = getToken('token');
+    
         if (token != null) {
-            checkToken()
-                .then((response) => {
+            (async () => {
+                try {
+                    const response = await checkToken();
                     if (response.status === 401) {
                         sessionStorage.removeItem('token');
-                        setUserAuth(null)
+                        setUserAuth(null);
+                    } else {
+                        const data = await response.json();
+                        console.log(data)
+                        setUserAuth(data);
                     }
-                    else {
-                        response.json().then(data => {
-                            setUserAuth(data)
-                        })
-                    }
-                })
-                .catch(err => console.log(err))
-                .finally(() => setIsLoading(false))
+                } catch (err) {
+                    console.log(err);
+                } finally {
+                    setIsLoading(false);
+                    setIsCheckingToken(false);
+                }
+            })();
         } else {
-            setIsLoading(false)
+            setIsLoading(false);
+            setIsCheckingToken(false);
         }
-    }, [])
+    }, []);
+    
 
     return (
-        <userContext.Provider value={{ userAuth, setUserAuth, logout, isLoading }} >
+        <userContext.Provider value={{ userAuth, setUserAuth, logout, isLoading, isCheckingToken }} >
             {children}
         </userContext.Provider>
     )

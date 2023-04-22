@@ -16,26 +16,32 @@ import Error_404_Page from './pages/404/Error_404_Page'
 
 
 const PrivateRoutes = () => {
-  const userAuth = useAuth();
-  return (
-    userAuth != null ?
-      userAuth.userRole === "Admin" ?
-        <Outlet />
-        :
-        console.log(userAuth.userRole) :
-      console.log("2")
-  )
+  const { userAuth } = useAuth();
 
-}
+  if (userAuth === undefined) {
+    return null;
+  }
+
+  return userAuth !== null && userAuth.userRole === "Admin" ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/" replace />
+  );
+};
+
 
 function App() {
   const { theme, setTheme } = useContext(themeContext);
+    const { isLoading, userAuth, isCheckingToken } = useAuth();
+
   useEffect(() => {
     const root = window.document.documentElement;
     theme === "light" ? root.classList.remove("dark") : root.classList.add('dark');
 
   }, [theme])
-
+  if (isCheckingToken) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <Nav />
