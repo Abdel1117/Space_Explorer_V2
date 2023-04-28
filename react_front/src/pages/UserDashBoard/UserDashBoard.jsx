@@ -38,8 +38,7 @@ export const UserDashBoard = () => {
         fetchData()
     }, [])
 
-    useEffect(() => {
-    }, [blockSection])
+
     return (
         <>
             {isLoading === true ?
