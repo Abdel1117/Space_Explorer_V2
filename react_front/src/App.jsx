@@ -32,7 +32,7 @@ const PrivateRoutes = () => {
 
 function App() {
   const { theme, setTheme } = useContext(themeContext);
-    const { isLoading, userAuth, isCheckingToken } = useAuth();
+  const { isLoading, userAuth, isCheckingToken } = useAuth();
 
   useEffect(() => {
     const root = window.document.documentElement;

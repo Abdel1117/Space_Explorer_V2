@@ -1,26 +1,59 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import Loader from '../Loader/Loader'
+import Article from "../../assets/icon_svg/un-journal.png"
+import Galery from "../../assets/icon_svg/galery.png"
+import Subscription from "../../assets/icon_svg/Sub.png"
+import User from "../../assets/icon_svg/utilisateur.png"
 export default function Accueil() {
-  return (
-    <div className=' w-full h-full shadow-lg bg-white dark:bg-[#252525] p-2 md:p-5'>
-         <h2 className='dark:text-white text-black'>Accueil</h2>
-        
-        <div className=' grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 '>
-            <div className='bg-yellow_to_orange w-full h-[100px] rounded-md flex flex-col p-2 justify-between'>
-                <h2 className='text-white   '>Total Articles</h2>
-                <span>12</span>
-            </div>
-            <div className='bg-green-gradient w-full h-[100px] rounded-md'>
-                <h2 className='text-white py-2 px-2 '>Total Images</h2>
-            </div>
-            <div className='bg-red-900 w-full h-[100px] rounded-md'>
-                <h2 className='dark:text-white text-black py-2 px-2 '>Total Abonnées</h2>
-            </div>
-            <div className='bg-red-900 w-full h-[100px] rounded-md'>
-                <h2 className='dark:text-white text-black py-2 px-2 '>Total Utilisateurs</h2>
-            </div>
+    const [isLoading, setIsLoading] = useState(false)
+    return (
+        <div className=' w-full h-full shadow-lg bg-white dark:bg-[#252525] p-2 md:p-5'>
 
+            <div className=' grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 '>
+
+
+                <div className='bg-yellow_to_orange w-full h-[100px] rounded-md flex flex-col justify-between p-2 relative'>
+                    <h2 className='text-white  font-semibold p-2 '>Total Articles</h2>
+                    <img className='absolute top-1 right-0 p-2 w-[50px] h-auto ' src={Article} alt="Icône représentant un article" />
+                    {isLoading === true ?
+                        <Loader />
+                        :
+                        <span className='text-white font-semibold p-2'>12</span>
+                    }
+                </div>
+
+
+                <div className='bg-green-gradient w-full h-[100px] rounded-md flex flex-col justify-between p-2  relative'>
+                    <h2 className='text-white py-2 px-2 font-semibold'>Total Images</h2>
+                    <img className='absolute top-1 right-0 p-2 w-[50px] h-auto ' src={Galery} alt="Icône représentant un article" />
+                    {isLoading === true ?
+                        <Loader />
+                        :
+                        <span className='text-white font-semibold p-2'>12</span>
+                    }
+                </div>
+
+                <div className='bg-light-blue w-full h-[100px] rounded-md flex flex-col  justify-between p-2 relative'>
+                    <h2 className='text-white py-2 px-2 font-semibold '>Total Abonnées</h2>
+                    <img className='absolute top-1 right-0 p-2 w-[50px] h-auto ' src={Subscription} alt="Icône représentant un article" />
+                    {isLoading === true ?
+                        <Loader />
+                        :
+                        <span className='text-white font-semibold p-2'>12</span>
+                    }
+                </div>
+
+                <div className='bg-azure_radiant w-full h-[100px] rounded-md flex flex-col justify-between p-2 relative'>
+                    <h2 className='text-white py-2 px-2 font-semibold '>Total Utilisateurs</h2>
+                    <img className='absolute top-1 right-0 p-2 w-[50px] h-auto ' src={User} alt="Icône représentant un article" />
+                    {isLoading === true ?
+                        <Loader />
+                        :
+                        <span className='text-white font-semibold p-2'>12</span>
+                    }
+                </div>
+
+            </div>
         </div>
-    </div>
-  )
+    )
 }

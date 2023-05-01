@@ -17,9 +17,10 @@ module.exports = {
       },
       backgroundImage: {
         'hero-form': "url('../src/assets/images/astronaute-.jpg')",
-        'green-gradient': "linear-gradient(180deg, rgb(124, 252, 115) 0%, rgb(65, 167, 113) 83%);",
+        'green-gradient': "linear-gradient(45deg,rgb(65, 167, 113) 0%,  rgb(124, 252, 115) 100%);",
         "light-blue": "linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);",
-        "yellow_to_orange":  "linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);"
+        "yellow_to_orange": "linear-gradient(45deg, #103CE7  0%, #64E9FF 100%);",
+        "azure_radiant": "linear-gradient(45deg, #0172AF 20%, #74FEBD 100%);"
 
       },
       boxShadow: {
