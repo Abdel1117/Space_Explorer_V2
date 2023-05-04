@@ -12,26 +12,27 @@ export default function Dashboard() {
 
     return (
         <>
-            <section className='flex flex-col md:flex-row relative '>
+            <section className='flex flex-col md:flex-row relative py-6'>
                 <Side_Barre_DashBoard blockSection={blockSection} setBlockSection={setBlockSection} />
 
                 <div className='w-full min-h-[700px] rounded-lg md:mx-2 bg-[#F5F5F5] dark:bg[#252525]'>
                     {blockSection != "" ?
 
                         (blockSection === "Accueil") ?
-                            <Accueil /> :
+                            <Accueil blockSection={blockSection} setBlockSection={setBlockSection} /> :
 
                             (blockSection === "Articles") ?
-                                <Articles /> :
+                                <Articles  /> :
 
                                 (blockSection === "Images") ?
                                     <Images /> :
 
                                     (blockSection === "Users") ?
                                         <Users /> :
-
+        
                                         <Accueil />
-                        : <Accueil />
+                        : 
+                        <Accueil />
 
                     }
                 </div>
