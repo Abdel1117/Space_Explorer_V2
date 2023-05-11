@@ -1,11 +1,14 @@
 import React from 'react'
 import Article from '../Article/Article';
 import Table from '../Table/Table';
+import Astronaute_in_front_of_computer from "../../assets/images/cute-astronaut-front-computer-no-bg.png";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
+
 const Articles_data = [
 
 {
@@ -43,7 +46,17 @@ const Articles_data = [
 export default function Articles() {
   return (
     <section className=' w-full h-full shadow-lg  bg-white dark:bg-[#252525] p-2 md:p-5'>
-      <div className='p-2'>
+
+      <div className='bg-light-blue dark:bg-dark-blue rounded-md my-5 relative h-60'>
+                        <h2 className='text-white p-6 font-semibold '>
+                            Publié un nouvel Article
+                        </h2>
+
+                        <a className='bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full ml-4' href='#'>Ecrire un Nouvel Article</a>
+                        <img className='w-44 h-auto object-cover bg-transparent absolute -bottom-4 md:-top-6 md:right-0 ' src={Astronaute_in_front_of_computer} alt="" />
+        </div>
+                  
+      <div className=''>
       <Table />
 
       </div>

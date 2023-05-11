@@ -49,7 +49,7 @@ export default function Accueil(props) {
                 </div>
 
                 <div  onClick={ () => {setBlockSection( "Users")}} className=' cursor-pointer bg-azure-radiant dark:bg-dark-azure w-full h-[100px] rounded-md flex flex-col justify-between p-2 relative'>
-                    <h2 className='text-white py-2 px-2 font-semibold '>Total Utilisateurs</h2>
+                    <h2 className='text-white py-2 px-2 font-semibold'>Total Utilisateurs</h2>
                     <img className='absolute top-1 right-0 p-2 w-[50px] h-auto ' src={User} alt="Icône représentant un article" />
                     {isLoading === true ?
                         <Loader />
@@ -59,6 +59,8 @@ export default function Accueil(props) {
                 </div>
 
             </div>
+
+         
         </div>
     )
 }
