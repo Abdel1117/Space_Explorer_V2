@@ -13,6 +13,7 @@ import Galerie from './pages/Galerie/Galerie'
 import { UserDashBoard } from './pages/UserDashBoard/UserDashBoard'
 import { themeContext } from "./Context/themeContext"
 import Error_404_Page from './pages/404/Error_404_Page'
+import Ajouter_Entity from './pages/Ajouter_Entity/Ajouter_Entity'
 
 
 const PrivateRoutes = () => {
@@ -55,6 +56,8 @@ function App() {
 
           <Route element={<PrivateRoutes />} >
             <Route path="/DashBoard" element={<DashBoard />} />
+            <Route path='/Ajouter_Entity' element={<Ajouter_Entity />} />
+
           </Route>
 
 

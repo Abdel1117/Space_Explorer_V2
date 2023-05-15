@@ -18,7 +18,7 @@ export default function Accueil(props) {
 
 
                 <div onClick={ () => {setBlockSection( "Articles")}} className='cursor-pointer bg-light-blue dark:bg-dark-blue w-full h-[100px] rounded-md flex flex-col justify-between p-2 relative'>
-                    <h2 className='text-white  font-semibold p-2 '>Total Articles</h2>
+                    <h2 className='text-white font-semibold p-2 '>Total Articles</h2>
                     <img className='absolute top-1 right-0 p-2 w-[50px] h-auto ' src={Article} alt="Icône représentant un article" />
                     {isLoading === true ?
                         <Loader />
