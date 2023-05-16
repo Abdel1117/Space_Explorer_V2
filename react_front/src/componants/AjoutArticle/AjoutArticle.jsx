@@ -35,7 +35,6 @@ export default function AjoutArticle() {
 
     }
 
-    console.log(nouvelArticle)
   }
 
 
