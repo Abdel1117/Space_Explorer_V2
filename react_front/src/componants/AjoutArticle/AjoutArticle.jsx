@@ -89,7 +89,13 @@ export default function AjoutArticle() {
 
     setArticle((prevArticle) => ({ ...prevArticle, nouvelArticle }))
   }
+  const countingChar = (section) => {
 
+    let value = section.contenu;
+    let counterValue = value.replace(/\s/g, "");
+    return counterValue.length
+
+  }
 
   return (
     <section className={` `}>
@@ -217,7 +223,7 @@ export default function AjoutArticle() {
                   pattern: {
                     required: true,
                     value: /^(?! )[a-zA-Z0-9\-() ]{1,38}(?<! )$/,
-                    message: "Veuillez taper un Titrre qui contien au moins 3 caractères et au maxmimum 20 caractères"
+                    message: "Veuillez taper un Titrre qui contien au moins 3 caractères et au maxmimum 40 caractères"
                   }
                 })}
                 onChange={(e) => {
@@ -227,8 +233,16 @@ export default function AjoutArticle() {
                 }}
               />
               <>
+                <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
+                  {countingChar(sections[index])} / 40 </p>
+
+
+
+
+              </>
+              <>
                 {errors[`Section_titre${index}`] && (
-                  <p>{errors[`Section_titre${index}`]?.message}</p>
+                  <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>{errors[`Section_titre${index}`]?.message}</p>
                 )}
               </>
             </div>
@@ -249,16 +263,30 @@ export default function AjoutArticle() {
                   required: "Veuillez taper une section d'article",
                   pattern: {
                     required: true,
-                    value: /^.{200,800}$/,
+                    value: /^.{400,1200}$/,
                     message: "Veuillez taper une section d'article qui contiens au moins 200 caractères et au maxmimum 800 caractères"
                   }
                 })}
                 onChange={(e) => {
-                  const updatedSections = [...sections];
-                  updatedSections[index].contenu = e.target.value;
-                  setSections(updatedSections);
+                  const content = e.target.value
+                  const regexContent = content.replace(/\s/g, "")
+
+                  if (regexContent.length < 1200) {
+
+                    const updatedSections = [...sections];
+                    updatedSections[index].contenu = e.target.value;
+                    setSections(updatedSections);
+                  }
                 }}
               ></textarea>
+              <>
+                <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
+                  {countingChar(sections[index])} / 1200 </p>
+
+
+
+
+              </>
               <>
                 {errors[`Section_${index}`] && (
                   <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>{errors[`Section_${index}`]?.message}</p>
