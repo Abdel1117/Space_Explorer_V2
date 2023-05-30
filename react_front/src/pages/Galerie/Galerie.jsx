@@ -31,6 +31,8 @@ export default function Galerie() {
       .catch(e => console.log(e))
   }
   useEffect(() => {
+
+
     fetchData();
   }, []);
 

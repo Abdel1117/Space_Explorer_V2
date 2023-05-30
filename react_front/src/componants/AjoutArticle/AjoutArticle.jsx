@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message';
 import _ from "lodash/fp";
@@ -10,30 +10,33 @@ export default function AjoutArticle() {
   const [sections, setSections] = useState([
 
   ]);
-
+  const [image, setImages] = useState("");
   const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
     criteriaMode: 'all',
 
   });
-
+  /* Handling Section  */
   const addSection = () => {
     const nouvelleSection = {
       titre: "",
-      contenu: ""
+      contenu: "",
+      image: ""
     };
-    setSections([...sections, nouvelleSection])
+
+    const updatedSections = [...sections, nouvelleSection];
+    setSections(updatedSections);
+
+    setValue(`Section_titre${updatedSections.length - 1}`, "");
+    setValue(`Section_${updatedSections.length - 1}`, "");
   }
-  const deleteLastSection = () => {
+  const deleteLastSection = (index) => {
 
     const newState = [...sections]
-    console.log(newState)
-    newState.pop()
-    console.log(newState)
-    setSections(setSections(newState))
+
+    newState.splice(index, 1)
+    setSections(newState)
   }
-
-
-
+  /* Handling Form Input */
   const handleSlugChange = (e) => {
     const slug = e.target.name;
     const checked = e.target.checked;
@@ -54,14 +57,36 @@ export default function AjoutArticle() {
     });
   }
 
+
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const imageDataURL = event.target.result;
+
+        setSections((prevSections) => {
+          const updatedSections = [...prevSections];
+          updatedSections[index] = {
+            ...updatedSections[index],
+            image: imageDataURL
+          };
+          return updatedSections;
+        });
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
   const handleForm = () => {
     const nouvelArticle = {
       titre: Titre,
       contenu: sections,
       slugs: Slug,
-
+      image: image
     }
-    console.log("ICI")
+
     setArticle((prevArticle) => ({ ...prevArticle, nouvelArticle }))
   }
 
@@ -187,7 +212,6 @@ export default function AjoutArticle() {
                 name={`Section_titre_${index}`}
                 id={`Section_titre_${index}`}
                 value={section.titre}
-
                 {...register(`Section_titre${index}`, {
                   required: "Veuillez taper un titre de section",
                   pattern: {
@@ -209,7 +233,11 @@ export default function AjoutArticle() {
               </>
             </div>
             <div className="mb-6">
-              <label htmlFor={`Section_${index}`} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Section</label>
+              <label
+                htmlFor={`Section_${index}`}
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Section
+              </label>
               <textarea
                 className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light'
                 cols="30"
@@ -217,7 +245,6 @@ export default function AjoutArticle() {
                 name={`Section_${index}`}
                 id={`Section_${index}`}
                 value={section.contenu}
-
                 {...register(`Section_${index}`, {
                   required: "Veuillez taper une section d'article",
                   pattern: {
@@ -234,22 +261,48 @@ export default function AjoutArticle() {
               ></textarea>
               <>
                 {errors[`Section_${index}`] && (
-                  <p>{errors[`Section_${index}`]?.message}</p>
+                  <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>{errors[`Section_${index}`]?.message}</p>
                 )}
               </>
+              <div className='mt-5 ml-1'>
+
+                <label className='dark:text-white mr-2 text-sm md:text-base'
+                  htmlFor={`Image_Section_${index}`}>Image liée à la séction</label>
+                <input
+                  className='dark:text-white text-sm md:text-base'
+                  type="file"
+                  name={`Image_Section_${index}`}
+                  id={`Image_Section_${index}`}
+
+                  {...register(`Image_Section_${index}`,
+                    {
+                      required: true,
+
+                      message: "Veuillez insérer une image qui puisse accompagné le paragraphe "
+                    })}
+                  onChange={(e) => handleImageChange(e, index)}
+
+                />
+              </div>
+            </div>
+            <div className='my-3'>
+
+              <a role='button' onClick={() => { deleteLastSection(index) }} className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Supprimer la section</a>
             </div>
           </div>
         ))}
         <div className='grid grid-cols-1 md:grid-cols-2 gap-3' >
-          <a href="#" onClick={() => { addSection() }} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
+          <a role='button' onClick={() => { addSection() }} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
             Ajouter une Section
           </a>
 
-          <a href="#" onClick={() => { deleteLastSection() }} className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Supprimer la derniere section</a>
+
           <button onClick={() => { handleSubmit() }} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Publier article</button>
 
 
         </div>
+
+
       </form>
 
     </section >
