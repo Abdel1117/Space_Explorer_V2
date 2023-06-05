@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
+import { useFetch } from '../../Hooks/useFetch';
+
 import { ErrorMessage } from '@hookform/error-message';
 import _ from "lodash/fp";
 
@@ -8,7 +10,7 @@ export default function AjoutArticle() {
   const [Titre, setTitre] = useState("");
   const [Slug, setSlug] = useState([]);
   const [sections, setSections] = useState([
-
+    { contenu: "", image: "", titre: "" }
   ]);
   const [image, setImages] = useState("");
   const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
@@ -60,6 +62,7 @@ export default function AjoutArticle() {
 
   const handleImageChange = (e, index) => {
     const file = e.target.files[0];
+    console.log(file.type)
     if (file) {
       const reader = new FileReader();
 
@@ -88,13 +91,19 @@ export default function AjoutArticle() {
     }
 
     setArticle((prevArticle) => ({ ...prevArticle, nouvelArticle }))
-  }
-  const countingChar = (section) => {
+    const apiUrl = import.meta.env.VITE_API_URL
 
-    let value = section.contenu;
+    useFetch(`${apiUrl}/ajoutArticle`, "POST");
+
+
+  }
+
+
+
+  const countingChar = (section) => {
+    let value = section;
     let counterValue = value.replace(/\s/g, "");
     return counterValue.length
-
   }
 
   return (
@@ -158,15 +167,15 @@ export default function AjoutArticle() {
               <input
                 className=''
                 type="checkbox"
-                id="Objet_Stélaire"
+                id="Objet Stélaire"
                 {...register('Slug', { required: true })}
                 name="Objet Stélaire"
                 value="Objet Stélaire"
                 onChange={handleSlugChange}
-                checked={Slug.includes('Objet_Stélaire')}
+                checked={Slug.includes('Objet Stélaire')}
 
               />
-              <label className='text-sm md:text-md dark:text-white ml-1' htmlFor="Objet_Stélaire">Objet Stélaire</label>
+              <label className='text-sm md:text-md dark:text-white ml-1' htmlFor="Objet Stélaire">Objet Stélaire</label>
             </div>
 
             <div>
@@ -201,7 +210,7 @@ export default function AjoutArticle() {
             <div className=' '>
 
               {errors.Slug && (
-                <p className="text-red-600">Veuillez sélectionner au moins un Slug pour l'article en question</p>
+                <p className="dark:text-white font-bold text-red-600 ">Veuillez sélectionner au moins un Slug pour l'article en question</p>
               )}
 
 
@@ -209,6 +218,7 @@ export default function AjoutArticle() {
           </fieldset>
 
         </div>
+
         {sections?.map((section, index) => (
           <div key={index}>
             <div className="mb-6">
@@ -222,8 +232,8 @@ export default function AjoutArticle() {
                   required: "Veuillez taper un titre de section",
                   pattern: {
                     required: true,
-                    value: /^(?! )[a-zA-Z0-9\-() ]{1,38}(?<! )$/,
-                    message: "Veuillez taper un Titrre qui contien au moins 3 caractères et au maxmimum 40 caractères"
+
+                    message: "Veuillez taper un Titre qui contien au moins 3 caractères et au maxmimum 40 caractères"
                   }
                 })}
                 onChange={(e) => {
@@ -234,7 +244,7 @@ export default function AjoutArticle() {
               />
               <>
                 <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
-                  {countingChar(sections[index])} / 40 </p>
+                  {countingChar(sections[index].titre)} / 40 </p>
 
 
 
@@ -242,7 +252,7 @@ export default function AjoutArticle() {
               </>
               <>
                 {errors[`Section_titre${index}`] && (
-                  <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>{errors[`Section_titre${index}`]?.message}</p>
+                  <p className='dark:text-white text-red-600 font-bold text-sm md:text-md ml-1 mt-2'>{errors[`Section_titre${index}`]?.message}</p>
                 )}
               </>
             </div>
@@ -262,34 +272,24 @@ export default function AjoutArticle() {
                 {...register(`Section_${index}`, {
                   required: "Veuillez taper une section d'article",
                   pattern: {
-                    required: true,
-                    value: /^.{400,1200}$/,
-                    message: "Veuillez taper une section d'article qui contiens au moins 200 caractères et au maxmimum 800 caractères"
+                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 1200 charactères"
                   }
                 })}
                 onChange={(e) => {
-                  const content = e.target.value
-                  const regexContent = content.replace(/\s/g, "")
+                  const text = e.target.value
+                  const updatedSections = [...sections];
+                  updatedSections[index].contenu = e.target.value;
+                  setSections(updatedSections);
 
-                  if (regexContent.length < 1200) {
-
-                    const updatedSections = [...sections];
-                    updatedSections[index].contenu = e.target.value;
-                    setSections(updatedSections);
-                  }
                 }}
               ></textarea>
               <>
                 <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
-                  {countingChar(sections[index])} / 1200 </p>
-
-
-
-
+                  {countingChar(sections[index].contenu)} / 1200 </p>
               </>
               <>
                 {errors[`Section_${index}`] && (
-                  <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>{errors[`Section_${index}`]?.message}</p>
+                  <p className='dark:text-white text-red-600 font-bold text-sm md:text-md ml-1 mt-2'>{errors[`Section_${index}`]?.message}</p>
                 )}
               </>
               <div className='mt-5 ml-1'>
@@ -304,13 +304,29 @@ export default function AjoutArticle() {
 
                   {...register(`Image_Section_${index}`,
                     {
-                      required: true,
+                      required: "Veuillez insérer une image qui puisse accompagner le paragraphe ",
+                      validate: {
+                        lessThan10MB: files => {
+                          if (files[0]) {
+                            if (files[0].type !== "image/png" && files[0].type !== "image/jpeg" && files[0].type !== "image/jpg" && files[0].type !== "image/webp") {
 
-                      message: "Veuillez insérer une image qui puisse accompagné le paragraphe "
+                              return "Nous n'acceptons que les images de type PNG, JPEG, JPG ou Webp"
+                            }
+                          } else {
+                            return "Veuillez insérer une image qui puisse accompagné le paragraphe "
+                          }
+                        },
+                      },
                     })}
                   onChange={(e) => handleImageChange(e, index)}
 
                 />
+
+                <>
+                  {errors[`Image_Section_${index}`] && (
+                    <p className='dark:text-white text-red-600 font-bold text-sm md:text-md  mt-2'>{errors[`Image_Section_${index}`]?.message}</p>
+                  )}
+                </>
               </div>
             </div>
             <div className='my-3'>
