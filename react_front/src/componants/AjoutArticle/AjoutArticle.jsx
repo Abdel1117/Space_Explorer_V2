@@ -89,11 +89,11 @@ export default function AjoutArticle() {
       slugs: Slug,
       image: image
     }
-
+    const tokken = sessionStorage.getItem('tokken');
     setArticle((prevArticle) => ({ ...prevArticle, nouvelArticle }))
     const apiUrl = import.meta.env.VITE_API_URL
 
-    useFetch(`${apiUrl}/ajoutArticle`, "POST");
+    useFetch(`${apiUrl}/ajoutArticle`, "POST", nouvelArticle);
 
 
   }
@@ -109,7 +109,7 @@ export default function AjoutArticle() {
   return (
     <section className={` `}>
 
-      <form onSubmit={handleSubmit(handleForm)} className="w-[280px] sm:w-[520px] md:w-[500px] lg:w-10/12 h-full bg-white dark:bg-blue-900 rounded-lg p-4 mx-auto">
+      <form onSubmit={handleSubmit(handleForm)} method='POST' className="w-[280px] sm:w-[520px] md:w-[500px] lg:w-10/12 h-full bg-white dark:bg-blue-900 rounded-lg p-4 mx-auto">
         <div className="mb-6">
           <label htmlFor="Titre_Article" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titre</label>
           <input
