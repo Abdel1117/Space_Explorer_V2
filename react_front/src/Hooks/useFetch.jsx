@@ -5,11 +5,9 @@ const useFetch = async (url, method, body) => {
         try {
             const response = await fetch(url, {
                 method: method,
-                body: JSON.stringify(body),
+                body: body,
                 headers: {
                     "Authorization": `${token}`,
-                    'Content-Type': 'application/json',
-
                 }
             })
 

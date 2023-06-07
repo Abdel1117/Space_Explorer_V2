@@ -1,23 +1,20 @@
-/*
-const mongoose = require("mongoose");
-
-const user = mongoose.Schema({
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  role: { type: String, default: "Utilisateur" }
-});
- 
- 
-module.exports = mongoose.model('User', user);
-*/
-
 const mongoose = require('mongoose');
 
-const Article = mongoose.Schema({
+const ContenuSchema = mongoose.Schema({
+  titre: { type: String, required: true },
+  contenu: { type: String, required: true },
+  image: { type: String, required: true }
+
+});
+
+const ArticleSchema = mongoose.Schema({
   Title: { type: String, required: true },
   Slugs: { type: Array, required: true },
-  Contenu: { type: Object, required: true },
-
+  Contenu: [{
+    type: ContenuSchema, required: true
+  }]
 })
 
-module.exports = mongoose.model('Article', Article)
+const Article = mongoose.model('Article', ArticleSchema);
+
+module.exports = Article;

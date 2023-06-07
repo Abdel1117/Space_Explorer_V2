@@ -1,7 +1,4 @@
 const { check, validationResult } = require("express-validator");
-const Article = require("../../Model/articleShema");
-const mongoose = require("mongoose");
-
 
 exports.checkArticle = [
     check("titre")

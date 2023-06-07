@@ -10,17 +10,21 @@ const MIME_TYPES = {
     "image/webp": "webp",
 }
 
-const storage = multer.diskStorage({
+const imageValidation = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, "/image");
+        callback(null, "image");
+        console.log("1")
     },
 
 
     filename: (req, file, callback) => {
+        console.log("2")
         const name = file.originalname.split(" ").join("_");
         const extention = MIME_TYPES[file.mimetype];
         callback(null, name + Date.now() + "." + extention);
     }
 })
 
-module.exports = multer({ storage: storage })
+const upload = multer({ storage: imageValidation })
+
+module.exports = upload

@@ -2,7 +2,6 @@ const articleShema = require("../Model/articleShema");
 const { validationResult } = require('express-validator')
 
 exports.addArticle = (req, res, next) => {
-    console.dir(req.body)
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
