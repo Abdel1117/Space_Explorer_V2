@@ -90,7 +90,10 @@ export default function AjoutArticle() {
       image: image
     }
     let formData = new FormData();
-    formData.append("image", file)
+    formData.append("image", image),
+      formData.append("titre", titre);
+    formData.append("contenu", contenu);
+    formData.append("slugs", Slug);
     const tokken = sessionStorage.getItem('tokken');
     setArticle((prevArticle) => ({ ...prevArticle, nouvelArticle }))
     const apiUrl = import.meta.env.VITE_API_URL
