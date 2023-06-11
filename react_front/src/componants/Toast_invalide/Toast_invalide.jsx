@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Toast_invalide({ message, index, deletePopUp }) {
+    
     return (
         <div className='bg-white border rounded-md shadow-xl min-w-[fit-content] mx-auto p-3 md:p-5 animate-fadeIn  fixed bottom-[50%] right-[50%] translate-x-[50%] translate-y-[50%] flex flex-col md:flex-row items-center justify-center '>
             <button

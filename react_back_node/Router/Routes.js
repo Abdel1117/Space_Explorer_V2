@@ -12,5 +12,5 @@ router.post("/inscription", validator.createUser, userControlleur.inscriptionHan
 router.post("/connexion", validationUser.checkUser, userControlleur.connexionHandler);
 router.get("/check", tokenChecker);
 router.get("/userProfil/:id", userControlleur.getInfo)
-router.post("/ajoutArticle", upload.single('image'), validatioonArticleText.checkArticle, articleController.addArticle)
+router.post("/ajoutArticle", upload.array('images'), validatioonArticleText.checkArticle, articleController.addArticle)
 module.exports = router;

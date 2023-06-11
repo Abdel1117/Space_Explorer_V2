@@ -1,3 +1,4 @@
+
 const useFetch = async (url, method, body) => {
     const token = sessionStorage.getItem('token');
     if (token != null || token != undefined) {
@@ -12,10 +13,9 @@ const useFetch = async (url, method, body) => {
             })
 
             const data = await response.json();
-            console.log(data);
+            return { status: response.status, data: data };
         } catch (error) {
-            console.log(error);
-
+            return { status: 500, error: error.message };
         }
     }
 }

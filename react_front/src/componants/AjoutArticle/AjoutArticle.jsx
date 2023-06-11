@@ -1,12 +1,15 @@
 import React, { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useFetch } from '../../Hooks/useFetch';
-
 import { ErrorMessage } from '@hookform/error-message';
 import _ from "lodash/fp";
+import Toast_validation from '../Toast_valide/Toast_valide';
+import Toast_invalide from '../Toast_invalide/Toast_invalide';
 
 export default function AjoutArticle() {
   const [article, setArticle] = useState({});
+  const [message, setMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
   const [Titre, setTitre] = useState("");
   const [Slug, setSlug] = useState([]);
   const [sections, setSections] = useState([
@@ -62,45 +65,49 @@ export default function AjoutArticle() {
 
   const handleImageChange = (e, index) => {
     const file = e.target.files[0];
-    console.log(file.type)
     if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        const imageDataURL = event.target.result;
-
-        setSections((prevSections) => {
-          const updatedSections = [...prevSections];
-          updatedSections[index] = {
-            ...updatedSections[index],
-            image: imageDataURL
-          };
-          return updatedSections;
-        });
-      };
-
-      reader.readAsDataURL(file);
+      setSections((prevSections) => {
+        const updatedSections = [...prevSections];
+        updatedSections[index] = {
+          ...updatedSections[index],
+          image: file // Stockez le fichier dans l'état
+        };
+        return updatedSections;
+      });
     }
   };
+
   const handleForm = () => {
-    const nouvelArticle = {
-      titre: Titre,
-      contenu: sections,
-      slugs: Slug,
-      image: image
-    }
-    let formData = new FormData();
-    formData.append("image", image),
-      formData.append("titre", titre);
-    formData.append("contenu", contenu);
-    formData.append("slugs", Slug);
+
+    const sectionsData = sections.map(section => ({
+      titre: section.titre,
+      contenu: section.contenu,
+    }));
+
+    const formData = new FormData();
+    formData.append("titre", JSON.stringify(Titre));
+    formData.append("slugs", JSON.stringify(Slug));
+    formData.append("contenu", JSON.stringify(sectionsData));
+
+    sections.forEach((section, index) => {
+      if (section.image) {
+        formData.append("images", section.image);
+      }
+    });
+
     const tokken = sessionStorage.getItem('tokken');
-    setArticle((prevArticle) => ({ ...prevArticle, nouvelArticle }))
+    setArticle((prevArticle) => ({ ...prevArticle, sectionsData }))
     const apiUrl = import.meta.env.VITE_API_URL
 
-    useFetch(`${apiUrl}/ajoutArticle`, "POST", nouvelArticle);
-
-
+    useFetch(`${apiUrl}/ajoutArticle`, "POST", formData)
+      .then(response => {
+        if (response.status === 201) {
+          setMessage(response.data.message)
+        }
+        else {
+          setErrorMessage("Une erreur inconnu est survenu")
+        }
+      })
   }
 
 
@@ -110,11 +117,19 @@ export default function AjoutArticle() {
     let counterValue = value.replace(/\s/g, "");
     return counterValue.length
   }
-
+  const deletePopUp = () => {
+    const newState = ""
+    setErrorMessage(newState)
+  }
   return (
     <section className={` `}>
-
-      <form onSubmit={handleSubmit(handleForm)} enctype="multipart/form-data" method='POST' className="w-[280px] sm:w-[520px] md:w-[500px] lg:w-10/12 h-full bg-white dark:bg-blue-900 rounded-lg p-4 mx-auto">
+      {message &&
+        <Toast_validation message={message} />
+      }
+      {errorMessage &&
+        <Toast_invalide message={errorMessage} deletePopUp={deletePopUp} />
+      }
+      <form onSubmit={handleSubmit(handleForm)} encType="multipart/form-data" method='POST' className="w-[280px] sm:w-[520px] md:w-[500px] lg:w-10/12 h-full bg-white dark:bg-blue-900 rounded-lg p-4 mx-auto">
         <div className="mb-6">
           <label htmlFor="Titre_Article" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titre</label>
           <input
@@ -122,8 +137,7 @@ export default function AjoutArticle() {
               required: "Veuillez remplir ce champs avec un Titre",
               pattern: {
                 value: /^(?! )[a-zA-Z0-9\-() ]{1,18}(?<! )$/,
-                message: "Veuillez taper un titre qui contient 3 à 20 caractères "
-
+                message: "Veuillez taper un titre qui contient 3 à 20 caractères"
               }
             })}
             onChange={(e) => { setTitre(e.target.value) }}

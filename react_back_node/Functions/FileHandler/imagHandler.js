@@ -11,14 +11,15 @@ const MIME_TYPES = {
 }
 
 const imageValidation = multer.diskStorage({
+
+
     destination: (req, file, callback) => {
-        callback(null, "image");
-        console.log("1")
+        const dir = path.join(__dirname, "..", "..", "image")
+        callback(null, dir);
     },
 
 
     filename: (req, file, callback) => {
-        console.log("2")
         const name = file.originalname.split(" ").join("_");
         const extention = MIME_TYPES[file.mimetype];
         callback(null, name + Date.now() + "." + extention);
