@@ -16,8 +16,8 @@ export const checkToken = async () => {
             {
                 method: "GET",
                 headers: {
-                    authorization: `${sessionStorage.getItem("token")}`,
-                    refreshToken: `${sessionStorage.getItem("refreshToken")}`
+                    authorization: `Bearer ${sessionStorage.getItem("token")}`,
+
                 },
             })
             ;
@@ -25,7 +25,7 @@ export const checkToken = async () => {
         return response;
     }
     catch (err) {
-       console.log(err)
+        console.log(err)
     }
 };
 

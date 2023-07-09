@@ -136,7 +136,7 @@ export default function AjoutArticle() {
             {...register('Article_title', {
               required: "Veuillez remplir ce champs avec un Titre",
               pattern: {
-                value: /^(?! )[a-zA-Z0-9\-() ]{1,18}(?<! )$/,
+                value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{1,18}(?<! )$/,
                 message: "Veuillez taper un titre qui contient 3 à 20 caractères"
               }
             })}
@@ -147,6 +147,14 @@ export default function AjoutArticle() {
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Titre de l'article"
             required />
+          <div className=' '>
+
+            {errors.Article_title && (
+
+              console.log(errors))}
+
+
+          </div>
         </div>
         <div className="mb-6">
           <label htmlFor="" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>

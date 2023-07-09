@@ -1,4 +1,4 @@
-const articleShema = require("../Model/articleShema");
+const Article = require("../Model/articleShema");
 const { validationResult } = require('express-validator')
 
 exports.addArticle = (req, res, next) => {
@@ -19,7 +19,7 @@ exports.addArticle = (req, res, next) => {
 
                 });
             }
-            const articleEntry = new articleShema({
+            const articleEntry = new Article({
                 Title: JSON.parse(req.body.titre),
                 Slugs: JSON.parse(req.body.slugs),
                 Contenu: contenu
@@ -31,4 +31,14 @@ exports.addArticle = (req, res, next) => {
             return res.status(400).json({ message: "Une erreur inconnue est survenu" })
         }
     }
+}
+
+
+exports.getArticle = (req, res, next) => {
+    const article = Article.find()
+        .then(articles => res.status(200).json(articles))
+        .catch(err => res.status(400).json({ err }))
+
+
+    console.log(article)
 }

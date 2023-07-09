@@ -19,6 +19,8 @@ import Ajouter_Entity from './pages/Ajouter_Entity/Ajouter_Entity'
 const PrivateRoutes = () => {
   const { userAuth } = useAuth();
 
+
+
   if (userAuth === undefined) {
     return null;
   }
@@ -38,7 +40,6 @@ function App() {
   useEffect(() => {
     const root = window.document.documentElement;
     theme === "light" ? root.classList.remove("dark") : root.classList.add('dark');
-
   }, [theme])
   if (isCheckingToken) {
     return <div>Loading...</div>;

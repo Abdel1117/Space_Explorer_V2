@@ -5,21 +5,30 @@ const User = require('../../Model/userShema');
 
 module.exports = async (req, res, next) => {
     try {
-        const token = req.headers.authorization;
+        const token = req.headers['authorization'];
+        console.log(`Le token est ici ${token}`);
+        const token2 = token.split(' ')[1];
+        console.log(`Le token parser est ici ${token2} `);
+
+
         const refreshToken = req.headers.refreshtoken;
+
+
+
         if (token) {
-            const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET', function (err, decoded) {
+            const decodedToken = jwt.verify(token2, 'RANDOM_TOKEN_SECRET', function (err, decoded) {
                 if (err) {
                     if (err instanceof jwt.TokenExpiredError) {
-                        console.log('ICI 1');
+                        console.log('Token Expirer');
+                        const refreshToken = req.cookie;
                         return res.status(401).json({
                             erreur: {
                                 name: "Token Expirer",
                                 message: "Veuillez vous reconnecter"
                             }
                         });
-                    } else {
-                        console.log('ICI 2');
+                    } else if (jwt.JsonWebTokenError) {
+                        console.log('Token Invalide');
                         return res.status(401).json({
                             erreur: {
                                 name: "Token Invalide",
@@ -28,7 +37,7 @@ module.exports = async (req, res, next) => {
                         })
                     }
                 } else {
-                    console.log('ICI 3');
+                    console.log('Token Valide');
                     req.user = decoded
                     console.log(req.user)
                     res.status(200).json({
@@ -42,7 +51,7 @@ module.exports = async (req, res, next) => {
             });
 
         } else {
-            console.log('ICI 4');
+            console.log(' Veuillez vous connecter');
             return res.status(401).json("message : Veuillez vous connecter");
         }
     } catch (error) {

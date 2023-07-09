@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-export default function CardNews() {
+export default function CardNews({ index, title, slugs, para, }) {
+
+
+    const Title = title
+    const Slugs = slugs
+    const resumer = para
+
     return (
         <article className='bg-slate-500 col-span-12 lg:col-span-8 mx-auto'>
             <div>
@@ -11,14 +17,19 @@ export default function CardNews() {
 
 
                 <div className='my-2 text-md md:text-xl '>
-                    <h2 className='dark:text-white '>Lorem ipsum dolor sit amet.</h2>
+                    <h2 className='dark:text-white '> {title} </h2>
                 </div>
                 <div>
 
                     <div className='flex w-9/12 md:w-full'>
-                        <p className='mr-1 dark:text-white'>#Travel</p>
-                        <p className='mr-1 dark:text-white'>#LifeStyle</p>
-                        <p className='mr-1 dark:text-white'>#Technology</p>
+                        {Slugs.map((slug, index) =>
+                            <>
+                                <p className='mr-2 dark:text-white'>#{slug}  </p>
+
+                            </>
+                        )}
+
+
                     </div>
 
 
@@ -30,6 +41,6 @@ export default function CardNews() {
                     <a href="">Lire la suite</a>
                 </button>
             </div>
-        </article>
+        </article >
     )
 }

@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const token = getToken('token');
-    
+        console.log(`Le token que nous verifions est : ${token}`)
         if (token != null) {
             (async () => {
                 try {
@@ -49,7 +49,7 @@ export const UserProvider = ({ children }) => {
             setIsCheckingToken(false);
         }
     }, []);
-    
+
 
     return (
         <userContext.Provider value={{ userAuth, setUserAuth, logout, isLoading, isCheckingToken }} >

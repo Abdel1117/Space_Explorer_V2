@@ -47,35 +47,48 @@ exports.connexionHandler = (req, res, next) => {
                         if (!valid) {
                             return res.status(401).json({ errors: "Paire login / Mot de passe incorect" })
                         }
-                        res.status(200).json({
-                            userId: user._id,
-                            userRole: user.role,
-                            message: "Connexion réussi vous aller être rediriger",
-                            token: jwt.sign(
-                                {
-                                    userId: user._id,
-                                    userRole: user.role
-                                },
-                                "RANDOM_TOKEN_SECRET",
-                                { expiresIn: "1d" }
+                        const token = jwt.sign(
+                            {
+                                userId: user._id,
+                                userRole: user.role
+                            },
+                            "RANDOM_TOKEN_SECRET",
+                            { expiresIn: "30m" }
 
-                            ),
-                            refreshToken: jwt.sign(
-                                {
-                                    userId: user._id,
-                                    userRole: user.role
+                        )
+                        const refreshToken = jwt.sign(
+                            {
+                                userId: user._id,
+                                userRole: user.role
+                            },
+                            "RANDOM_TOKEN_SECRET_REFRESH",
+                            { expiresIn: "3h" },
+                        )
 
+                        user.refreshToken = refreshToken;
+                        user.save()
+                            .then(updatedUser => {
+                                if (updatedUser) {
 
-                                },
-                                "RANDOM_TOKEN_SECRET_REFRESH",
-                                { expiresIn: "3h" },
-                            )
-                        });
+                                    res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 })
+
+                                    res.status(200).json({
+                                        userId: user._id,
+                                        userRole: user.role,
+                                        token,
+                                        message: "Connexion réussi vous aller être rediriger"
+                                    })
+                                }
+                                else {
+                                    res.status(500).json({ erreur: "Une erreur inconnue est survenue" })
+                                };
+                            })
+
                     })
                     .catch(err => console.log(err));
             })
 
-            .catch(err => res.status(500).json({ err }))
+            .catch(err => res.status(500).json({ erreur: "Une erreur inconne est survenue" }))
 
     };
 }
