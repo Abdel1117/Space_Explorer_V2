@@ -19,8 +19,6 @@ import Ajouter_Entity from './pages/Ajouter_Entity/Ajouter_Entity'
 const PrivateRoutes = () => {
   const { userAuth } = useAuth();
 
-
-
   if (userAuth === undefined) {
     return null;
   }

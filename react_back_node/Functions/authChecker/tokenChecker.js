@@ -6,9 +6,8 @@ const User = require('../../Model/userShema');
 module.exports = async (req, res, next) => {
     try {
         const token = req.headers['authorization'];
-        console.log(`Le token est ici ${token}`);
+
         const token2 = token.split(' ')[1];
-        console.log(`Le token parser est ici ${token2} `);
 
 
         const refreshToken = req.headers.refreshtoken;
@@ -20,13 +19,14 @@ module.exports = async (req, res, next) => {
                 if (err) {
                     if (err instanceof jwt.TokenExpiredError) {
                         console.log('Token Expirer');
-                        const refreshToken = req.cookie;
+                        const refreshToken = req.cookies
+                        console.log(refreshToken);
                         return res.status(401).json({
                             erreur: {
                                 name: "Token Expirer",
                                 message: "Veuillez vous reconnecter"
                             }
-                        });
+                        })
                     } else if (jwt.JsonWebTokenError) {
                         console.log('Token Invalide');
                         return res.status(401).json({
@@ -49,7 +49,6 @@ module.exports = async (req, res, next) => {
                     next()
                 }
             });
-
         } else {
             console.log(' Veuillez vous connecter');
             return res.status(401).json("message : Veuillez vous connecter");

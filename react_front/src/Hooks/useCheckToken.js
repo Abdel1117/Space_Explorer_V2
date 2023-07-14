@@ -28,9 +28,3 @@ export const checkToken = async () => {
         console.log(err)
     }
 };
-
-
-
-
-
-

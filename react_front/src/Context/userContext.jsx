@@ -2,7 +2,8 @@ import { useEffect, useMemo } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createContext, useContext } from "react";
-import { checkToken, getToken, setToken } from "../Hooks/checkToken";
+import { checkToken, getToken, setToken } from "../Hooks/useCheckToken";
+import { useRefreshToken } from "../Hooks/useRefreshToken";
 
 
 const userContext = createContext();
@@ -24,17 +25,21 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const token = getToken('token');
-        console.log(`Le token que nous verifions est : ${token}`)
         if (token != null) {
             (async () => {
                 try {
                     const response = await checkToken();
                     if (response.status === 401) {
-                        sessionStorage.removeItem('token');
-                        setUserAuth(null);
+                        try {
+                            const refreshToken = useRefreshToken();
+                            if (refreshToken.response) {
+                                console.log(refreshToken.response);
+                            }
+                        } catch (error) {
+                            console.log(error)
+                        }
                     } else {
                         const data = await response.json();
-                        console.log(data)
                         setUserAuth(data);
                     }
                 } catch (err) {

@@ -46,7 +46,7 @@ export default function Connexion() {
             sessionStorage.setItem("token", data.token)
             setTimeout(() => {
               location.href = "/"
-            }, 2000);
+            }, 200000);
           }
           else {
 

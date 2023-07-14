@@ -1,14 +1,11 @@
-const { all } = require('..');
 const User = require('../Model/userShema');
 const jwt = require('jsonwebtoken');
 
 exports.handleRefreshToken = async (req, res, next) => {
 
     const cookies = req.cookies;
-
     if (!cookies?.jwt) return res.sendStatus(401);
 
-    console.log(cookies.jwt);
 
     const refreshToken = cookies.jwt;
 
