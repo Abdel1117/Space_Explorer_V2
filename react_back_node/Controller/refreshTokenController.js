@@ -20,10 +20,12 @@ exports.handleRefreshToken = async (req, res, next) => {
         refreshToken,
         "RANDOM_TOKEN_SECRET_REFRESH",
         (err, decoded) => {
-            if (err || actualUser.email !== decoded.email)
-                return res.sendStatus(403) //Forbidden
+            if (err || actualUser.email !== decoded.email) {
 
-            console.log(decoded)
+                /* We need to clear the Cookie here  */
+                return res.clearCookie("jwt").sendStatus(403); //Forbidden
+            }
+
             const accessToken = jwt.sign(
                 {
                     userId: decoded.userId,
@@ -32,7 +34,11 @@ exports.handleRefreshToken = async (req, res, next) => {
                 "RANDOM_TOKEN_SECRET",
                 { expiresIn: "30s" }
             )
-            res.json({ accessToken })
+            res.json({
+                "userId": decoded.userId,
+                "userRole": decoded.userRole,
+                accessToken
+            })
         }
 
     )

@@ -1,47 +1,60 @@
-const http = require('http');
-const app = require('./index');
+const express = require('express');
+const app = express();
+const path = require('path');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const corsOptions = require('./config/corsOptions')
+const { logger } = require('./Functions/logEvent/logEvent')
+const errorHandler = require('./Functions/errorHandler/errorHandler');
+const credentials = require("./Functions/credentials/credentials");
+const cookieParser = require('cookie-parser');
+const Route = require('./Router/Routes')
+const mongoose = require("mongoose");
+const PORT = process.env.PORT || 4000;
 
-const normalizePort = val => {
-  const port = parseInt(val, 10);
+mongoose.set('strictQuery', true);
+mongoose.connect("mongodb+srv://abdel1117:Fermetageule14@mern.m90bhsv.mongodb.net/test")
+  .then(() => { console.log("Connexion à la base de donnée réussi") })
+  .catch(err => console.log(err))
 
-  if (isNaN(port)) {
-    return val;
+
+app.use(logger);
+
+
+app.use(credentials);
+
+
+app.use(cors(corsOptions));
+
+app.use(express.urlencoded({ extended: false }));
+
+
+app.use(express.json());
+
+
+app.use(cookieParser());
+
+app.use('/', express.static(path.join(__dirname, '/public')));
+
+
+app.use(bodyParser.json({ limit: "100mb" }));
+
+app.use('/', Route)
+
+
+app.all('*', (req, res) => {
+  res.status(404);
+  if (req.accepts('html')) {
+    res.sendFile(path.join(__dirname, 'views', '404.html'));
+  } else if (req.accepts('json')) {
+    res.json({ "error": "404 Not Found" });
+  } else {
+    res.type('txt').send("404 Not Found");
   }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
-};
-const port = normalizePort(process.env.PORT || '4000');
-app.set('port', port);
-
-const errorHandler = error => {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges.');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use.');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-};
-
-const server = http.createServer(app);
-
-server.on('error', errorHandler);
-server.on('listening', () => {
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
-  console.log('Listening on ' + bind);
 });
 
-server.listen(port);
+
+app.use(errorHandler);
+
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

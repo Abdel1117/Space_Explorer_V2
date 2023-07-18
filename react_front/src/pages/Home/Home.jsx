@@ -46,11 +46,15 @@ const Home = () => {
 
                     )
                 }
-                {/*    <CardNews />
-                <CardNews />
-                <CardNews />
-                <CardNews />
-                <CardNews /> */}
+                {
+                    /*
+                    <CardNews />
+                    <CardNews />
+                    <CardNews />
+                    <CardNews />
+                    <CardNews /> 
+                    */
+                }
                 <div className='col-span-12 lg:col-span-3 sm:flex lg:flex-col sm:justify-between lg:absolute lg:top-0 lg:-right-12 xl:right-2 2xl:right-18'>
                     <NewsLetter />
                     <TagsArticleList />

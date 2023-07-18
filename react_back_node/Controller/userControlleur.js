@@ -53,7 +53,7 @@ exports.connexionHandler = (req, res, next) => {
                                 userRole: user.role
                             },
                             "RANDOM_TOKEN_SECRET",
-                            { expiresIn: "30s" }
+                            { expiresIn: "20min" }
 
                         )
                         const refreshToken = jwt.sign(
@@ -62,15 +62,15 @@ exports.connexionHandler = (req, res, next) => {
                                 userRole: user.role
                             },
                             "RANDOM_TOKEN_SECRET_REFRESH",
-                            { expiresIn: "3h" },
+                            { expiresIn: "1h" },
                         )
 
                         user.refreshToken = refreshToken;
                         user.save()
                             .then(updatedUser => {
                                 if (updatedUser) {
-                                    console.log('qsdqsdqsdqsd');
-                                    res.cookie("jwt", refreshToken, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000 });
+
+                                    res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
 
                                     res.status(200).json({
                                         userId: user._id,

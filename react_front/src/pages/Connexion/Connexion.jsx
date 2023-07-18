@@ -4,6 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import _ from "lodash/fp";
 import { useState, useEffect } from 'react'
 import userContext from '../../Context/userContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import Toast_valide from '../../componants/Toast_valide/Toast_valide';
 import Toast_invalide from '../../componants/Toast_invalide/Toast_invalide';
@@ -18,7 +19,7 @@ export default function Connexion() {
   const [errorsMessages, setErrorsMessages] = useState([]);
   const [message, setMessages] = useState("")
   const apiUrl = import.meta.env.VITE_API_URL;
-
+  const navigate = useNavigate();
   const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
     criteriaMode: 'all',
     defaultValues: {
@@ -37,6 +38,7 @@ export default function Connexion() {
       method: "POST",
       body: JSON.stringify(form),
       headers: { 'Content-Type': 'application/json' },
+      credentials: "include",
     })
       .then(res => {
         res.json().then(data => {
@@ -77,6 +79,11 @@ export default function Connexion() {
     setErrorsMessages(newState)
   }
 
+  useEffect(() => {
+    if (userAuth != undefined) {
+      navigate(`/profil/${userAuth.userId}`)
+    }
+  }, [])
 
 
   return (

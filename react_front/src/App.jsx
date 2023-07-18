@@ -13,8 +13,7 @@ import Galerie from './pages/Galerie/Galerie'
 import { UserDashBoard } from './pages/UserDashBoard/UserDashBoard'
 import { themeContext } from "./Context/themeContext"
 import Error_404_Page from './pages/404/Error_404_Page'
-import Ajouter_Entity from './pages/Ajouter_Entity/Ajouter_Entity'
-
+import Ajouter_Article from './pages/Ajouter_Article/Ajouter_Article'
 
 const PrivateRoutes = () => {
   const { userAuth } = useAuth();
@@ -33,12 +32,13 @@ const PrivateRoutes = () => {
 
 function App() {
   const { theme, setTheme } = useContext(themeContext);
-  const { isLoading, userAuth, isCheckingToken } = useAuth();
+  const { userAuth, isCheckingToken } = useAuth();
 
   useEffect(() => {
     const root = window.document.documentElement;
     theme === "light" ? root.classList.remove("dark") : root.classList.add('dark');
   }, [theme])
+
   if (isCheckingToken) {
     return <div>Loading...</div>;
   }
@@ -55,7 +55,7 @@ function App() {
 
           <Route element={<PrivateRoutes />} >
             <Route path="/DashBoard" element={<DashBoard />} />
-            <Route path='/Ajouter_Entity' element={<Ajouter_Entity />} />
+            <Route path='/ajouterArticle' element={<Ajouter_Article />} />
 
           </Route>
 

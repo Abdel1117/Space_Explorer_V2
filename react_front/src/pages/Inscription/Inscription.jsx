@@ -1,11 +1,13 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message';
+import userContext from '../../Context/userContext';
+import { useContext } from 'react';
 import _ from "lodash/fp";
 import { useState, useEffect } from 'react'
 import Toast_valide from '../../componants/Toast_valide/Toast_valide';
 import Toast_invalide from '../../componants/Toast_invalide/Toast_invalide';
-
+import { Navigate, useNavigate } from 'react-router-dom';
 export default function Inscription() {
     const [form, setForm] = useState([])
     const [loading, setLoading] = useState(false);
@@ -14,7 +16,8 @@ export default function Inscription() {
     const [message, setMessages] = useState("")
     const [checked, setChecked] = useState(false);
     const apiUrl = import.meta.env.VITE_API_URL;
-
+    const { userAuth } = useContext(userContext);
+    const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
         criteriaMode: 'all',
         defaultValues: {
@@ -71,7 +74,11 @@ export default function Inscription() {
         newState.splice(index, 1)
         setErrorsMessages(newState)
     }
-
+    useEffect(() => {
+        if (userAuth != undefined) {
+            navigate(`/profil/${userAuth.userId}`)
+        }
+    }, [])
     return (
         <>
             {message &&

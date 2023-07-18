@@ -31,9 +31,16 @@ export const UserProvider = ({ children }) => {
                     const response = await checkToken();
                     if (response.status === 401) {
                         try {
-                            const refreshToken = useRefreshToken();
-                            if (refreshToken.response) {
-                                console.log(refreshToken.response);
+                            const refreshToken = await useRefreshToken();
+                            if (refreshToken.ok) {
+                                const refreshTokenData = await refreshToken.json()
+                                setUserAuth(refreshTokenData)
+                                setToken(refreshToken.accessToken)
+                            } else {
+                                setUserAuth(undefined)
+                                sessionStorage.removeItem("token")
+                                navigate("/")
+
                             }
                         } catch (error) {
                             console.log(error)
