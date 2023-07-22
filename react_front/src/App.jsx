@@ -1,19 +1,20 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, lazy, Suspense } from 'react'
 import { useAuth } from "./Context/userContext"
 import { Navigate, Outlet } from 'react-router-dom'
 import Nav from './componants/navBarre/Nav'
 import Footer from './componants/Footer/Footer'
-import Home from './pages/Home/Home'
-import Connexion from './pages/Connexion/Connexion'
-import Inscription from './pages/Inscription/Inscription'
-import DashBoard from "./pages/DashBoard/Dashboard"
+const Home = lazy(() => import('./pages/Home/Home'))
+const Connexion = lazy(() => import('./pages/Connexion/Connexion'))
+const Inscription = lazy(() => import('./pages/Inscription/Inscription'))
+const DashBoard = lazy(() => import("./pages/DashBoard/Dashboard"))
+const Ajouter_Article = lazy(() => import('./pages/Ajouter_Article/Ajouter_Article'))
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Galerie from './pages/Galerie/Galerie'
 import { UserDashBoard } from './pages/UserDashBoard/UserDashBoard'
 import { themeContext } from "./Context/themeContext"
 import Error_404_Page from './pages/404/Error_404_Page'
-import Ajouter_Article from './pages/Ajouter_Article/Ajouter_Article'
+import Ajouter_Image from './pages/AjouterImage/Ajouter_Image'
 
 const PrivateRoutes = () => {
   const { userAuth } = useAuth();
@@ -56,6 +57,7 @@ function App() {
           <Route element={<PrivateRoutes />} >
             <Route path="/DashBoard" element={<DashBoard />} />
             <Route path='/ajouterArticle' element={<Ajouter_Article />} />
+            <Route path='/ajouterImage' element={<Ajouter_Image />} />
 
           </Route>
 

@@ -21,6 +21,7 @@ module.exports = {
       },
       backgroundImage: {
         'hero-form': "url('../src/assets/images/astronaute-.jpg')",
+        /* Color Gradient for Light Theme */
         'green-gradient': "linear-gradient(45deg,rgb(65, 167, 113) 0%,  rgb(124, 252, 115) 100%);",
         "light-violet": "linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);",
         "light-blue": "linear-gradient(45deg, #103CE7  0%, #64E9FF 100%);",

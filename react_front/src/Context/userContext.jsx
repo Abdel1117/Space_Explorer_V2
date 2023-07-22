@@ -35,7 +35,8 @@ export const UserProvider = ({ children }) => {
                             if (refreshToken.ok) {
                                 const refreshTokenData = await refreshToken.json()
                                 setUserAuth(refreshTokenData)
-                                setToken(refreshToken.accessToken)
+                                sessionStorage.removeItem("token")
+                                setToken(refreshTokenData.accessToken)
                             } else {
                                 setUserAuth(undefined)
                                 sessionStorage.removeItem("token")
