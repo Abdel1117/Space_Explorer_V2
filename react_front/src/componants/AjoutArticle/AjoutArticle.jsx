@@ -95,7 +95,6 @@ export default function AjoutArticle() {
       }
     });
 
-    const tokken = sessionStorage.getItem('tokken');
     setArticle((prevArticle) => ({ ...prevArticle, sectionsData }))
     const apiUrl = import.meta.env.VITE_API_URL
 
