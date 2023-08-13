@@ -19,48 +19,52 @@ export const UserProvider = ({ children }) => {
     const navigate = useNavigate();
     const logout = () => {
         setUserAuth(null);
-        sessionStorage.removeItem('token');
-        navigate("/")
+        setTimeout(() => {
+            sessionStorage.removeItem('token');
+            navigate("/");
+        }, 0);
     }
 
-    useEffect(() => {
+    async function checkTokenAndUpdate() {
         const token = getToken('token');
         if (token != null) {
-            (async () => {
-                try {
-                    const response = await checkToken();
-                    if (response.status === 401) {
-                        try {
-                            const refreshToken = await useRefreshToken();
-                            if (refreshToken.ok) {
-                                const refreshTokenData = await refreshToken.json()
-                                setUserAuth(refreshTokenData)
-                                sessionStorage.removeItem("token")
-                                setToken(refreshTokenData.accessToken)
-                            } else {
-                                setUserAuth(undefined)
-                                sessionStorage.removeItem("token")
-                                navigate("/")
-
-                            }
-                        } catch (error) {
-                            console.log(error)
+            try {
+                const response = await checkToken();
+                if (response.status === 401) {
+                    try {
+                        const refreshToken = await useRefreshToken();
+                        if (refreshToken.ok) {
+                            const refreshTokenData = await refreshToken.json()
+                            setUserAuth(refreshTokenData)
+                            sessionStorage.removeItem("token")
+                            sessionStorage.setItem("token",refreshTokenData.accessToken)
+                        } else {
+                            setUserAuth(undefined)
+                            sessionStorage.removeItem("token")
+                            navigate("/")
                         }
-                    } else {
-                        const data = await response.json();
-                        setUserAuth(data);
+                    } catch (error) {
+                        console.log(error)
                     }
-                } catch (err) {
-                    console.log(err);
-                } finally {
-                    setIsLoading(false);
-                    setIsCheckingToken(false);
+                } else {
+                    const data = await response.json();
+                    setUserAuth(data);
                 }
-            })();
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setIsLoading(false);
+                setIsCheckingToken(false);
+            }
+
         } else {
             setIsLoading(false);
             setIsCheckingToken(false);
         }
+    }
+
+    useEffect(() => {
+        checkTokenAndUpdate()
     }, []);
 
 

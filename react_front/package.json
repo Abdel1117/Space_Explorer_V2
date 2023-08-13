@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "setup": "concurrently \"npm run dev\" \"npm --prefix ../react_back_node start\"",
     "test": "jest"
   },
   "dependencies": {

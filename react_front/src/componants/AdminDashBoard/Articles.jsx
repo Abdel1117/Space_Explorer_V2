@@ -12,9 +12,15 @@ import "swiper/css/pagination";
 
 export default function Articles() {
   const [loading, setIsLoading] = useState(false);
-  const [articles, setArticles] = useState()
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const [articles, setArticles] = useState();
+  const [filtre, setFiltre] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
 
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const setClickedFilte = (index, items) => {
+    setSelectedRow(oldState => [...oldState, items[index]])
+  }
 
   useEffect(() => {
     const getArticle = async () => {
@@ -27,7 +33,6 @@ export default function Articles() {
         })
 
         const articles = await data.json()
-
         setArticles(articles)
       } catch (err) {
         console.log(err)
@@ -35,12 +40,11 @@ export default function Articles() {
         setIsLoading(false)
       }
     }
-
     getArticle();
   }, [])
 
   return (
-    <section className=' w-full h-full shadow-lg  bg-white dark:bg-[#252525] p-2 md:p-5'>
+    <section className='w-full h-full shadow-lg  bg-white dark:bg-[#252525] p-2 md:p-5'>
 
       <div className='bg-light-blue dark:bg-dark-blue rounded-md my-5 relative h-[400px] sm:h-60'>
         <h2 className='text-white p-6 font-semibold z-10 '>
@@ -52,7 +56,7 @@ export default function Articles() {
       </div>
 
       <div className=''>
-        <Table articles={articles} loading={loading} />
+        <Table articles={articles} selectedRow={setClickedFilte} loading={loading} />
 
       </div>
 

@@ -8,6 +8,7 @@ const Connexion = lazy(() => import('./pages/Connexion/Connexion'))
 const Inscription = lazy(() => import('./pages/Inscription/Inscription'))
 const DashBoard = lazy(() => import("./pages/DashBoard/Dashboard"))
 const Ajouter_Article = lazy(() => import('./pages/Ajouter_Article/Ajouter_Article'))
+const Forum = lazy(() => import('./pages/Forum/Forum'))
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Galerie from './pages/Galerie/Galerie'
@@ -52,9 +53,9 @@ function App() {
           <Route path='/inscription' element={<Inscription />} />
           <Route path='/connexion' element={<Connexion />} />
           <Route path='/galerie' element={<Galerie />} />
-          <Route path='/Profil/:id' element={<UserDashBoard />} />
-
+          <Route path='/forum' element={<Forum />} />
           <Route element={<PrivateRoutes />} >
+            <Route path='/Profil/:id' element={<UserDashBoard />} />
             <Route path="/DashBoard" element={<DashBoard />} />
             <Route path='/ajouterArticle' element={<Ajouter_Article />} />
             <Route path='/ajouterImage' element={<Ajouter_Image />} />

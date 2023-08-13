@@ -10,22 +10,27 @@ const MIME_TYPES = {
     "image/webp": "webp",
 }
 
-const imageValidation = multer.diskStorage({
 
 
-    destination: (req, file, callback) => {
-        const dir = path.join(__dirname, "..", "..", "image")
-        callback(null, dir);
-    },
+function imageValidation(dossier) {
+
+    return multer.diskStorage({
 
 
-    filename: (req, file, callback) => {
-        const name = file.originalname.split(" ").join("_");
-        const extention = MIME_TYPES[file.mimetype];
-        callback(null, name + Date.now() + "." + extention);
-    }
-})
+        destination: (req, file, callback) => {
+            const dir = path.join(__dirname, "..", "..", "image", dossier)
+            callback(null, dir);
+        },
 
-const upload = multer({ storage: imageValidation })
+
+        filename: (req, file, callback) => {
+            const name = file.originalname.split(" ").join("_");
+            const extention = MIME_TYPES[file.mimetype];
+            callback(null, name + Date.now() + "." + extention);
+        }
+    })
+}
+
+const upload = dossier => multer({ storage: imageValidation(dossier) })
 
 module.exports = upload
