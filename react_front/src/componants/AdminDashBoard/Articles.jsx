@@ -8,19 +8,79 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import Result from 'postcss/lib/result';
 
 
 export default function Articles() {
   const [loading, setIsLoading] = useState(false);
-  const [articles, setArticles] = useState();
+  const [articles, setArticles] = useState([]);
   const [filtre, setFiltre] = useState(null);
-  const [selectedRow, setSelectedRow] = useState(null);
-
-
+  const [articleSelected, setArticleSelected] = useState([])
   const apiUrl = import.meta.env.VITE_API_URL;
-  const setClickedFilte = (index, items) => {
-    setSelectedRow(oldState => [...oldState, items[index]])
+
+
+  const findArticle = async (result) => {
+
+    try {
+      setIsLoading(true)
+      const data = await fetch(`${apiUrl}/searchArticle`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ query: result }),
+        headers: { "Content-Type": "application/json" }
+      })
+
+      const articles = await data.json()
+      setArticles(articles)
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      setIsLoading(false)
+    }
   }
+
+  const handleSearch = (e) => {
+    // Filtrer les articles en fonction de la correspondance de la recherche
+    const result = e.target.value
+    console.log(result)
+
+    findArticle(result)
+
+  }
+
+
+
+  const handleArticleSelection = (index) => {
+    setArticleSelected(prevSelected => {
+      if (prevSelected.includes(index)) {
+        return prevSelected.filter(i => i !== index);
+      } else {
+        return [...prevSelected, index];
+      }
+    })
+  }
+
+  const selectAllArticle = () => {
+    const allIndices = articles.map((_, index) => index);
+
+    setArticleSelected(allIndices);
+  }
+
+  const deselectAllArticles = () => {
+    setArticleSelected([]);
+  }
+
+  const handleSelectAllChange = (e) => {
+    if (e.target.checked) {
+      selectAllArticle();
+    }
+    else {
+      deselectAllArticles();
+    }
+  }
+
+
 
   useEffect(() => {
     const getArticle = async () => {
@@ -43,6 +103,24 @@ export default function Articles() {
     getArticle();
   }, [])
 
+  const deleteArticle = async () => {
+    const selectedArticle = articleSelected.map(index => articles[index]._id)
+
+    try {
+      setIsLoading(true)
+      const response = await fetch(`${apiUrl}/deleteArticle`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ids: selectedArticle })
+        })
+    } catch (error) {
+      console.log(error)
+    }
+    finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <section className='w-full h-full shadow-lg  bg-white dark:bg-[#252525] p-2 md:p-5'>
 
@@ -56,7 +134,16 @@ export default function Articles() {
       </div>
 
       <div className=''>
-        <Table articles={articles} selectedRow={setClickedFilte} loading={loading} />
+        <Table
+          articles={articles}
+          articleSelected={articleSelected}
+          handleArticleSelection={handleArticleSelection}
+          selectAllArticle={selectAllArticle}
+          deselectAllArticles={deselectAllArticles}
+          handleSelectAllChange={handleSelectAllChange}
+          handleSearch={handleSearch}
+          loading={loading}
+        />
 
       </div>
 

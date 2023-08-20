@@ -42,3 +42,20 @@ exports.getArticle = (req, res, next) => {
 
     console.log(article)
 }
+
+
+exports.getSearchResultArticle = async (req, res, next) => {
+
+    try {
+        const { query } = req.body;
+        const articles = await Article.find({
+            $or: [
+                { Title: new RegExp(query, 'i') },
+                { "Slugs": new RegExp(query, 'i') }
+            ]
+        });
+        return res.json(articles)
+    } catch (error) {
+        res.status(500).send("Une erreur lors de la recherche c'est produite")
+    }
+}

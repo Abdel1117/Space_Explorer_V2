@@ -25,6 +25,6 @@ router.get("/userProfil/:id", userControlleur.getInfo)
 /* CRUD */
 router.post("/ajoutArticle", upload("Image_article").array('images'), validatioonArticleText.checkArticle, articleController.addArticle);
 router.post("/ajoutImage", upload("galerie").single('image'), imageController.addImage)
-
+router.post("/searchArticle", articleController.getSearchResultArticle)
 
 module.exports = router;
