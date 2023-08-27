@@ -11,6 +11,11 @@ exports.addArticle = (req, res, next) => {
     } else {
         try {
             let contenu = JSON.parse(req.body.contenu)
+            const date = Date();
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let Year = date.getFullYear();
+            let dateOfPublication = `${day}-${month}-${Year}`
 
             if (req.files && req.files.length === contenu.length) {
 
@@ -22,7 +27,8 @@ exports.addArticle = (req, res, next) => {
             const articleEntry = new Article({
                 Title: JSON.parse(req.body.titre),
                 Slugs: JSON.parse(req.body.slugs),
-                Contenu: contenu
+                Contenu: contenu,
+                dateOfPublication
             })
             articleEntry.save()
                 .then(() => { return res.status(201).json({ message: "Article crée avec succées" }) })

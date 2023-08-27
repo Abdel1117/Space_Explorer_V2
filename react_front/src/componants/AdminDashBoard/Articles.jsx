@@ -43,10 +43,7 @@ export default function Articles() {
   const handleSearch = (e) => {
     // Filtrer les articles en fonction de la correspondance de la recherche
     const result = e.target.value
-    console.log(result)
-
     findArticle(result)
-
   }
 
 

@@ -150,7 +150,7 @@ export default function AjoutArticle() {
 
             {errors.Article_title && (
 
-              console.log(errors))}
+              <p>errors</p>)}
 
 
           </div>
@@ -318,6 +318,7 @@ export default function AjoutArticle() {
                   <p className='dark:text-white text-red-600 font-bold text-sm md:text-md ml-1 mt-2'>{errors[`Section_${index}`]?.message}</p>
                 )}
               </>
+
               <div className='mt-5 ml-1'>
 
                 <label className='dark:text-white mr-2 text-sm md:text-base'
