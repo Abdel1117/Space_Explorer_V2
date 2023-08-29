@@ -9,12 +9,12 @@ import { ThemeProvider } from './Context/themeContext'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider>
-        <UserProvider>
+      <UserProvider>
+        <ThemeProvider>
           <App />
-        </UserProvider>
-      </ThemeProvider>
+        </ThemeProvider>
 
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
 )

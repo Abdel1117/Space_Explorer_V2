@@ -40,39 +40,25 @@ export default function Connexion() {
       headers: { 'Content-Type': 'application/json' },
       credentials: "include",
     })
-      .then(res => {
-        res.json().then(data => {
-          if (res.status === 200) {
-            setUserAuth(data)
-            setMessages(data.message)
-            sessionStorage.setItem("token", data.token)
-            setTimeout(() => {
-              location.href = "/"
-            }, 200000);
+      .then(async res => {
+        const data = await res.json();
+        if (res.status === 200) {
+          setUserAuth(data);
+          setMessages(data.message);
+          sessionStorage.setItem("token", data.token);
+          location.href = "/";
+        } else {
+          let errorsMsg = [];
+          if (Array.isArray(data.errors)) {
+            errorsMsg = data.errors.map(err => err.msg);
+          } else {
+            errorsMsg.push(data.errors);
           }
-          else {
-
-            const errorsMsg = []
-            if (typeof (data) === "object" && typeof (data.errors) != "string") {
-
-              data.errors.forEach(element => {
-                errorsMsg.push(element.msg)
-              })
-              setErrorsMessages(errorsMsg)
-            } else {
-
-              setErrorsMessages(oldState => {
-                const newArray = [...oldState];
-                newArray.push(data.errors);
-                return newArray
-              })
-            }
-          }
-
-        })
+          setErrorsMessages(errorsMsg);
+        }
       })
-      .catch(err => console.log(err))
-  }
+      .catch(err => console.log(err));
+  };
   const deletePopUp = index => {
     const newState = [...errorsMessages]
     newState.splice(index, 1)
