@@ -35,14 +35,14 @@ const PrivateRoutes = () => {
 
 function App() {
   const { theme, setTheme } = useContext(themeContext);
-  const { userAuth, isCheckingToken } = useAuth();
+  const { userAuth, isCheckingToken, isLoading } = useAuth();
 
   useEffect(() => {
     const root = window.document.documentElement;
     theme === "light" ? root.classList.remove("dark") : root.classList.add('dark');
   }, [theme])
 
-  if (isCheckingToken) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
   return (

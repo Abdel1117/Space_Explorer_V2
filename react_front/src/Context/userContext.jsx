@@ -8,7 +8,7 @@ const userContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [userAuth, setUserAuth] = useState(undefined);
-    const [authError, setAuthError] = useState(null); // Gérer les erreurs
+    const [authError, setAuthError] = useState(null); 
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
     }, [navigate]);
 
     const checkTokenAndUpdate = useCallback(async () => {
+        setIsLoading(true)
         const token = getToken('token');
         if (token) {
             try {
