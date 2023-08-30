@@ -2,21 +2,36 @@ import { React, useState, useEffect, useContext } from 'react'
 import userContext from '../../Context/userContext'
 import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom';
 export const Ajout_Sujet = () => {
+
     const { userAuth } = useContext(userContext)
     const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
         criteriaMode: 'all',
-
     });
 
+    const [title, setTitle] = useState("");
+    const [sujet, setSujet] = useState("");
+    const [slug, setSlug] = useState("");
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     const handleForm = () => {
-        console.log("Hello World !")
+
+        fetch(`${apiUrl}/ajoutSujet`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify()
+        })
+
     }
 
     useEffect(() => {
-        userAuth === undefined || userAuth === null ? console.log("noob") : console.log("gg")
+        userAuth === undefined || userAuth === null && navigate("/forum")
     }, [])
-
+    const categories = ["Général", "Astronomie", "Discussion", "Planète", "Système Solaire"];
     return (
         <section className='min-h-screen flex flex-col items-center'>
             <h1 className='mx-auto py-2 md:py-8 text-lg md:text-xl xl:text-2xl dark:text-white text-center'>Ajout Sujet</h1>
@@ -32,7 +47,7 @@ export const Ajout_Sujet = () => {
                                     message: "Veuillez taper un titre qui contient 3 à 20 caractères"
                                 }
                             })}
-
+                            onChange={e => setTitle(e.target.value)}
                             type="text"
                             name="Forum_title"
                             id="Forum_title"
@@ -50,7 +65,18 @@ export const Ajout_Sujet = () => {
                             }
                         />
                     </div>
+                    <div className="mb-6">
+                        <select onChange={e => setSlug(e.target.value)} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer' name="categories" id="categorie">
+                            <option className='cursor-pointer' value="">Veuillez choisir une catégorie</option>
 
+                            {categories.map((cat, index) =>
+                                <option className='cursor-pointer' key={index} value={cat} >
+                                    {cat}
+                                </option>
+                            )}
+                        </select>
+
+                    </div>
                     <div className="mb-6">
 
                         <textarea
@@ -60,6 +86,7 @@ export const Ajout_Sujet = () => {
                             name={`Sujet`}
                             id={`Sujet`}
                             placeholder='Ecrivez votre sujet ici'
+                            onChange={e => setSujet(e.target.value)}
                             {...register(`Sujet`, {
                                 required: "Veuillez taper votre sujet ici",
                                 pattern: {

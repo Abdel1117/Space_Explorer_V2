@@ -17,6 +17,7 @@ const SujetForumShema = mongoose.Schema({
     Slug: { type: String, required: true },
     Sujet: { type: String, required: true },
     Date: { type: Date, default: Date.now },
+    FormattedDate: { type: String },
     User: {
         type: Schema.Types.ObjectId,
         ref: 'User',

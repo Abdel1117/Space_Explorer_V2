@@ -17,7 +17,7 @@ router.post("/inscription", validator.createUser, userControlleur.inscriptionHan
 /* Route for the Connexion */
 router.post("/connexion", validationUser.checkUser, userControlleur.connexionHandler);
 router.get("/", articleController.getArticle);
-
+router.get("/forum", forumController.findSujet);
 
 /* Route for the Permission & token */
 router.get("/check", tokenChecker);

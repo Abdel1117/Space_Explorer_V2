@@ -16,7 +16,6 @@ const Home = () => {
             try {
                 const data = await fetch(`${urlBack}`, {
                     method: "GET"
-
                 })
                 const response = await data.json()
                 setArticles(response)
