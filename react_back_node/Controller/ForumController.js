@@ -17,7 +17,6 @@ exports.addSujet = (req, res, next) => {
         }
     })
 
-    console.log(decode.userId)
     const errors = validationResult(req);
     const { Forum_title, Slug, Sujet } = req.body;
     if (!errors.isEmpty()) {

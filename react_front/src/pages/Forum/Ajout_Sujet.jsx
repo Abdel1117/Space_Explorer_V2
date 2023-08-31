@@ -15,18 +15,31 @@ export const Ajout_Sujet = () => {
     const [slug, setSlug] = useState("");
     const apiUrl = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
+
+
     const handleForm = () => {
 
         fetch(`${apiUrl}/ajoutSujet`, {
             method: "POST",
             credentials: "include",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "authorization": sessionStorage.getItem('token')
             },
-            body: JSON.stringify()
+
+
+            body: JSON.stringify(
+                {
+                    "Forum_title": title,
+                    "Slug": slug,
+                    "Sujet": sujet,
+                }
+
+            )
         })
 
     }
+    const isIncludeWord = (str, arr) => str.split(" ").reduce((include, word) => include || arr.includes(word), false);
 
     useEffect(() => {
         userAuth === undefined || userAuth === null && navigate("/forum")
@@ -43,7 +56,7 @@ export const Ajout_Sujet = () => {
                             {...register('Forum_title', {
                                 required: "Veuillez remplir ce champs avec un Titre",
                                 pattern: {
-                                    value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{3,18}(?<! )$/,
+                                    value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{3,}$/,
                                     message: "Veuillez taper un titre qui contient 3 à 20 caractères"
                                 }
                             })}
@@ -66,7 +79,16 @@ export const Ajout_Sujet = () => {
                         />
                     </div>
                     <div className="mb-6">
-                        <select onChange={e => setSlug(e.target.value)} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer' name="categories" id="categorie">
+                        <select
+                            {...register('categorie', {
+                                required: "Veuillez choisir une catégorie ",
+                                validate:
+                                    value => isIncludeWord(value, categories) || "Veuillez choisir une catégorie valide",
+                            })}
+                            onChange={e => setSlug(e.target.value)} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 cursor-pointer' name="categorie"
+                            id="categorie"
+
+                        >
                             <option className='cursor-pointer' value="">Veuillez choisir une catégorie</option>
 
                             {categories.map((cat, index) =>
@@ -75,7 +97,16 @@ export const Ajout_Sujet = () => {
                                 </option>
                             )}
                         </select>
-
+                        <ErrorMessage
+                            errors={errors}
+                            name="categorie"
+                            render={({ messages }) =>
+                                messages &&
+                                Object.entries(messages).map(([type, message]) => (
+                                    <p className='text-red-700 dark:text-white text-sm md:text-base ml-1 md:ml-0' key={type}>{message}</p>
+                                ))
+                            }
+                        />
                     </div>
                     <div className="mb-6">
 
@@ -86,15 +117,16 @@ export const Ajout_Sujet = () => {
                             name={`Sujet`}
                             id={`Sujet`}
                             placeholder='Ecrivez votre sujet ici'
-                            onChange={e => setSujet(e.target.value)}
+
                             {...register(`Sujet`, {
                                 required: "Veuillez taper votre sujet ici",
                                 pattern: {
-                                    value: /^(?! )[\s\S]{9,}(?<! )$/,
+                                    value: /^(?! )[\s\S]{9,}$/,
                                     message: "Veuillez donner plus d'information pour que les gens puisse vous comprendre !"
                                 }
                             })}
-                        ></textarea>
+                            onChange={e => setSujet(e.target.value)}
+                        />
 
 
                         <ErrorMessage
@@ -115,9 +147,9 @@ export const Ajout_Sujet = () => {
                         <button className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' type="submit">Ajouter Sujet</button>
                     </div>
                 </form>
-            </div>
+            </div >
 
 
-        </section>
+        </section >
     )
 }
