@@ -4,10 +4,9 @@ const jwt = require("jsonwebtoken");
 const formatDateToDDMMYYYY = require("../Functions/DateFormat/DateFormat");
 
 exports.addSujet = (req, res, next) => {
-    console.log(req.body)
     const tokken = req.headers.authorization;
-
     const tokkenSplited = tokken.split(' ')[1]
+    
     if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
     const decode = jwt.verify(tokkenSplited, "RANDOM_TOKEN_SECRET", function (err, decoded) {
         if (err) {
@@ -35,7 +34,8 @@ exports.addSujet = (req, res, next) => {
             User: decode.userId,
         })
         nouveauSujet.save()
-            .then(() => res.status(201).json({ message: "Noveau sujet ajouter avec succès" }))
+            .then(() => res.status(201).json({ message: "Noveau sujet ajouter avec succès", idSujet : nouveauSujet._id }))
+            .then(() => console.log(nouveauSujet._id))
             .catch(e => res.status(500).json({ message: e }))
     }
 }

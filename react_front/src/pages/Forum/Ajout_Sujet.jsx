@@ -3,8 +3,11 @@ import userContext from '../../Context/userContext'
 import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
-export const Ajout_Sujet = () => {
+import Toast_valide from '../../componants/Toast_valide/Toast_valide';
+import Toast_invalide from '../../componants/Toast_invalide/Toast_invalide';
+ 
 
+export const Ajout_Sujet = () => {
     const { userAuth } = useContext(userContext)
     const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
         criteriaMode: 'all',
@@ -13,32 +16,53 @@ export const Ajout_Sujet = () => {
     const [title, setTitle] = useState("");
     const [sujet, setSujet] = useState("");
     const [slug, setSlug] = useState("");
+    const [succes, setSucces] = useState("")
+    const [errorsMessage, setErrorMessage] = useState("")
+    const [listErrorsMessages, setListErrorMessages] = useState("")
     const apiUrl = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
 
 
-    const handleForm = () => {
+    const handleForm = async  () => {
 
-        fetch(`${apiUrl}/ajoutSujet`, {
+        const response = await fetch(`${apiUrl}/ajoutSujet`, {
             method: "POST",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
-                "authorization": sessionStorage.getItem('token')
+                "authorization": `Bearer ${sessionStorage.getItem('token')}`
             },
-
-
             body: JSON.stringify(
                 {
                     "Forum_title": title,
                     "Slug": slug,
                     "Sujet": sujet,
+                })})
+               const data = await response.json();
+                
+               if(response.ok) {
+                setSucces(data.message)                
+               }
+               else{
+                if(data.errors){
+                    setListErrorMessages(data.errors)
+                    setTimeout(() => {setListErrorMessages([])}, 10000)
+                }else if(data.message){
+                    setErrorMessage(data.message)
                 }
-
-            )
-        })
-
+               }
+            
     }
+
+    const getBackToForum = () => {
+        navigate("/forum")
+    }
+
+
+    const goToYourSujet = (idSujet) => {
+        navigate(`sujet/:${idSujet}`)
+    }
+
     const isIncludeWord = (str, arr) => str.split(" ").reduce((include, word) => include || arr.includes(word), false);
 
     useEffect(() => {
@@ -46,14 +70,32 @@ export const Ajout_Sujet = () => {
     }, [])
     const categories = ["Général", "Astronomie", "Discussion", "Planète", "Système Solaire"];
     return (
+
+<>  
+        {succes && 
+        
+        <Toast_valide message={succes} options={true} doYesAction={getBackToForum} doNoAction={goToYourSujet(data?.idSujet)} />
+        }
+
+        {errorsMessage && 
+            
+            <Toast_invalide message={errorsMessage} />
+        }
         <section className='min-h-screen flex flex-col items-center'>
             <h1 className='mx-auto py-2 md:py-8 text-lg md:text-xl xl:text-2xl dark:text-white text-center'>Ajout Sujet</h1>
+             {
+                        listErrorsMessages && 
+                            listErrorsMessages.map((n, index) => 
+                                <p className='animate-fadeIn ease-in 0text-red-600 dark:text-white' key={index}>{n.msg}</p>
+                            )
+                        
+                        }
             <div className='w-11/12 md:w-10/12 h-full bg-white dark:bg-blue-900 rounded-lg px-4 py-14 my-8 mx-2 md:mx-0 shadow-md '>
                 <form onSubmit={handleSubmit(handleForm)} method="post">
 
                     <div className="mb-6">
                         <input
-                            {...register('Forum_title', {
+                            {...register('Forum_title',{
                                 required: "Veuillez remplir ce champs avec un Titre",
                                 pattern: {
                                     value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{3,}$/,
@@ -149,7 +191,8 @@ export const Ajout_Sujet = () => {
                 </form>
             </div >
 
-
+                       
         </section >
+        </>
     )
 }
