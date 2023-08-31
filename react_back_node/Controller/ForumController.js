@@ -6,7 +6,7 @@ const formatDateToDDMMYYYY = require("../Functions/DateFormat/DateFormat");
 exports.addSujet = (req, res, next) => {
     const tokken = req.headers.authorization;
     const tokkenSplited = tokken.split(' ')[1]
-    
+
     if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
     const decode = jwt.verify(tokkenSplited, "RANDOM_TOKEN_SECRET", function (err, decoded) {
         if (err) {
@@ -25,7 +25,6 @@ exports.addSujet = (req, res, next) => {
 
         let date = new Date();
         const dateReformated = formatDateToDDMMYYYY(date);
-        console.log(dateReformated);
         const nouveauSujet = new forumShema({
             Title: Forum_title,
             Slug: Slug,
@@ -34,7 +33,7 @@ exports.addSujet = (req, res, next) => {
             User: decode.userId,
         })
         nouveauSujet.save()
-            .then(() => res.status(201).json({ message: "Noveau sujet ajouter avec succès", idSujet : nouveauSujet._id }))
+            .then(() => res.status(201).json({ message: "Nouveau sujet ajouter avec succès, revenir à la liste des sujet ou aller sur votre sujet ? ", idSujet: nouveauSujet._id }))
             .then(() => console.log(nouveauSujet._id))
             .catch(e => res.status(500).json({ message: e }))
     }
@@ -51,7 +50,7 @@ exports.findSujet = (req, res, next) => {
 
 
 exports.findSujetById = (req, res, next) => {
-    forum.findById({ _id: req.params.id })
+    forumShema.findById({ _id: req.params.id })
         .then(forum => res.status(200).json(forum))
         .catch(e => res.status(400).json(e))
 }

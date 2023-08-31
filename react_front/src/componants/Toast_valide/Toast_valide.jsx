@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function Toast_validation({ message, options = false, doYesAction, doNoAction }) {
+export default function Toast_validation({ message, options = false, doYesAction, doNoAction, choice1 = "Oui", choice2 = "Non" }) {
 
     const [yesClicked, setYesCliked] = useState(false);
     const [noClicked, setNoCliked] = useState(false);
@@ -34,10 +34,10 @@ export default function Toast_validation({ message, options = false, doYesAction
                 options === true &&
                 <div className='flex justify-between items-center w-full mt-5 min-w-[280px]'>
                     <button onClick={handleYesClick} className='min-w-[100px] outline-none p-1 rounded-md text-white bg-blue-500'>
-                        Oui
+                        {choice1}
                     </button>
                     <button onClick={handleNoClick} className='min-w-[100px] outline-none p-1 rounded-md text-white bg-red-600'>
-                        Non
+                        {choice2}
                     </button>
                 </div>
             }

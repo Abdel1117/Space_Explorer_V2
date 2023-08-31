@@ -62,26 +62,26 @@ const Nav = () => {
             </div>
           </div>
 
-          <div className={` ${toogle ? "block" : "hidden"} bg-white border-t-2 py-2`} >
+          <div className={` ${toogle ? "block" : "hidden"} bg-white dark:bg-[#1C1E21] border-t-2 py-2`} >
             <div className="flex flex-col">
-              <a href="/" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">Accueil</a>
-              <a href="/galerie" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">Galerie</a>
-              <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">Forum</a>
-              <a href="#" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mb-1">A venir</a>
+              <a href="/" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Accueil</a>
+              <a href="/galerie" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Galerie</a>
+              <a href="/forum" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Forum</a>
+              <a href="#" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">A venir</a>
               {userAuth != undefined || userAuth != null &&
                 userAuth.userRole === "Admin" &&
-                <a href="/dashBoard" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">DashBoard</a>
+                <a href="/dashBoard" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">DashBoard</a>
               }
               {
                 userAuth === null || userAuth === undefined ?
                   <div className="flex justify-between items-center border-t-2 pt-2">
                     <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
-                    <a href="/inscription" className="text-gray-800 text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Inscription</a>
+                    <a href="/inscription" className="text-gray-800  dark:text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Inscription</a>
                   </div>
                   :
                   <div className="flex justify-between items-center border-t-2 pt-2">
-                    <a href="/profil/:${userTest.userId}" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Mon Profil</a>
-                    <a onClick={() => logout()} className="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">Se Déconnecter</a>
+                    <a href={`/profil/:${userAuth.userId}`} className="text-gray-800  dark:text-white  text-sm font-semibold hover:text-purple-600 mr-4">Mon Profil</a>
+                    <a onClick={() => logout()} className="text-gray-800 dark:text-white  text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">Se Déconnecter</a>
 
                   </div>
               }

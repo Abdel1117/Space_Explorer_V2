@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { checkToken } from '../../Hooks/useCheckToken'
 import { useParams } from 'react-router-dom'
-import userContext from '../../Context/userContext';
 import Aside from '../../componants/aside/Aside';
 import Accueil from '../../componants/userDashBoardBLock/Accueil';
 import Profil from "../../componants/userDashBoardBLock/Profil"
@@ -9,8 +7,6 @@ import Amis from "../../componants/userDashBoardBLock/Amis"
 import Parametre from "../../componants/userDashBoardBLock/Parametre"
 import Messages from "../../componants/userDashBoardBLock/Messages"
 
-
-import { FcHome, FcBusinessman, FcBusinesswoman, FcConferenceCall, FcFeedback, FcSettings } from "react-icons/fc"
 
 
 export const UserDashBoard = () => {
