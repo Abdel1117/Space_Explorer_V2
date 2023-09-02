@@ -75,7 +75,7 @@ const Nav = () => {
               {
                 userAuth === null || userAuth === undefined ?
                   <div className="flex justify-between items-center border-t-2 pt-2">
-                    <a href="/connexion" className="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
+                    <a href="/connexion" className="text-gray-800 dark:text-white dark:hover:text-purple-600 text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
                     <a href="/inscription" className="text-gray-800  dark:text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Inscription</a>
                   </div>
                   :

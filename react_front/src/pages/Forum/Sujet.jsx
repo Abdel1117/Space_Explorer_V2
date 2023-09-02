@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom';
-import Loader from '../../componants/Loader/Loader';
+import { Spinner } from '../../componants/Spinner/Spinner';
 export const Sujet = () => {
     const sujetId = useParams()
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -16,7 +16,6 @@ export const Sujet = () => {
 
             const response = await request.json();
             setSujet(response);
-            console.log(response)
             setLoading(false);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -29,7 +28,7 @@ export const Sujet = () => {
     return (
         <>
             {
-                loading === true ? <Loader /> :
+                loading === true ? <Spinner /> :
                     <section className='min-h-screen'>
                         <h1 className='mx-auto py-2 md:py-8 text-lg md:text-xl xl:text-2xl dark:text-white text-center'>{sujet?.Title}</h1>
                     </section>
