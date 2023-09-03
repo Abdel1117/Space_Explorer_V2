@@ -41,23 +41,23 @@ export const Sujet = () => {
                         <div className=' border-white container min-h-[200px]'>
 
                             <article className='border border-white relative flex flex-col md:flex-row justify-center md:justify-start items-center '>
-                                <div className='w-full flex items-center justify-center py-2'>
+                                <div className='flex items-center justify-center py-2 md:px-2 md:py-0 w-full md:w-1/12'>
                                     <div class="relative w-[100px] h-[100px] overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 ">
                                         <svg class="absolute w-[110px] h-[110px] text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                                     </div>
                                 </div>
-                                <div className='border-y border-slate-500 dark:border-white min-h-[200px] min-w-full p-1 md:p-2 lg:p-4 '>
+                                <div className='border-y md:border-y-0 border-x-0 md:border-x border-slate-500 dark:border-white min-h-[200px] p-1 md:p-2 lg:p-4 w-full md:w-9/12'>
                                     <p className='text-sm md:text-base text-black dark:text-white mt-2'>
                                         {sujet?.Sujet}
                                     </p>
                                 </div>
 
-                                <div className=' border-red-900 min-h-[70px] min-w-full p-1 md:p-2 lg:p-4'>
+                                <div className=' border-red-900 min-h-[70px]  p-1 md:p-2 lg:p-4 w-full md:w-1/12'> 
 
-                                    <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit float-left'>
+                                    <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit'>
                                         {sujet?.User.email}
                                     </p>
-                                    <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit float-right'>
+                                    <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit'>
                                         {sujet?.FormattedDate}
                                     </p>
                                 </div>
