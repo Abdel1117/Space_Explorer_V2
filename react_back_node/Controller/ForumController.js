@@ -50,7 +50,8 @@ exports.findSujet = (req, res, next) => {
 
 
 exports.findSujetById = (req, res, next) => {
-    forumShema.findById({ _id: req.params.id })
+    const forums = forumShema.findById({ _id: req.params.id })
+        .populate("User")
         .then(forum => res.status(200).json(forum))
         .catch(e => res.status(400).json(e))
 }

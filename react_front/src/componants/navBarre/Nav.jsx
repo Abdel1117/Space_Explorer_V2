@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import userContext from '../../Context/userContext';
 import SpaceExplorer from "../../../public/favicon.png"
 
@@ -8,6 +8,19 @@ import SpaceExplorer from "../../../public/favicon.png"
 const Nav = () => {
   const { userAuth, logout } = useContext(userContext);
   const [toogle, setToogle] = useState(false);
+
+
+  const resetToogle = () => {
+    const innerWidth = window.innerWidth
+
+    if (innerWidth >= 640) setToogle(false)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', resetToogle);
+
+    return () => window.removeEventListener('resize', resetToogle)
+  }, [])
   return (
 
     <nav className="bg-gray-100 font-sans w-full m-0">
