@@ -23,7 +23,7 @@ router.get("/forum/:id", forumController.findSujetById)
 router.get("/check", tokenChecker);
 router.get("/refreshToken", refreshTokenController.handleRefreshToken);
 router.get("/userProfil/:id", userControlleur.getInfo)
-
+router.get("/getImage", imageController.getImage)
 /* CRUD */
 router.post("/ajoutArticle", upload("Image_article").array('images'), validatioonArticleText.checkArticle, articleController.addArticle);
 router.post("/ajoutImage", upload("galerie").single('image'), imageController.addImage)

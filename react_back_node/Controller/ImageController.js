@@ -26,3 +26,12 @@ exports.addImage = (req, res, next) => {
 
     }
 }
+
+
+exports.getImage = (req, res, next) => {
+
+    const image = Image.find()
+        .then(images => res.status(200).json(images))
+        .catch(err => res.status(400).json({ err }))
+
+}

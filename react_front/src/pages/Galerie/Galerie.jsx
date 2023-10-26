@@ -55,8 +55,9 @@ export default function Galerie() {
       </section>
 
       <div className='mx-auto  py-12 w-[250px] flex justify-between itemx-center'>
-        <button className='w-5/12 outline-none border border-purple-600 rounded-lg text-black dark:text-white text-sm hover:border-white hover:dark:text-purple-600 p-1' onClick={setPage}>Plus d'image</button>
         <button className='w-5/12 outline-none border border-purple-600 rounded-lg text-black dark:text-white text-sm hover:border-white hover:dark:text-purple-600 p-1' >Moins d'image</button>
+        <button className='w-5/12 outline-none border border-purple-600 rounded-lg text-black dark:text-white text-sm hover:border-white hover:dark:text-purple-600 p-1' onClick={setPage}>Plus d'image</button>
+
       </div>
     </>
   )

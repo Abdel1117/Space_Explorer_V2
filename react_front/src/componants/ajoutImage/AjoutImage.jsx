@@ -117,8 +117,6 @@ export default function AjoutImage() {
                 <Toast_invalide message={errorMessage} deletePopUp={deletePopUp} />
             }
 
-
-
             <form ref={formRef} onSubmit={handleSubmit(handleForm)} encType="multipart/form-data" method='POST' className="w-[10/12] sm:w-[520px] md:w-[500px] lg:w-10/12 h-full bg-white shadow-lg dark:bg-dark-blue rounded-lg p-4  mx-2 md:mx-auto my-20 flex justify-center items-center flex-col text-center">
                 <div className='mx-auto'>
                     <img className='min-w-[100px] min-h-auto w-[120px] h-auto object-cover  mx-auto' src={`${Upload}`} alt="" />
