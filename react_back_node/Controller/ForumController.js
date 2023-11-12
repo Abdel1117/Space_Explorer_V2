@@ -53,10 +53,22 @@ exports.findSujetById = (req, res, next) => {
         .catch(e => res.status(400).json(e))
 }
 
-exports.addReponse = (req, res, next) => {
+exports.addReponse = async (req, res, next) => {
+    try {
+        const {user, response_content} = req.body
+        
+        const newResponse = {
+            content : response_content,
+            user : user
+        };
 
-
-    const forum = forumShema.findById({ _id: req.params.id })
-    console.log(req.params.id)
-    console.log(forum)
+        const forum = await forumShema.findById({ _id: req.params.id })
+        forum.Reponses.push(newResponse)
+        await forum.save()
+        res.status((201)).json("Message envoyé avec success")
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("Une erreur interne est survenu")
+    }
+    
 }

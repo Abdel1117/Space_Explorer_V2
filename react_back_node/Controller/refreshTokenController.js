@@ -32,7 +32,7 @@ exports.handleRefreshToken = async (req, res, next) => {
                     userRole: decoded.userRole
                 },
                 "RANDOM_TOKEN_SECRET",
-                { expiresIn: "30s" }
+                { expiresIn: "30min" }
             )
             res.json({
                 "userId": decoded.userId,
