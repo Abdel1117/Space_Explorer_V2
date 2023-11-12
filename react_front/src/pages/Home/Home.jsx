@@ -41,7 +41,7 @@ const Home = () => {
                 {
                     articles &&
                     articles.map((article, index) =>
-                        <CardNews key={index} index={index} title={article.Title} slugs={article.Slugs} />
+                        <CardNews key={index} index={article._id} title={article.Title} slugs={article.Slugs} />
 
                     )
                 }

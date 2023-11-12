@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useFetch } from '../../Hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
@@ -11,8 +11,9 @@ import Upload from "../../assets/icon_svg/upload.png"
 export default function AjoutImage() {
     const [message, setMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
-    const [images, setImages] = useState();
+    const [images, setImages] = useState(null);
     const [imageDes, setImageDes] = useState("");
+    const [Slug, setSlug] = useState([]);
     const [loading, setIsLoading] = useState(false);
     const [imagePreShow, setImagePreShow] = useState();
     const navigate = useNavigate()
@@ -21,6 +22,8 @@ export default function AjoutImage() {
         criteriaMode: 'all',
 
     });
+
+
     const handleImageChange = (e, index) => {
         const file = e.target.files[0];
         if (file) {
@@ -28,7 +31,7 @@ export default function AjoutImage() {
             reader.onload = function (event) {
                 const img = new Image();
                 img.onload = function () {
-                    if (img.width > 1200 && img.height > 920) {
+                    if (img.width > 1200 && img.height > 900) {
                         const myImage = URL.createObjectURL(e.target.files[0])
                         setImagePreShow(myImage);
                         setImages(
@@ -36,7 +39,7 @@ export default function AjoutImage() {
                         );
                     } else {
 
-                        setErrorMessage("Veuillez mettre une image qui à une dimention de au moins 1200 pixels sur 920")
+                        setErrorMessage("Veuillez mettre une image qui à une dimention de au moins 1200 pixels sur 900")
                         setImagePreShow()
                         setImages([{ image: "" }])
                     }
@@ -59,7 +62,7 @@ export default function AjoutImage() {
     const resetAll = () => {
         setMessage("")
         setErrorMessage("")
-        setImages()
+        setImages(null)
         setImageDes("")
         setImagePreShow()
         setIsLoading(false)
@@ -67,7 +70,26 @@ export default function AjoutImage() {
         const FormElement = formRef.current;
         FormElement.reset()
     }
+    /* Handling Form Input */
+    const handleSlugChange = (e) => {
+        const slug = e.target.name;
+        const checked = e.target.checked;
 
+        if (checked) {
+            setSlug((prevSlug) => [...prevSlug, slug]);
+
+        } else {
+            setSlug((prevSlug) => prevSlug.filter((prevSlug) => prevSlug !== slug))
+        }
+
+        setValue('Slug', (prevSlug) => {
+            if (checked) {
+                return [...prevSlug, slug];
+            } else {
+                return prevSlug.filter((prevSlug) => prevSlug !== slug);
+            }
+        });
+    }
     const handleImageUpload = async () => {
         setIsLoading(true)
         try {
@@ -76,6 +98,7 @@ export default function AjoutImage() {
 
             formData.append("image", images);
             formData.append("image_desc", imageDes);
+            formData.append("Slug", Slug)
             const apiUrl = import.meta.env.VITE_API_URL;
 
             useFetch(`${apiUrl}/ajoutImage`, "POST", formData)
@@ -102,8 +125,6 @@ export default function AjoutImage() {
     }
 
     return (
-
-
         <section className=''>
             {message &&
                 <Toast_validation
@@ -157,6 +178,96 @@ export default function AjoutImage() {
                             )}
                         </>
                     </div>
+
+                    <div className="mb-6">
+                        <label htmlFor="" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
+                        <fieldset className=' grid grid-cols-2 justify-items-start'>
+                            <legend className="text-sm md:text-md dark:text-white">Choisisez au moins une catégorie </legend>
+
+                            <div>
+                                <input
+                                    className=''
+                                    type="checkbox"
+                                    id="Planète"
+                                    {...register('Slug', { required: true })}
+                                    name="Planète"
+                                    value="Planète"
+                                    onChange={handleSlugChange}
+                                    checked={Slug.includes('Planète')}
+                                />
+                                <label className='text-sm md:text-md dark:text-white ml-1' htmlFor="Planète">Planète</label>
+                            </div>
+
+                            <div>
+                                <input
+                                    className=''
+                                    type="checkbox"
+                                    id="Systeme_Solaire"
+                                    {...register('Slug', { required: true })}
+                                    checked={Slug.includes('Systeme Solaire')}
+                                    name="Systeme Solaire"
+                                    value="Systeme Solaire"
+                                    onChange={handleSlugChange}
+
+                                />
+                                <label className='text-sm md:text-md dark:text-white ml-1' htmlFor="Systeme_Solaire">Système Solaire</label>
+                            </div>
+
+                            <div>
+                                <input
+                                    className=''
+                                    type="checkbox"
+                                    id="Objet Stélaire"
+                                    {...register('Slug', { required: true })}
+                                    name="Objet Stélaire"
+                                    value="Objet Stélaire"
+                                    onChange={handleSlugChange}
+                                    checked={Slug.includes('Objet Stélaire')}
+
+                                />
+                                <label className='text-sm md:text-md dark:text-white ml-1' htmlFor="Objet Stélaire">Objet Stélaire</label>
+                            </div>
+
+                            <div>
+                                <input
+                                    className=''
+                                    type="checkbox"
+                                    id="Etoile"
+                                    {...register('Slug', { required: true })}
+                                    name="Etoile"
+                                    value="Etoile"
+                                    onChange={handleSlugChange}
+                                    checked={Slug.includes('Etoile')}
+
+                                />
+                                <label className='text-sm md:text-md dark:text-white ml-1' htmlFor="Etoile">Etoile</label>
+                            </div>
+
+                            <div>
+                                <input
+                                    className=''
+                                    type="checkbox"
+                                    id="Météorite"
+                                    {...register('Slug', { required: true })}
+                                    name="Météorite"
+                                    value="Météorite"
+                                    checked={Slug.includes('Météorite')}
+                                    onChange={handleSlugChange}
+
+                                />
+                                <label className='text-sm md:text-md dark:text-white ml-1' htmlFor="Météorite">Météorite</label>
+                            </div>
+                            <div className=' '>
+
+                                {errors.Slug && (
+                                    <p className="dark:text-white font-bold text-red-600 ">Veuillez sélectionner au moins un Slug pour l'article en question</p>
+                                )}
+
+
+                            </div>
+                        </fieldset>
+
+                    </div>
                     {/* Display of the image */}
 
                     {imagePreShow && (
@@ -177,10 +288,10 @@ export default function AjoutImage() {
                         <input
                             className="text-sm md:text-base border-black border rounded-lg p-2 mt-2 w-full"
                             type="text"
-                            name={`Image_Desc`}
-                            id={`Image_Desc`}
+                            name={`image_desc`}
+                            id={`image_desc`}
                             value={imageDes}
-                            {...register(`Image_Des`,
+                            {...register(`image_desc`,
                                 {
 
                                     required: "Veuillez taper un text court qui puisse décrire l'image afin de facilité l'accésibilté",
@@ -200,8 +311,8 @@ export default function AjoutImage() {
                         </>
 
                         <>
-                            {errors["Image_Desc"] && (
-                                <p className=' text-red-500 font-bold text-sm md:text-md  mt-2'>{errors[`Image_Desc_${index}`]?.message}</p>
+                            {errors["image_desc"] && (
+                                <p className=' text-red-500 font-bold text-sm md:text-md  mt-2'>{errors[`image_desc`]?.message}</p>
                             )}
                         </>
                     </div>

@@ -90,8 +90,9 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
                                 <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                             </div>
                         </th>
+
                         <th scope="col" className="px-6 py-3">
-                            Titre de l'article
+                            Titre
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Catégorie
@@ -122,13 +123,13 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
                                             <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
                                         </div>
                                     </td>
+
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {article.Title}
+                                        {article.Title === undefined ? "NA" : article.Title}
                                     </th>
+
                                     <td className="px-6 py-4">
-                                        {article.Slugs.map((element, index) => {
-                                            return (element[0] + ", ")
-                                        })}
+                                        {article.Slugs.join(", ")}
 
                                     </td>
                                     <td className="px-6 py-4">

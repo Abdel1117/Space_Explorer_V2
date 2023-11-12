@@ -99,7 +99,7 @@ export const Ajout_Sujet = () => {
 
                 }
                 <div className='w-11/12 md:w-10/12 h-full bg-white dark:bg-blue-900 rounded-lg px-4 py-14 my-8 mx-2 md:mx-0 shadow-md '>
-                    <form onSubmit={handleSubmit(handleForm)} method="post">
+                    <form onSubmit={handleSubmit(handleForm)} >
 
                         <div className="mb-6">
                             <input

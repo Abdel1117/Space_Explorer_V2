@@ -97,16 +97,20 @@ export default function AjoutArticle() {
 
     setArticle((prevArticle) => ({ ...prevArticle, sectionsData }))
     const apiUrl = import.meta.env.VITE_API_URL
-
-    useFetch(`${apiUrl}/ajoutArticle`, "POST", formData)
-      .then(response => {
-        if (response.status === 201) {
-          setMessage(response.data.message)
-        }
-        else {
-          setErrorMessage("Une erreur inconnu est survenu")
-        }
-      })
+    try {
+      useFetch(`${apiUrl}/ajoutArticle`, "POST", formData)
+        .then(response => {
+          if (response.status === 201) {
+            setMessage(response.data.message)
+            window.location.href = "/dashboard"
+          }
+          else {
+            setErrorMessage("Une erreur inconnu est survenu")
+          }
+        })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
 

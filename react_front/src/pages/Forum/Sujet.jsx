@@ -44,7 +44,7 @@ export const Sujet = () => {
                             <article className='shadow-lg bg-[#ffffff] rounded-lg dark:bg-[#1C1C1C] mb-6'>
                                 <div className='flex flex-col md:flex-row justify-center md:justify-start items-center py-1 px-1 w-full'>
                                     <div className="relative w-[75px] h-[75px] overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 py-1 px-1 ml-2 mt-4 md:mt-0">
-                                        <svg className="absolute w-[75px] h-[75px] text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                                        <svg className="absolute w-[75px] h-[75px] text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
                                     </div>
                                     <div className='min-h-[70px] flex flex-col md:flex-row justify-center md:justify-between items-center p-1 md:p-2 lg:p-4 ml-10 w-full'>
                                         <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit first-letter:uppercase'>
@@ -67,7 +67,7 @@ export const Sujet = () => {
 
 
                         </div>
-                        <Reponse />
+                        <Reponse sujetId={sujetId} />
                     </section>
             }
         </>

@@ -8,7 +8,7 @@ export default function Side_Barre_DashBoard(props) {
 
     return (
         <div className="flex ">
-            <div className={`flex flex-col h-screen p-3 bg-white dark:bg-gray-800 shadow transition-all duration-150 ${toogle === true ? "w-60" : "w-16"} `}>
+            <div className={`flex md:flex-col h-screen p-3 bg-white dark:bg-gray-800 shadow transition-all duration-150 ${toogle === true ? "w-60" : "w-16"} `}>
                 <div className="space-y-3">
 
                     <div className="relative">

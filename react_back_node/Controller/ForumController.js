@@ -39,8 +39,6 @@ exports.addSujet = (req, res, next) => {
     }
 }
 
-
-
 exports.findSujet = (req, res, next) => {
     const forum = forumShema.find()
         .populate('User')
@@ -48,10 +46,17 @@ exports.findSujet = (req, res, next) => {
         .catch(e => res.status(500).json({ message: "Une erreur interne est survenu" }))
 }
 
-
 exports.findSujetById = (req, res, next) => {
     const forums = forumShema.findById({ _id: req.params.id })
         .populate("User")
         .then(forum => res.status(200).json(forum))
         .catch(e => res.status(400).json(e))
+}
+
+exports.addReponse = (req, res, next) => {
+
+
+    const forum = forumShema.findById({ _id: req.params.id })
+    console.log(req.params.id)
+    console.log(forum)
 }

@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Article from '../Article/Article';
 import Table from '../Table/Table';
 import Astronaute_in_front_of_computer from "../../assets/images/cute-astronaut-front-computer-no-bg.png";
-import AjoutArticle from '../AjoutArticle/AjoutArticle';
-import { Navigation, Pagination } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Result from 'postcss/lib/result';
 
 
 export default function Articles() {

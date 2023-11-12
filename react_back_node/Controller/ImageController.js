@@ -10,15 +10,17 @@ exports.addImage = (req, res, next) => {
     } else {
         const image = req.file;
         const image_desc = req.body.image_desc;
+        const slug_Image = req.body.Slug
         const ImageEntry = new Image({
             image: image.path,
-            imageDesc: image_desc
+            imageDesc: image_desc,
+            Slugs: slug_Image
         })
 
 
         ImageEntry.save()
             .then(() => {
-                return res.status(201).json({ message: "Image ajouté avec succées" })
+                return res.status(201).json({ message: "Image ajouté avec succées, voullez vous rajouter une autre image" })
             })
             .catch((err) => {
                 return res.status(500).json({ message: err })

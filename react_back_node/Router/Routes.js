@@ -19,6 +19,7 @@ router.post("/connexion", validationUser.checkUser, userControlleur.connexionHan
 router.get("/", articleController.getArticle);
 router.get("/forum", forumController.findSujet);
 router.get("/forum/:id", forumController.findSujetById)
+router.get("/article/:id", articleController.getUniqueArticle)
 /* Route for the Permission & token */
 router.get("/check", tokenChecker);
 router.get("/refreshToken", refreshTokenController.handleRefreshToken);
@@ -30,5 +31,5 @@ router.post("/ajoutImage", upload("galerie").single('image'), imageController.ad
 router.post("/searchArticle", articleController.getSearchResultArticle)
 /* Forum CRUD */
 router.post("/ajoutSujet", validationForumSujet.checkSujetForm, forumController.addSujet);
-
+router.post("/ajoutReponse/:id", forumController.addReponse)
 module.exports = router;

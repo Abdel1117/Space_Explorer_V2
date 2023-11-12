@@ -9,7 +9,7 @@ const ContenuSchema = mongoose.Schema({
 
 const ArticleSchema = mongoose.Schema({
   Title: { type: String, required: true },
-  Slugs: [{ type: Array, required: true }],
+  Slugs: { type: Array, required: true },
   Contenu: [{
     type: ContenuSchema, required: true
   }]

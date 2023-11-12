@@ -18,6 +18,7 @@ import { UserDashBoard } from './pages/UserDashBoard/UserDashBoard'
 import { themeContext } from "./Context/themeContext"
 import Error_404_Page from './pages/404/Error_404_Page'
 import Ajouter_Image from './pages/AjouterImage/Ajouter_Image'
+import Article from './pages/Article/Article'
 
 const PrivateRoutes = () => {
   const { userAuth } = useAuth();
@@ -58,6 +59,7 @@ function App() {
           <Route path='/forum' element={<Forum />} />
           <Route path='/sujet/:id' element={<Sujet />} />
           <Route path='/ajoutSujet' element={<Ajout_Sujet />} />
+          <Route path='/article/:id' element={<Article />} />
           <Route element={<PrivateRoutes />} >
             <Route path='/Profil/:id' element={<UserDashBoard />} />
             <Route path="/DashBoard" element={<DashBoard />} />

@@ -1,8 +1,6 @@
-
 const useFetch = async (url, method, body) => {
     const token = sessionStorage.getItem('token');
     if (token != null || token != undefined) {
-
         try {
             const response = await fetch(url, {
                 method: method,
@@ -11,7 +9,6 @@ const useFetch = async (url, method, body) => {
                     "Authorization": `${token}`,
                 }
             })
-
             const data = await response.json();
             return { status: response.status, data: data };
         } catch (error) {
@@ -19,5 +16,4 @@ const useFetch = async (url, method, body) => {
         }
     }
 }
-
 export { useFetch };

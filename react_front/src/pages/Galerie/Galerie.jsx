@@ -5,6 +5,7 @@ export default function Galerie() {
   const [data, setData] = useState([]);
   const [images, setNumberImage] = useState(10);
   const [load, setLoad] = useState(false)
+  const ApiUrl = import.meta.env.VITE_API_URL
   const numberOfDivs = 20
   const setPage = () => {
     setNumberImage(images + 10)
@@ -12,7 +13,7 @@ export default function Galerie() {
   }
   function fetchData() {
     setLoad(true)
-    fetch(`https://api.thecatapi.com/v1/images/search?limit=${images}`, {
+    fetch(`${ApiUrl}/getImage`, {
       method: 'GET',
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -23,8 +24,8 @@ export default function Galerie() {
 
       .then(async (response) => {
         const data = await response.json();
-
-        setData(prevImages => [...prevImages, ...data]);
+        console.log(data)
+        setData(data);
         setLoad(false);
 
       })
@@ -42,13 +43,13 @@ export default function Galerie() {
         {load === true ?
 
           Array(numberOfDivs).fill().map((_, i) => {
-            return <div className='animate-pulse h-[300px] w-full bg-slate-400'></div>
+            return <div key={i} className='animate-pulse h-[300px] w-full bg-slate-400'></div>
 
           })
 
           :
           data && data.map((image, id) =>
-            <img className='min-w-full h-[300px] hover:opacity-70 hover:cursor-pointer xl:first-of-type:col-span-2 xl:first-of-type:row-span-2 xl:first-of-type:h-full object-fill' key={image.id} src={image.url} />
+            <img className='min-w-full h-[300px] hover:opacity-70 hover:cursor-pointer xl:first-of-type:col-span-2 xl:first-of-type:row-span-2 xl:first-of-type:h-full object-fill' key={id} src={`${image.image.replace(/\\/g, "/")}`} alt={image.imageDesc} />
           )
         }
 
