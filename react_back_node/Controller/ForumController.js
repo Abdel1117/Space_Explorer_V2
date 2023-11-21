@@ -6,11 +6,10 @@ const formatDateToDDMMYYYY = require("../Functions/DateFormat/DateFormat");
 exports.addSujet = (req, res, next) => {
     const tokken = req.headers.authorization;
     const tokkenSplited = tokken.split(' ')[1]
-
     if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
     const decode = jwt.verify(tokkenSplited, "RANDOM_TOKEN_SECRET", function (err, decoded) {
         if (err) {
-            res.status(403).json({ message: "Veuillez vous connecter afin de pouvoir poster un nouveau sujet" })
+            return res.status(403).json({ message: "Veuillez vous connecter afin de pouvoir poster un nouveau sujet" })
         } else {
             return decoded
         }
@@ -54,21 +53,43 @@ exports.findSujetById = (req, res, next) => {
 }
 
 exports.addReponse = async (req, res, next) => {
-    try {
-        const {user, response_content} = req.body
-        
-        const newResponse = {
-            content : response_content,
-            user : user
-        };
 
-        const forum = await forumShema.findById({ _id: req.params.id })
-        forum.Reponses.push(newResponse)
-        await forum.save()
-        res.status((201)).json("Message envoyé avec success")
-    } catch (error) {
-        console.log(error)
-        res.status(500).json("Une erreur interne est survenu")
+    const tokken = req.headers.authorization;
+    const tokkenSplited = tokken.split(' ')[1]
+
+    if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
+    const decode = jwt.verify(tokkenSplited, "RANDOM_TOKEN_SECRET", function (err, decoded) {
+        if (err) {
+            return res.status(403).json({ message: "Veuillez vous connecter afin de pouvoir poster un nouveau sujet" })
+        } else {
+            return decoded
+        }
+    })
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
     }
-    
+    else {
+        try {
+            const { user, response_content } = req.body
+            let date = new Date();
+            const dateReformated = formatDateToDDMMYYYY(date);
+
+            const newResponse = {
+                content: response_content,
+                user: user,
+                FormattedDate: dateReformated,
+            };
+
+            const forum = await forumShema.findById({ _id: req.params.id })
+            forum.Reponses.push(newResponse)
+            await forum.save()
+            return res.status((201)).json({ message: "Message envoyé avec success" })
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json("Une erreur interne est survenu")
+        }
+    }
 }

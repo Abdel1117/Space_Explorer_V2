@@ -2,8 +2,9 @@ import React, { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import _ from "lodash/fp";
 import userContext from '../../Context/userContext';
+import Toast_validation from '../Toast_valide/Toast_valide';
 
-export const Reponse = ({ sujetId }) => {
+export const Reponse = ({ sujetId, messagePosted, setMessagePosted }) => {
     const [reponse, setReponse] = useState("");
     const apiUrl = import.meta.env.VITE_API_URL
     const { userAuth } = useContext(userContext)
@@ -19,24 +20,24 @@ export const Reponse = ({ sujetId }) => {
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
-                    "authorization": `Bearer ${sessionStorage.getItem(" token")}`
+                    "authorization": `Bearer ${sessionStorage.getItem("token")}`
                 },
                 body: JSON.stringify(
                     {
-                    "ForumId": sujetId.id,
-                    "user": userAuth.userId,
-                    "response_content": reponse,
-                 }
+                        "ForumId": sujetId.id,
+                        "user": userAuth.userId,
+                        "response_content": reponse,
+                    }
                 )
             })
 
             const responseServer = await request.json();
-            console.log(responseServer)
-            if (responseServer.ok) {
-                console.log(responseServer)
+            console.log(request)
+            if (request.ok) {
+                setMessagePosted(true)
             }
             else {
-                console.log(responseServer)
+                setError(responseServer.message)
             }
         } catch (error) {
             console.log(error)

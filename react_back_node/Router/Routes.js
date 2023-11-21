@@ -7,6 +7,8 @@ const tokenChecker = require('../Functions/authChecker/tokenChecker');
 const validator = require("../Functions/RegexFunction/Validation");
 const validationUser = require('../Functions/RegexFunction/ValidationUserConnexion');
 const validationForumSujet = require("../Functions/RegexFunction/ValidationForumSujet");
+const validationReponsesSujet = require("../Functions/RegexFunction/ValidationReponseSujet")
+
 const upload = require("../Functions/FileHandler/imagHandler");
 const validatioonArticleText = require("../Functions/RegexFunction/ValidationArticle");
 const refreshTokenController = require('../Controller/refreshTokenController');
@@ -31,5 +33,5 @@ router.post("/ajoutImage", upload("galerie").single('image'), imageController.ad
 router.post("/searchArticle", articleController.getSearchResultArticle)
 /* Forum CRUD */
 router.post("/ajoutSujet", validationForumSujet.checkSujetForm, forumController.addSujet);
-router.post("/ajoutReponse/:id", forumController.addReponse)
+router.post("/ajoutReponse/:id", validationReponsesSujet.checkReponseSujet, forumController.addReponse)
 module.exports = router;

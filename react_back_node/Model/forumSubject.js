@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const ReponseShema = mongoose.Schema({
     content: { type: String, required: true },
     date: { type: Date, default: Date.now },
+    FormattedDate: { type: String },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',

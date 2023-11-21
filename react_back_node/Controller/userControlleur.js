@@ -53,7 +53,7 @@ exports.connexionHandler = (req, res, next) => {
                                 userRole: user.role
                             },
                             "RANDOM_TOKEN_SECRET",
-                            { expiresIn: "20min" }
+                            { expiresIn: "50min" }
 
                         )
                         const refreshToken = jwt.sign(
@@ -62,7 +62,7 @@ exports.connexionHandler = (req, res, next) => {
                                 userRole: user.role
                             },
                             "RANDOM_TOKEN_SECRET_REFRESH",
-                            { expiresIn: "1h" },
+                            { expiresIn: "2h" },
                         )
 
                         user.refreshToken = refreshToken;

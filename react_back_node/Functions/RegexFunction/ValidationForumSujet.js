@@ -1,6 +1,5 @@
 const { check } = require("express-validator")
 const Sujet = require('../../Model/forumSubject');
-const mongoose = require("mongoose");
 
 
 exports.checkSujetForm = [
@@ -18,21 +17,4 @@ exports.checkSujetForm = [
         .trim()
         .isLength({ min: 9 })
         .withMessage("Veuillez donner plus d'information pour que les gens puisse vous comprendre !")
-]
-
-
-
-
-exports.checkSujetForm = [
-    check("User_Id")
-        .trim()
-        .isLength({ min: 3 })
-        .withMessage("Veuillez taper un titre qui contient 3 à 20 caractères"),
-
-    check("Reponse")
-        .trim()
-        .isLength({ min: 3 })
-        .withMessage("Veuillez selectionner une catégorie valide"),
-
-
 ]

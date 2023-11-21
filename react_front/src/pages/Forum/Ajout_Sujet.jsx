@@ -68,10 +68,16 @@ export const Ajout_Sujet = () => {
 
 
     const goToYourSujet = (idSujet) => {
-        navigate(`sujet/:${idSujet}`)
+        navigate(`sujet/${idSujet}`)
     }
 
-    const isIncludeWord = (str, arr) => str.split(" ").reduce((include, word) => include || arr.includes(word), false);
+    const isIncludeWord = (str, arr) => {
+
+        const lowerStr = str.toLowerCase();
+
+        return arr.some((category) => lowerStr.includes(category.toLowerCase()));
+    };
+
 
     useEffect(() => {
         userAuth === undefined || userAuth === null && navigate("/forum")

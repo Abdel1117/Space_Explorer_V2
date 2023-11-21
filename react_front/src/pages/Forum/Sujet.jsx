@@ -7,7 +7,9 @@ export const Sujet = () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     const [loading, setLoading] = useState(false)
     const [sujet, setSujet] = useState(null)
+    const [messagePosted, setMessagePosted] = useState(false)
     const getSujetAndResponse = async () => {
+
         try {
             setLoading(true)
             const request = await fetch(`${apiUrl}/forum/${sujetId.id}`, {
@@ -16,17 +18,20 @@ export const Sujet = () => {
 
             const response = await request.json();
             setSujet(response);
-          
-            setLoading(false);
+
         } catch (error) {
             console.error("Error fetching data:", error);
-            setLoading(false);
+        }
+        finally {
+            setLoading(false)
+            setMessagePosted(false)
+
         }
     }
 
     useEffect(() => {
         getSujetAndResponse()
-    }, [])
+    }, [messagePosted])
 
     return (
         <>
@@ -65,40 +70,50 @@ export const Sujet = () => {
 
 
                             </article>
-                          
-              {
-                 sujet?.Reponses != null ?
-                
-                 (
-                    sujet?.Reponses.map((rep, index) => 
-                    (
-                        
-                        <div  key={index} className='w-full md:w-8/12 md:ml-2 px-2 md:px-0'>
 
-                        <article className='shadow-lg bg-[#ffffff] rounded-lg dark:bg-[#1C1C1C] mb-6'>
-                        <div className='flex flex-col md:flex-row justify-center md:justify-start items-center py-1 px-1 w-full'>
-                                    <div className="relative w-[75px] h-[75px] overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 py-1 px-1 ml-2 mt-4 md:mt-0">
-                                        <svg className="absolute w-[75px] h-[75px] text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
-                                    </div>
-                                    <div className='min-h-[70px] flex flex-col md:flex-row justify-center md:justify-between items-center p-1 md:p-2 lg:p-4 ml-10 w-full'>
-                                        <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit first-letter:uppercase'>
-                                            {sujet?.User.email}
-                                        </p>
-                                        <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit first-letter:uppercase'>
-                                            {rep?.date}
-                                        </p>
-                                    </div>
-                                    </div>
-                        <h1>{rep.content}</h1>
-                        </article>
+                            {
+                                sujet?.Reponses != null ?
+
+                                    (
+                                        sujet?.Reponses.map((rep, index) =>
+                                        (
+
+                                            <div key={index} className='w-full md:w-8/12 md:ml-2 px-2 md:px-0'>
+
+                                                <article className='shadow-lg bg-[#ffffff] rounded-lg dark:bg-[#1C1C1C] mb-6'>
+                                                    <div className='flex flex-col md:flex-row justify-center md:justify-start items-center py-1 px-1 w-full'>
+                                                        <div className="relative w-[75px] h-[75px] overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 py-1 px-1 ml-2 mt-4 md:mt-0">
+                                                            <svg className="absolute w-[75px] h-[75px] text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
+                                                        </div>
+                                                        <div className='min-h-[70px] flex flex-col md:flex-row justify-center md:justify-between items-center p-1 md:p-2 lg:p-4 ml-10 w-full'>
+                                                            <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit first-letter:uppercase'>
+                                                                {sujet?.User.email}
+                                                            </p>
+                                                            <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit first-letter:uppercase'>
+                                                                {rep?.date}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='md:ml-[100px] p-4'>
+                                                        <p className='text-sm md:text-base text-black dark:text-white mt-2 p-2 first-letter:uppercase'>
+                                                            {rep?.content}
+
+                                                        </p>
+                                                    </div>
+
+                                                </article>
+                                            </div>
+                                        )
+                                        ))
+                                    :
+                                    null
+                            }
                         </div>
-                        )
-                        ))  
-                        : 
-                        null      
-                }            
-                        </div>
-                        <Reponse sujetId={sujetId} />
+                        <Reponse
+                            sujetId={sujetId}
+                            messagePosted={messagePosted}
+                            setMessagePosted={setMessagePosted}
+                        />
                     </section>
             }
         </>
