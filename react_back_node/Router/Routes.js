@@ -18,20 +18,26 @@ router.post("/inscription", validator.createUser, userControlleur.inscriptionHan
 
 /* Route for the Connexion */
 router.post("/connexion", validationUser.checkUser, userControlleur.connexionHandler);
-router.get("/", articleController.getArticle);
-router.get("/forum", forumController.findSujet);
-router.get("/forum/:id", forumController.findSujetById)
-router.get("/article/:id", articleController.getUniqueArticle)
 /* Route for the Permission & token */
 router.get("/check", tokenChecker);
 router.get("/refreshToken", refreshTokenController.handleRefreshToken);
-router.get("/userProfil/:id", userControlleur.getInfo)
-router.get("/getImage", imageController.getImage)
+
 /* CRUD */
+/* User CRUD */
+router.get("/userProfil/:id", userControlleur.getInfo)
+router.get("/getAllUsers", userControlleur.getAllUsers)
+/* Article CRUD */
+router.get("/", articleController.getArticle);
+router.get("/article/:id", articleController.getUniqueArticle)
 router.post("/ajoutArticle", upload("Image_article").array('images'), validatioonArticleText.checkArticle, articleController.addArticle);
-router.post("/ajoutImage", upload("galerie").single('image'), imageController.addImage)
 router.post("/searchArticle", articleController.getSearchResultArticle)
+/* Galerie Crud */
+router.get("/getImage", imageController.getImage)
+router.post("/ajoutImage", upload("galerie").single('image'), imageController.addImage)
+
 /* Forum CRUD */
+router.get("/forum", forumController.findSujet);
+router.get("/forum/:id", forumController.findSujetById)
 router.post("/ajoutSujet", validationForumSujet.checkSujetForm, forumController.addSujet);
 router.post("/ajoutReponse/:id", validationReponsesSujet.checkReponseSujet, forumController.addReponse)
 module.exports = router;

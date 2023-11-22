@@ -9,10 +9,7 @@ module.exports = async (req, res, next) => {
 
         const token2 = token.split(' ')[1];
 
-
         const refreshToken = req.headers.refreshtoken;
-
-
 
         if (token) {
             const decodedToken = jwt.verify(token2, 'RANDOM_TOKEN_SECRET', function (err, decoded) {
@@ -21,12 +18,12 @@ module.exports = async (req, res, next) => {
                         console.log('Token Expirer');
                         const refreshToken = req.cookies
                         console.log(refreshToken);
-                        return res.status(401).json({
-                            erreur: {
-                                name: "Token Expirer",
-                                message: "Veuillez vous reconnecter"
-                            }
-                        })
+                        /*   return res.status(401).json({
+                              erreur: { 
+                                  name: "Token Expirer",
+                                  message: "Veuillez vous reconnecter"
+                              }
+                          }) */
                     } else if (jwt.JsonWebTokenError) {
                         console.log('Token Invalide');
                         return res.status(401).json({

@@ -8,7 +8,6 @@ export const useRefreshToken = async () => {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json"
-
             },
         })
         console.log(response);

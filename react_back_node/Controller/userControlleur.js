@@ -98,3 +98,14 @@ exports.getInfo = (req, res, next) => {
         .then(user => res.status(200).json(user))
         .catch(err => res.status(409).json(err))
 }
+
+
+exports.getAllUsers = async (req, res, next) => {
+    try {
+        const users = await User.find({}, '_id email role'); // Utilisez la méthode `find` avec `select` pour spécifier les champs à inclure/exclure.
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Une erreur est survenue" });
+    }
+};

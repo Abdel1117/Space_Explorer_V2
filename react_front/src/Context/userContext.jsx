@@ -8,7 +8,7 @@ const userContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [userAuth, setUserAuth] = useState(undefined);
-    const [authError, setAuthError] = useState(null); 
+    const [authError, setAuthError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
