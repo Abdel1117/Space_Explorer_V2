@@ -38,6 +38,61 @@ exports.addSujet = (req, res, next) => {
     }
 }
 
+exports.deleteSujet = (req, res, next) => {
+    console.log("La route de supression d'article")
+
+    try {
+        const tokken = req.headers.authorization;
+        const tokkenSplited = tokken.split(' ')[1]
+        if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
+
+        const sujetId = req.params.id
+        forumShema.find()
+            .then(forum => {
+                try {
+                    const allForum = forum
+
+                    const result = allForum.filter((uniqueForum) => uniqueForum._id.toString() === req.params.id)
+
+                    console.log(result)
+
+                    if (result.length === 0) {
+                        return res.status(200).json({ message: "Aucun sujet correspondant retrouvé" })
+                    }
+                    else {
+                        forumShema.deleteOne({ "_id": sujetId })
+                            .then(() => {
+                                return res.status(200).json({ message: `Le sujet à bien était supprimé` })
+                            })
+                            .catch((err) => {
+                                return res.status(500).json({ message: "Impossible de supprimer le sujet" });
+                            })
+                    }
+
+
+                } catch (error) {
+                    console.log(error)
+                }
+
+            })
+            .catch((e) => {
+                console.log(e)
+
+                return res.status(500).json({ message: "Impossible de supprimer le Sujet " })
+            })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: "Impossible d'éffectuer l'action" })
+    }
+
+}
+
+exports.editSujet = (req, res, next) => {
+    console.log("Hello Edit Sujet Router")
+}
+
+
 exports.findSujet = (req, res, next) => {
     const forum = forumShema.find()
         .populate('User')

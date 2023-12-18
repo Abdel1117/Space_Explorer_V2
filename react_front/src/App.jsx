@@ -19,6 +19,10 @@ import { themeContext } from "./Context/themeContext"
 import Error_404_Page from './pages/404/Error_404_Page'
 import Ajouter_Image from './pages/AjouterImage/Ajouter_Image'
 import Article from './pages/Article/Article'
+import { EditImage } from './componants/EditEntity/EditImage/EditImage'
+import { EditArticle } from './componants/EditEntity/EditArticle/EditArticle'
+import { EditSujet } from './componants/EditEntity/EditSujet/EditSujet'
+import { Spinner } from './componants/Spinner/Spinner'
 
 const PrivateRoutes = () => {
   const { userAuth } = useAuth();
@@ -45,7 +49,7 @@ function App() {
   }, [theme])
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
   return (
     <>
@@ -65,6 +69,9 @@ function App() {
             <Route path="/DashBoard" element={<DashBoard />} />
             <Route path='/ajouterArticle' element={<Ajouter_Article />} />
             <Route path='/ajouterImage' element={<Ajouter_Image />} />
+            <Route path='/editImage/:id' element={<EditImage />} />
+            <Route path='/editArticle/:id' element={<EditArticle />} />
+            <Route path='/editSujet/:id' element={<EditSujet />} />
 
           </Route>
 

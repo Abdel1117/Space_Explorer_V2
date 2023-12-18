@@ -26,18 +26,25 @@ router.get("/refreshToken", refreshTokenController.handleRefreshToken);
 /* User CRUD */
 router.get("/userProfil/:id", userControlleur.getInfo)
 router.get("/getAllUsers", userControlleur.getAllUsers)
+router.put("/editUser/:id", userControlleur.editUser)
+router.delete("/deleteUser/:id", userControlleur.deleteUser)
 /* Article CRUD */
 router.get("/", articleController.getArticle);
 router.get("/article/:id", articleController.getUniqueArticle)
 router.post("/ajoutArticle", upload("Image_article").array('images'), validatioonArticleText.checkArticle, articleController.addArticle);
 router.post("/searchArticle", articleController.getSearchResultArticle)
+router.delete("/deleteArticle/:id", articleController.deleteArticle)
+router.put("/editArticle/:id", articleController.editArticle)
 /* Galerie Crud */
 router.get("/getImage", imageController.getImage)
 router.post("/ajoutImage", upload("galerie").single('image'), imageController.addImage)
-
+router.delete("/deleteImage/:id", imageController.deleteImage)
+router.put("/editImage/:id", imageController.editImage)
 /* Forum CRUD */
 router.get("/forum", forumController.findSujet);
 router.get("/forum/:id", forumController.findSujetById)
 router.post("/ajoutSujet", validationForumSujet.checkSujetForm, forumController.addSujet);
 router.post("/ajoutReponse/:id", validationReponsesSujet.checkReponseSujet, forumController.addReponse)
+router.delete("/deleteSujet/:id", forumController.deleteSujet)
+router.put("/editSujet/:id", forumController.editSujet)
 module.exports = router;

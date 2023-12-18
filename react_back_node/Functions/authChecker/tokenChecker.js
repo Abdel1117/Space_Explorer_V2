@@ -18,12 +18,13 @@ module.exports = async (req, res, next) => {
                         console.log('Token Expirer');
                         const refreshToken = req.cookies
                         console.log(refreshToken);
-                        /*   return res.status(401).json({
-                              erreur: { 
-                                  name: "Token Expirer",
-                                  message: "Veuillez vous reconnecter"
-                              }
-                          }) */
+                        next()
+                        /*  return res.status(401).json({
+                             erreur: {
+                                 name: "Token Expirer",
+                                 message: "Veuillez vous reconnecter"
+                             }
+                         }) */
                     } else if (jwt.JsonWebTokenError) {
                         console.log('Token Invalide');
                         return res.status(401).json({

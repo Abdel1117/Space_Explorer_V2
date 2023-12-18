@@ -4,7 +4,6 @@ import Loader from '../Loader/Loader'
 export default function Table({ articles, articleSelected, handleArticleSelection, selectAllArticle, deselectAllArticles, handleSelectAllChange, handleSearch, loading }) {
 
     const [toogle, setToogle] = useState(false)
-
     const myStyle = {
         position: "absolute",
         inset: "40px auto 0px 0px",
@@ -139,7 +138,7 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
                                         $2999
                                     </td>
                                     <td className="px-6 py-4 flex justify-between">
-                                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifié</a>
+                                        <a href={`/editSujet/${article._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifié</a>
                                         <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a>
                                     </td>
                                 </tr>

@@ -40,6 +40,55 @@ exports.addArticle = (req, res, next) => {
     }
 }
 
+exports.deleteArticle = (req, res, next) => {
+    console.log("La route de supression ")
+
+    try {
+        const tokken = req.headers.authorization;
+        const tokkenSplited = tokken.split(' ')[1]
+        if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
+
+        const articletId = req.params.id
+        Article.find()
+            .then(article => {
+                try {
+                    const allArticle = article
+
+                    const result = allArticle.filter((uniqueArticle) => uniqueArticle._id.toString() === req.params.id)
+
+                    console.log(result)
+
+                    if (result.length === 0) {
+                        return res.status(200).json({ message: "Aucun article correspondant retrouvé" })
+                    }
+                    else {
+                        Article.deleteOne({ "_id": articletId })
+                            .then(() => {
+                                return res.status(200).json({ message: `L'article à bien était supprimé` })
+                            })
+                            .catch((err) => {
+                                return res.status(500).json({ message: "Impossible de supprimer l'article" });
+                            })
+                    }
+
+
+                } catch (error) {
+                    console.log(error)
+                }
+
+            })
+            .catch((e) => {
+                console.log(e)
+
+                return res.status(500).json({ message: "Impossible de supprimer l'article " })
+            })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: "Impossible d'éffectuer l'action" })
+    }
+
+}
 
 exports.getArticle = (req, res, next) => {
     const article = Article.find()
@@ -50,9 +99,17 @@ exports.getArticle = (req, res, next) => {
     console.log(article)
 }
 exports.getUniqueArticle = (req, res, next) => {
+    console.log(`${req.params.id} est mon id`)
     const uniqueArticle = Article.findById({ _id: req.params.id })
         .then(article => res.status(200).json(article))
         .catch(err => res.status(401).json({ message: " Une erreure innatendu est survenu" + err }))
+
+    console.log(uniqueArticle)
+}
+
+
+exports.editArticle = (req, res, next) => {
+    console.log("Hello Route Edit Article")
 }
 
 exports.getSearchResultArticle = async (req, res, next) => {
