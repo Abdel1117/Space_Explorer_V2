@@ -55,29 +55,31 @@ function App() {
     <>
       <Nav />
       <main className='bg-[#F5F5F5] dark:bg-[#252525]'>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/inscription' element={<Inscription />} />
-          <Route path='/connexion' element={<Connexion />} />
-          <Route path='/galerie' element={<Galerie />} />
-          <Route path='/forum' element={<Forum />} />
-          <Route path='/sujet/:id' element={<Sujet />} />
-          <Route path='/ajoutSujet' element={<Ajout_Sujet />} />
-          <Route path='/article/:id' element={<Article />} />
-          <Route element={<PrivateRoutes />} >
-            <Route path='/Profil/:id' element={<UserDashBoard />} />
-            <Route path="/DashBoard" element={<DashBoard />} />
-            <Route path='/ajouterArticle' element={<Ajouter_Article />} />
-            <Route path='/ajouterImage' element={<Ajouter_Image />} />
-            <Route path='/editImage/:id' element={<EditImage />} />
-            <Route path='/editArticle/:id' element={<EditArticle />} />
-            <Route path='/editSujet/:id' element={<EditSujet />} />
+        <Suspense fallback={<Spinner />}>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/inscription' element={<Inscription />} />
+            <Route path='/connexion' element={<Connexion />} />
+            <Route path='/galerie' element={<Galerie />} />
+            <Route path='/forum' element={<Forum />} />
+            <Route path='/sujet/:id' element={<Sujet />} />
+            <Route path='/ajoutSujet' element={<Ajout_Sujet />} />
+            <Route path='/article/:id' element={<Article />} />
+            <Route element={<PrivateRoutes />} >
+              <Route path='/Profil/:id' element={<UserDashBoard />} />
+              <Route path="/DashBoard" element={<DashBoard />} />
+              <Route path='/ajouterArticle' element={<Ajouter_Article />} />
+              <Route path='/ajouterImage' element={<Ajouter_Image />} />
+              <Route path='/editImage/:id' element={<EditImage />} />
+              <Route path='/editArticle/:id' element={<EditArticle />} />
+              <Route path='/editSujet/:id' element={<EditSujet />} />
 
-          </Route>
+            </Route>
 
 
-          <Route path='*' element={<Error_404_Page />} />
-        </Routes>
+            <Route path='*' element={<Error_404_Page />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer />
     </>

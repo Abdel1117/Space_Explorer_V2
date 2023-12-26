@@ -1,11 +1,12 @@
+const { cp } = require("fs");
 const Article = require("../Model/articleShema");
 const { validationResult } = require('express-validator')
-
+const mongoose = require("mongoose")
 exports.addArticle = (req, res, next) => {
 
 
     const errors = validationResult(req);
-    console.log(errors)
+
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     } else {
@@ -108,9 +109,61 @@ exports.getUniqueArticle = (req, res, next) => {
 }
 
 
-exports.editArticle = (req, res, next) => {
-    console.log("Hello Route Edit Article")
-}
+exports.editArticle = async (req, res, next) => {
+    try {
+        const article = await Article.findById(req.params.id);
+
+        if (article) {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            } else {
+                let Title = JSON.parse(req.body.titre);
+                let contenu = JSON.parse(req.body.contenu);
+                let Slugs = JSON.parse(req.body.slugs);
+
+                /* Here we take care of the image  */
+
+                const images = []
+                for (let i = 0; i < req.files.length; i++) {
+                    images.push(req.files[i])
+                }
+
+
+                article.Contenu = contenu.map((section, index) => {
+                    let imageExistante = (article.Contenu[index] && article.Contenu[index].image) ? article.Contenu[index].image : null;
+
+                    let newImage;
+                    if (imageExistante == null && images.length > 0) {
+                        newImage = images.shift().path;
+                    } else {
+                        newImage = imageExistante;
+                    }
+
+                    const updatedSection = {
+                        _id: section._id || new mongoose.Types.ObjectId(),
+                        titre: section.titre,
+                        contenu: section.contenu,
+                        image: newImage
+                    };
+
+                    return updatedSection;
+                });
+
+                article.Title = Title;
+                article.Slugs = Slugs;
+                await article.save();
+                res.status(200).json({ message: "Article modifié avec succès" });
+            }
+        } else {
+            return res.status(404).json({ message: "Article introuvable" });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Une erreur inconnue est survenue" });
+    }
+};
+
 
 exports.getSearchResultArticle = async (req, res, next) => {
 

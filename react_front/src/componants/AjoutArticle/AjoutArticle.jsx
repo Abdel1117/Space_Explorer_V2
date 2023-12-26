@@ -154,7 +154,7 @@ export default function AjoutArticle() {
 
             {errors.Article_title && (
 
-              <p>errors</p>)}
+              <p className='dark:text-white font-bold text-red-600 '>{errors?.Article_title?.message}</p>)}
 
 
           </div>

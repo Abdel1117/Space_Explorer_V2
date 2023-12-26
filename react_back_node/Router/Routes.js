@@ -34,7 +34,7 @@ router.get("/article/:id", articleController.getUniqueArticle)
 router.post("/ajoutArticle", upload("Image_article").array('images'), validatioonArticleText.checkArticle, articleController.addArticle);
 router.post("/searchArticle", articleController.getSearchResultArticle)
 router.delete("/deleteArticle/:id", articleController.deleteArticle)
-router.put("/editArticle/:id", articleController.editArticle)
+router.put("/editArticle/:id", upload("Image_article").array('images'), articleController.editArticle)
 /* Galerie Crud */
 router.get("/getImage", imageController.getImage)
 router.post("/ajoutImage", upload("galerie").single('image'), imageController.addImage)
