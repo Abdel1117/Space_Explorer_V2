@@ -95,9 +95,9 @@ export const EditSujet = () => {
         try {
             const sectionData = editedSections.map((section, index) => {
                 // Inclure les identifiants des images existantes pour les conserver
-                const { titre, contenu, image, imageChanged } = section;
+                const { titre, contenu, image } = section;
                 console.log(section)
-                return { titre, contenu, imageId: section._id, imageChanged };
+                return { titre, contenu, image };
             });
 
             const formData = new FormData();
@@ -105,26 +105,19 @@ export const EditSujet = () => {
             formData.append("contenu", JSON.stringify(sectionData));
             formData.append("slugs", JSON.stringify(editedSlug));
             console.log(editedSections)
-
-
             try {
-
                 editedSections.forEach((section, index) => {
+                    console.log(section)
+                    console.log(section.image)
 
                     if (section.image instanceof File) {
-
-                        // Nouvelle image sélectionnée
                         formData.append(`images`, section.image);
-                        formData.append('imageSectionIds', section._id); // Envoyer l'ID de la section
-
                     } else {
-                        if (section.image[index]) {
-
-                            formData.append(`images`, section._id)
+                        if (section.image) {
+                            formData.append(`images`, section.image)
                         }
                     }
-                    // Pas besoin d'envoyer le chemin de l'image existante
-                    // car l'identifiant de l'image est déjà inclus dans sectionData
+
                 });
             } catch (e) {
                 console.log(e)

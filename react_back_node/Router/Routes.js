@@ -37,9 +37,10 @@ router.delete("/deleteArticle/:id", articleController.deleteArticle)
 router.put("/editArticle/:id", upload("Image_article").array('images'), articleController.editArticle)
 /* Galerie Crud */
 router.get("/getImage", imageController.getImage)
+router.get("/getImageById/:id", imageController.getUniqueImage)
 router.post("/ajoutImage", upload("galerie").single('image'), imageController.addImage)
 router.delete("/deleteImage/:id", imageController.deleteImage)
-router.put("/editImage/:id", imageController.editImage)
+router.put("/editImage/:id", upload("galerie").single('image'), imageController.editImage)
 /* Forum CRUD */
 router.get("/forum", forumController.findSujet);
 router.get("/forum/:id", forumController.findSujetById)

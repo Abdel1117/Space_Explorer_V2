@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import Astronaute_in_front_of_computer from "../../assets/images/cute-astronaut-front-computer-no-bg.png";
-import Table from '../Table/Table';
+import { TableImage } from '../Table/TableImage';
+import Toast_invalide from '../Toast_invalide/Toast_invalide';
+
+
 export default function Images() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [images, setImages] = useState([])
-  const [articleSelected, setArticleSelected] = useState([])
-
+  const [imageSelected, setImageSelected] = useState([])
+  const [dataChanged, setDataChanged] = useState(false)
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -30,19 +33,19 @@ export default function Images() {
       }
     }
     getImages()
-  }, [])
+  }, [dataChanged])
 
 
   const handleSearch = (e) => {
-    // Filtrer les articles en fonction de la correspondance de la recherche
+    // Filtrer les images en fonction de la correspondance de la recherche
     const result = e.target.value
-    findArticle(result)
+    findImage(result)
   }
 
 
 
-  const handleArticleSelection = (index) => {
-    setArticleSelected(prevSelected => {
+  const handleImageSelection = (index) => {
+    setImageSelected(prevSelected => {
       if (prevSelected.includes(index)) {
         return prevSelected.filter(i => i !== index);
       } else {
@@ -51,44 +54,59 @@ export default function Images() {
     })
   }
 
-  const selectAllArticle = () => {
-    const allIndices = articles.map((_, index) => index);
+  const selectAllImage = () => {
+    const allIndices = images.map((_, index) => index);
 
-    setArticleSelected(allIndices);
+    setImageSelected(allIndices);
   }
 
-  const deselectAllArticles = () => {
-    setArticleSelected([]);
+  const deselectAllImage = () => {
+    setImageSelected([]);
   }
 
   const handleSelectAllChange = (e) => {
     if (e.target.checked) {
-      selectAllArticle();
+      selectAllImage();
     }
     else {
-      deselectAllArticles();
+      deselectAllImage();
     }
   }
 
 
-  const deleteArticle = async () => {
-    const selectedArticle = articleSelected.map(index => articles[index]._id)
+  const deleteArticle = async (id) => {
 
-    try {
-      setIsLoading(true)
-      const response = await fetch(`${apiUrl}/deleteArticle`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ids: selectedArticle })
-        })
-    } catch (error) {
-      console.log(error)
+    const windowsConfirm = window.confirm(`Voullez vous supprimez l'image ${id}`)
+    if (windowsConfirm) {
+      try {
+        setIsLoading(true)
+        const request = await fetch(`${apiUrl}/deleteImage/${id}`,
+          {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json", "authorization": `Bearer ${sessionStorage.getItem('token')}` },
+            credentials: "include",
+
+          })
+
+        const data = await request.json()
+        if (request.status === 200) {
+          setDataChanged(true)
+        } else {
+          Toast_invalide("Une erreur lors de la suppression de l'image est survenu")
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
+      finally {
+        setIsLoading(false)
+      }
+
     }
-    finally {
-      setIsLoading(false)
-    }
+
   }
+
+
   return (
     <section className=' w-full h-full shadow-lg  bg-white dark:bg-[#252525] p-2 md:p-5'>
 
@@ -102,17 +120,21 @@ export default function Images() {
         <img className='w-64 h-auto object-cover bg-transparent absolute sm:top-0 sm:right-0 ' src={Astronaute_in_front_of_computer} alt="Astronaute Devant un ordinateur" />
       </div>
       <div>
-        <Table
-          articles={images}
-          articleSelected={articleSelected}
-          handleArticleSelection={handleArticleSelection}
-          selectAllArticle={selectAllArticle}
-          deselectAllArticles={deselectAllArticles}
+        <TableImage
+          images={images}
+          imageSelected={imageSelected}
+          handleImageSelection={handleImageSelection}
+          selectAllImage={selectAllImage}
+          deselectAllImage={deselectAllImage}
           handleSelectAllChange={handleSelectAllChange}
           handleSearch={handleSearch}
           loading={isLoading}
+          deleteArticle={deleteArticle}
         />
       </div>
+
+
+
     </section>
   )
 }

@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import Table from '../Table/Table';
 import { TableUser } from '../Table/TableUser';
-
+import Toast_invalide from '../Toast_invalide/Toast_invalide';
+import Toast_validation from '../Toast_valide/Toast_valide';
+import { FormModal } from '../ActionModal/FormModal';
 export default function Users() {
+
   const [loading, setLoading] = useState(false)
   const [users, setUsers] = useState(null)
   const [userSelected, setUserSelected] = useState([])
+  const [dataChanged, setDataChanged] = useState(false)
+  const [toggle, setToggle] = useState(false)
+  /* State for Retrieve User */
+  const [id, setId] = useState(null)
+
+
   const apiUrl = import.meta.env.VITE_API_URL;
 
   /* Fonctions to handle the selections */
@@ -47,13 +55,48 @@ export default function Users() {
     }
   }
 
+  /* CRUD Function for user */
+
+  const banUser = async (id, name) => {
+
+    const userConfirm = window.confirm(`Voullez vous vraiment Bannir du Site : ${name}`)
+
+    if (userConfirm) {
+
+      try {
+        setLoading(true)
+        const request = await fetch(`${apiUrl}/deleteUser/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json", "authorization": `Bearer ${sessionStorage.getItem('token')}` },
+          credentials: "include",
+        })
+        const response = await request.json();
+
+        if (request.status === 200) {
+
+          console.log(response)
+          setDataChanged(true)
+
+        } else {
+          Toast_invalide("Une erreure lors de la suppression est survenu")
+          console.log(response)
+        }
+      } catch (error) {
 
 
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
+
+    }
+  }
+
+  const OpenModal = async (id) => {
+    setId(id)
+    setToggle(true)
+  }
   /* End of the functions handling Selection  */
-
-
-
-
   useEffect(() => {
     const getAllUser = async () => {
       try {
@@ -63,9 +106,11 @@ export default function Users() {
         if (request.ok) {
           const response = await request.json();
           setUsers(response)
+          setDataChanged(false)
+
         } else {
           setUsers([])
-          console.log("Une erreur est survenu")
+          Toast_invalide("une erreur est survenu")
         }
       } catch (error) {
         setUsers([])
@@ -76,7 +121,7 @@ export default function Users() {
       }
     }
     getAllUser()
-  }, [])
+  }, [dataChanged])
 
   return (
     <section className='w-full h-full shadow-lg  bg-white dark:bg-[#252525] p-2 md:p-5'>
@@ -91,10 +136,14 @@ export default function Users() {
             deselectAllUsers={deselectAllUsers}
             handleSelectAllChange={handleSelectAllChange}
             handleSearch={handleSearch}
+            loading={loading}
+            banUser={banUser}
+            OpenModal={OpenModal}
           />
         </>
       }
-
+      {toggle &&
+        <FormModal id={id} setToggle={setToggle} setDataChanged={setDataChanged} dataChanged={dataChanged} />}
 
 
     </section >

@@ -4,6 +4,7 @@ import Astronaute_in_front_of_computer from "../../assets/images/cute-astronaut-
 import "swiper/css"
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import Toast_invalide from '../Toast_invalide/Toast_invalide';
 
 
 export default function Articles() {
@@ -95,22 +96,35 @@ export default function Articles() {
     getArticle();
   }, [])
 
-  const deleteArticle = async () => {
-    const selectedArticle = articleSelected.map(index => articles[index]._id)
+  const deleteArticle = async (id, title) => {
 
-    try {
-      setIsLoading(true)
-      const response = await fetch(`${apiUrl}/deleteArticle`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ids: selectedArticle })
-        })
-    } catch (error) {
-      console.log(error)
-    }
-    finally {
-      setIsLoading(false)
+    const windowsConfirm = window.confirm(`Voullez vous supprimez l'article sur : ${title}`)
+    if (windowsConfirm) {
+
+      try {
+        setIsLoading(true)
+        const request = await fetch(`${apiUrl}/deleteArticle/${id}`,
+          {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json", "authorization": `Bearer ${sessionStorage.getItem('token')}` },
+            credentials: "include"
+          })
+
+
+        const data = await request.json()
+        if (request.status === 200) {
+          setDataChanged(true)
+
+        } else {
+          Toast_invalide("Une erreur lors de la suppression de l'article est survenu")
+        }
+      } catch (error) {
+        Toast_invalide("Une erreur innatendu est survenu")
+        console.log(error)
+      }
+      finally {
+        setIsLoading(false)
+      }
     }
   }
   return (
@@ -135,6 +149,7 @@ export default function Articles() {
           handleSelectAllChange={handleSelectAllChange}
           handleSearch={handleSearch}
           loading={loading}
+          deleteArticle={deleteArticle}
         />
 
       </div>

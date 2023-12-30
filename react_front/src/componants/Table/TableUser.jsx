@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useContext } from 'react';
+import userContext from '../../Context/userContext';
 
-export const TableUser = ({ users, userSelected, handleUserSelection, selectAllUsers, deselectAllUsers, handleSelectAllChange, handleSearch, loading }) => {
+export const TableUser = ({ users, userSelected, handleUserSelection, selectAllUsers, deselectAllUsers, handleSelectAllChange, handleSearch, loading, banUser, OpenModal }) => {
     const [toogle, setToogle] = useState(false)
-
+    const { userAuth } = useContext(userContext);
     const myStyle = {
         position: "absolute",
         inset: "40px auto 0px 0px",
@@ -108,8 +110,10 @@ export const TableUser = ({ users, userSelected, handleUserSelection, selectAllU
                     {users ?
 
                         users.map((user, index) => {
-                            return (
-                                <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+
+                            return user._id !== userAuth.userId ? (
+
+                                < tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
                                     <td className="w-4 p-4">
                                         <div className="flex items-center">
                                             <input onChange={() => handleUserSelection(index)} id="checkbox-table-search-1"
@@ -134,11 +138,13 @@ export const TableUser = ({ users, userSelected, handleUserSelection, selectAllU
                                     </td>
 
                                     <td className="px-6 py-4 flex justify-between">
-                                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifié</a>
-                                        <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a>
+                                        <a onClick={() => { OpenModal(user._id) }} className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Modifié</a>
+                                        <a onClick={() => { banUser(user._id, user.email) }} className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Supprimer</a>
                                     </td>
                                 </tr>
                             )
+                                : null
+
                         })
                         :
                         <Loader />

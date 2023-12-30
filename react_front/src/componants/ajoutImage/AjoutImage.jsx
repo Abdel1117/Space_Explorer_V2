@@ -97,8 +97,8 @@ export default function AjoutImage() {
             const formData = new FormData();
 
             formData.append("image", images);
-            formData.append("image_desc", imageDes);
-            formData.append("Slug", Slug)
+            formData.append("image_desc", JSON.stringify(imageDes));
+            formData.append("Slug", JSON.stringify(Slug))
             const apiUrl = import.meta.env.VITE_API_URL;
 
             useFetch(`${apiUrl}/ajoutImage`, "POST", formData)

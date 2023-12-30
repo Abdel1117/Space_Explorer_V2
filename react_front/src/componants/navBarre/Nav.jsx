@@ -81,9 +81,9 @@ const Nav = () => {
               <a href="/galerie" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Galerie</a>
               <a href="/forum" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Forum</a>
               <a href="#" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">A venir</a>
-              {userAuth != undefined || userAuth != null &&
-                userAuth.userRole === "Admin" &&
-                <a href="/dashBoard" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">DashBoard</a>
+              {
+                userAuth?.userRole === "Admin" &&
+                <a href="/dashBoard" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</a>
               }
               {
                 userAuth === null || userAuth === undefined ?

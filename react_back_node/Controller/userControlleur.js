@@ -139,8 +139,29 @@ exports.deleteUser = (req, res, next) => {
 }
 
 
-exports.editUser = (req, res, next) => {
+exports.editUser = async (req, res, next) => {
+
     console.log("Edit User Route")
+    const authorization = req.headers.authorization;
+    console.log(authorization)
+
+    try {
+        const id = req.params.id
+        const userFind = User.findById(req.param.id)
+        if (userFind) {
+
+            const updatedUser = req.body
+            console.log(updatedUser)
+            await User.findByIdAndUpdate(id, updatedUser, { new: true })
+            return res.status(200).json({ message: "Changement Effectuer" })
+        } else {
+            return res.status(404).json({ message: "Aucun utilisateur trouvé" })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: "Une erreur est survenu" })
+    }
+
 }
 
 

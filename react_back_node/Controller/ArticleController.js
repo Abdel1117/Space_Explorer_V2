@@ -109,58 +109,41 @@ exports.getUniqueArticle = (req, res, next) => {
 }
 
 
-exports.editArticle = async (req, res, next) => {
+exports.editArticle = async (req, res) => {
     try {
-        const article = await Article.findById(req.params.id);
-
-        if (article) {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
-            } else {
-                let Title = JSON.parse(req.body.titre);
-                let contenu = JSON.parse(req.body.contenu);
-                let Slugs = JSON.parse(req.body.slugs);
-
-                /* Here we take care of the image  */
-
-                const images = []
-                for (let i = 0; i < req.files.length; i++) {
-                    images.push(req.files[i])
-                }
-
-
-                article.Contenu = contenu.map((section, index) => {
-                    let imageExistante = (article.Contenu[index] && article.Contenu[index].image) ? article.Contenu[index].image : null;
-
-                    let newImage;
-                    if (imageExistante == null && images.length > 0) {
-                        newImage = images.shift().path;
-                    } else {
-                        newImage = imageExistante;
-                    }
-
-                    const updatedSection = {
-                        _id: section._id || new mongoose.Types.ObjectId(),
-                        titre: section.titre,
-                        contenu: section.contenu,
-                        image: newImage
-                    };
-
-                    return updatedSection;
-                });
-
-                article.Title = Title;
-                article.Slugs = Slugs;
-                await article.save();
-                res.status(200).json({ message: "Article modifié avec succès" });
-            }
-        } else {
-            return res.status(404).json({ message: "Article introuvable" });
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
+
+        let title = JSON.parse(req.body.titre);
+        let slugs = JSON.parse(req.body.slugs);
+        let contenu = JSON.parse(req.body.contenu)
+
+        const images = req.files.map(file => file.path);
+
+
+        let updatedSections = contenu.map((section, index) => {
+
+            return {
+                _id: section._id || new mongoose.Types.ObjectId(),
+                titre: section.titre,
+                contenu: section.contenu,
+                image: Object.keys(section.image).length !== 0 ? section.image : images.shift()
+            };
+        });
+
+        let update = {
+            Title: title,
+            Slugs: slugs,
+            Contenu: updatedSections
+        };
+
+        await Article.findByIdAndUpdate(req.params.id, update, { new: false });
+        res.status(200).json({ message: "Article modifié avec succès" });
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Une erreur inconnue est survenue" });
+        console.error(error);
+        res.status(500).json({ message: "Une erreur inconnue est survenue" });
     }
 };
 
