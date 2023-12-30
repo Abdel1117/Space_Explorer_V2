@@ -5,7 +5,7 @@ export default function Galerie() {
   const [data, setData] = useState([]);
   const [images, setNumberImage] = useState(10);
   const [load, setLoad] = useState(false)
-  const ApiUrl = import.meta.env.VITE_API_URL
+  const apiUrl = import.meta.env.VITE_API_URL
   const numberOfDivs = 20
   const setPage = () => {
     setNumberImage(images + 10)
@@ -13,7 +13,7 @@ export default function Galerie() {
   }
   function fetchData() {
     setLoad(true)
-    fetch(`${ApiUrl}/getImage`, {
+    fetch(`${apiUrl}/getImage`, {
       method: 'GET',
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -49,7 +49,7 @@ export default function Galerie() {
 
           :
           data && data.map((image, id) =>
-            <img className='min-w-full h-[300px] hover:opacity-70 hover:cursor-pointer xl:first-of-type:col-span-2 xl:first-of-type:row-span-2 xl:first-of-type:h-full object-fill' key={id} src={`${image.image.replace(/\\/g, "/")}`} alt={image.imageDesc} />
+            <img className='min-w-full h-[300px] hover:opacity-70 hover:cursor-pointer xl:first-of-type:col-span-2 xl:first-of-type:row-span-2 xl:first-of-type:h-full object-fill' key={id} src={`${apiUrl}/${image.image.replace(/\\/g, "/")}`} alt={image.imageDesc} />
           )
         }
 

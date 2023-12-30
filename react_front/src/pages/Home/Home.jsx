@@ -5,6 +5,7 @@ import CardNews from '../../componants/cardNews/CardNews';
 import TagsArticleList from '../../componants/tagsArticlesList/TagsArticleList';
 import Carousel from '../../componants/Carousel/Carousel';
 import { SkeletonArticle } from '../../componants/Skeleton/SkeletonArticle/SkeletonArticle';
+import { CookieBanner } from '../../componants/CookieBanner/CookieBanner';
 const Home = () => {
     const [loading, setLoading] = useState(false);
     const [articles, setArticles] = useState(undefined)
@@ -55,7 +56,7 @@ const Home = () => {
 
                         )
                 }
-
+                <CookieBanner />
                 <div className='col-span-12 lg:col-span-3 sm:flex lg:flex-col sm:justify-between lg:absolute lg:top-0 lg:-right-12 xl:right-2 2xl:right-18'>
                     <NewsLetter />
                     <TagsArticleList />

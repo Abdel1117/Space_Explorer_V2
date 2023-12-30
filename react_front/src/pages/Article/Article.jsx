@@ -31,7 +31,7 @@ export default function Article() {
 
 
     return (
-        <section classNaùe="min-h-screen py-4">
+        <section className="min-h-screen py-4">
 
             {loading === true ?
 
@@ -47,7 +47,7 @@ export default function Article() {
                             <h2 className="text-lg md:text-xl xl:text-2xl dark:text-white text-center first-letter:uppercase mb-4 ">{element.titre}</h2>
                             <div className={`flex ${index % 2 === 0 ? 'flex-col md:flex-row' : 'flex-col md:flex-row-reverse'} my-5 md:my-0 mx-4`}>
 
-                                <img src="https://via.placeholder.com/250x250" alt="Une image liée à un article"
+                                <img src={`${apiUrl}/${element.image.replace(/\\/g, "/")}`} alt="Une image liée à un article"
                                     className="object-cover w-50 h-50 md:w-100 md:h-auto" />
                                 <p className=' md:text-base text-black dark:text-white w-fit first-letter:uppercase px-0 md:px-4 '>{element.contenu}</p>
 

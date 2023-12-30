@@ -64,6 +64,7 @@ export const EditImage = () => {
 
     /* Handling of image */
     const handleImageChange = (e, index) => {
+        setImagePreShow(null)
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -338,7 +339,7 @@ export const EditImage = () => {
                                 type="text"
                                 name={`image_desc`}
                                 id={`image_desc`}
-                                value={imageDes}
+                                value={imageDes || ""}
                                 {...register(`image_desc`,
                                     {
 

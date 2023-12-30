@@ -24,9 +24,12 @@ function imageValidation(dossier) {
 
 
         filename: (req, file, callback) => {
-            const name = file.originalname.split(" ").join("_");
-            const extention = MIME_TYPES[file.mimetype];
-            callback(null, name + Date.now() + "." + extention);
+            const name = file.originalname;
+            const nameWithoutExt = path.basename(name, path.extname(name))
+            const extention = path.extname(name)
+            const date = Date.now();
+            const finalName = `${nameWithoutExt}_${date}`
+            callback(null, finalName + extention);
         }
     })
 }

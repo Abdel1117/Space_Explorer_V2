@@ -129,7 +129,7 @@ export const TableImage = ({ images, imageSelected, handleImageSelection, select
                                     </td>
 
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {image.Title === undefined ? "NA" : image.Title}
+                                        {image.image === undefined ? "NA" : image.image}
                                     </th>
 
                                     <td className="px-6 py-4">

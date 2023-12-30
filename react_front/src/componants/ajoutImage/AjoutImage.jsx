@@ -105,6 +105,7 @@ export default function AjoutImage() {
                 .then(response => {
                     if (response.status === 201) {
                         setMessage(response?.data?.message)
+                        setSlug([])
                     }
                     else {
                         setErrorMessage("Une erreur est survenu")

@@ -19,10 +19,10 @@ exports.addArticle = (req, res, next) => {
             let Year = date.getFullYear();
             let dateOfPublication = `${day}-${month}-${Year}`
             if (req.files && req.files.length === contenu.length) {
-
+                console.log(req.files.length)
                 contenu.forEach((element, index) => {
-                    element.image = req.files[index].path
-
+                    const image = req.files[index]
+                    element.image = image.filename
                 });
             }
             const articleEntry = new Article({
@@ -120,7 +120,7 @@ exports.editArticle = async (req, res) => {
         let slugs = JSON.parse(req.body.slugs);
         let contenu = JSON.parse(req.body.contenu)
 
-        const images = req.files.map(file => file.path);
+        const images = req.files.map(file => file.filename);
 
 
         let updatedSections = contenu.map((section, index) => {

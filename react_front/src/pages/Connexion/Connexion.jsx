@@ -57,7 +57,10 @@ export default function Connexion() {
           setErrorsMessages(errorsMsg);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        Toast_invalide("Une erreur est survenu")
+      });
   };
   const deletePopUp = index => {
     const newState = [...errorsMessages]

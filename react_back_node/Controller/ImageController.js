@@ -11,10 +11,11 @@ exports.addImage = (req, res, next) => {
 
     } else {
         const image = req.file;
+        const imageName = image.filename
         const image_desc = JSON.parse(req.body.image_desc);
         const slug_Image = JSON.parse(req.body.Slug);
         const ImageEntry = new Image({
-            image: image.path,
+            image: imageName,
             imageDesc: image_desc,
             Slugs: slug_Image
         })
@@ -51,11 +52,11 @@ exports.deleteImage = (req, res, next) => {
                         return res.status(404).json({ message: "Aucune image correspondant retrouvé" })
                     }
                     else {
-
-                        console.log(result)
                         const filePath = result[0].image;
+
+                        const fullPath = `./image/galerie/${filePath}`
                         // Assurez-vous que 'path' est le bon champ
-                        fs.unlink(filePath, (err) => {
+                        fs.unlink(fullPath, (err) => {
                             if (err) {
                                 console.error(err);
                                 return res.status(500).json({ message: "Erreur lors de la suppression du fichier" });
@@ -73,6 +74,8 @@ exports.deleteImage = (req, res, next) => {
                     }
                 } catch (error) {
                     console.log(error)
+                    return res.status(500).json({ message: "Une erreur est survenu" })
+
                 }
             })
             .catch((e) => {
@@ -92,24 +95,29 @@ exports.editImage = async (req, res, next) => {
         const imageFile = req.file; // Nouveau fichier image, si fourni
         const slugs = req.body.editedSlug ? JSON.parse(req.body.editedSlug) : undefined;
         const imageDesc = req.body.image_desc ? JSON.parse(req.body.image_desc) : undefined;
-        console.log(slugs)
-        const imageId = req.params.id;
-        console.log("Image ID:", imageId);
 
-        console.log("Nouvelles données:", { imageFile, slugs, imageDesc });
+        const imageId = req.params.id;
+
+        const imageName = imageFile.filename
+        console.log(imageName)
+        console.log("Nouvelles données:", { imageName, slugs, imageDesc });
 
         const currentImage = await Image.findById(imageId);
         if (!currentImage) {
             return res.status(404).json({ message: "Image non trouvée" });
         }
-
+        console.log("============")
+        console.log(currentImage)
+        const fullPath = `./image/galerie/${currentImage.image}`
+        console.log("================")
         const updateData = {};
         if (imageFile) {
-            updateData.image = imageFile.path;
+            updateData.image = imageName;
             // Supprimer l'ancien fichier image
             await new Promise((resolve, reject) => {
-                fs.unlink(currentImage.image, err => {
+                fs.unlink(fullPath, err => {
                     if (err) {
+                        console.log(currentImage.image)
                         console.error("Erreur lors de la suppression de l'ancien fichier image", err);
                         reject(err);
                     }
