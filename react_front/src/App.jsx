@@ -23,6 +23,8 @@ import { EditImage } from './componants/EditEntity/EditImage/EditImage'
 import { EditArticle } from './componants/EditEntity/EditArticle/EditArticle'
 import { EditSujet } from './componants/EditEntity/EditSujet/EditSujet'
 import { Spinner } from './componants/Spinner/Spinner'
+import { CookieBanner } from './componants/CookieBanner/CookieBanner';
+import { getCookie, setCookie } from './Functions/CookiesFunction/CookiesFunction'
 
 const PrivateRoutes = () => {
   const { userAuth } = useAuth();
@@ -42,11 +44,26 @@ const PrivateRoutes = () => {
 function App() {
   const { theme, setTheme } = useContext(themeContext);
   const { userAuth, isCheckingToken, isLoading } = useAuth();
+  const [showBannerCookie, setShowBannerCookie] = useState(true)
 
+  const cookie = getCookie("acceptCookie")
+  /* UseEffect to handle the theme of the appplication */
   useEffect(() => {
     const root = window.document.documentElement;
     theme === "light" ? root.classList.remove("dark") : root.classList.add('dark');
   }, [theme])
+
+  /* UseEffect to handle the cookie autorisation in the application */
+  useEffect(() => {
+
+    try {
+
+      cookie === undefined ? setShowBannerCookie(true) : setShowBannerCookie(false)
+    } catch (e) {
+      console.log(e)
+    }
+  }, [cookie, setCookie])
+
 
   if (isLoading) {
     return <Spinner />;
@@ -75,12 +92,15 @@ function App() {
               <Route path='/editSujet/:id' element={<EditSujet />} />
 
             </Route>
-
-
             <Route path='*' element={<Error_404_Page />} />
           </Routes>
         </Suspense>
+        {showBannerCookie === true ?
+          <CookieBanner />
+          : null
+        }
       </main>
+
       <Footer />
     </>
   )

@@ -1,13 +1,16 @@
-import { React, useState, useEffect, useContext, useMemo } from 'react'
+import { React, useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { Spinner } from '../../componants/Spinner/Spinner';
 import { Reponse } from '../../componants/Reponse/Reponse';
+import userContext from '../../Context/userContext';
 export const Sujet = () => {
     const sujetId = useParams()
     const apiUrl = import.meta.env.VITE_API_URL;
     const [loading, setLoading] = useState(false)
     const [sujet, setSujet] = useState(null)
     const [messagePosted, setMessagePosted] = useState(false)
+    const { userAuth } = useContext(userContext)
+
     const getSujetAndResponse = async () => {
 
         try {
@@ -107,11 +110,13 @@ export const Sujet = () => {
                                     null
                             }
                         </div>
+
                         <Reponse
                             sujetId={sujetId}
                             messagePosted={messagePosted}
                             setMessagePosted={setMessagePosted}
                         />
+
                     </section>
             }
         </>
