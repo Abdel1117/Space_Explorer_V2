@@ -1,0 +1,17 @@
+{
+    "presets": [
+        "@babel/preset-env",
+        [
+            "@babel/preset-react",
+            {
+                "pragma": "dom",
+                "pragmaFrag": "DomFrag",
+                "throwIfNamespace": false,
+                "runtime": "classic"
+            }
+        ]
+    ],
+    "plugins": [
+        "transform-import-meta"
+    ]
+}

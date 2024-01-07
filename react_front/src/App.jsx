@@ -62,7 +62,7 @@ function App() {
     } catch (e) {
       console.log(e)
     }
-  }, [cookie, setCookie])
+  }, [setCookie])
 
 
   if (isLoading) {

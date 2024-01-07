@@ -9,8 +9,10 @@ export default defineConfig({
     // https://vitest.dev/config/
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/test/vitest.setup.js'],
+    setupFiles: ['test/vitest.setup.js'],
     include: ['__tests__/**/*.[jt]s?(x)'],
+    exclude: ['**/node_modules/**', '**/dist/**', 'src/test/vitest.setup.js'],
+
   },
 
   server: {
