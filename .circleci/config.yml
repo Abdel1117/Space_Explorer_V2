@@ -9,8 +9,7 @@ jobs:
       name: node/default
       tag: '14.17.0'  # Utilisez la version de Node.js adaptée à votre projet
     steps:
-      
-checkout
+      -checkout
 node/install-packages:
       pkg-manager: npm
 run:
