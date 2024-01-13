@@ -82,8 +82,8 @@ function App() {
             <Route path='/sujet/:id' element={<Sujet />} />
             <Route path='/ajoutSujet' element={<Ajout_Sujet />} />
             <Route path='/article/:id' element={<Article />} />
+            <Route path='/Profil/:id' element={<UserDashBoard />} />
             <Route element={<PrivateRoutes />} >
-              <Route path='/Profil/:id' element={<UserDashBoard />} />
               <Route path="/DashBoard" element={<DashBoard />} />
               <Route path='/ajouterArticle' element={<Ajouter_Article />} />
               <Route path='/ajouterImage' element={<Ajouter_Image />} />

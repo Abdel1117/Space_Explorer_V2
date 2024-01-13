@@ -16,6 +16,7 @@ exports.inscriptionHandler = (req, res, next) => {
         bcrypt.hash(req.body.passwordInput, 10)
             .then(hash => {
                 const user = new User({
+                    pseudo : req.body.pseudo,
                     email: req.body.emailInput,
                     password: hash
                 });

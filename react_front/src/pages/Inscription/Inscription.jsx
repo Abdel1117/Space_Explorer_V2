@@ -111,8 +111,38 @@ export default function Inscription() {
 
                         <h1 className='text-xl xl:text-2xl animate-pulse text-white mb-10'>Rejoindre la communauté de Space Explorer</h1>
                         <form onSubmit={handleSubmit(handleForm)} method="POST" className="space-y-4 md:space-y-6 w-9/12 mx-auto" >
+                        <div>
+                                <label for="pseudo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre Pseudo</label>
+                                <input {...register('pseudo', {
+                                    required: "Veuillez remplir ce champs",
+                                    pattern: {
+                                        value: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/,
+                                        message: "Veuillez renseigner un pseudo valide"
+                                    }
+                                })}
+                                    onChange={handleChange}
+                                    value={form.pseudo}
+                                    type="pseudo"
+                                    required={true}
+                                    name="pseudo"
+                                    id="pseudo"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 focus:shadow-input_neupho"
+                                    placeholder="MonPseudo123"
+
+                                />
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="pseudo"
+                                    render={({ messages }) =>
+                                        messages &&
+                                        Object.entries(messages).map(([type, message]) => (
+                                            <p style={{ color: "red" }} key={type}>{message}</p>
+                                        ))
+                                    }
+                                />
+                            </div>
                             <div>
-                                <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                                <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre Email</label>
                                 <input {...register('emailInput', {
                                     required: "Veuillez remplir ce champs",
                                     pattern: {
@@ -123,7 +153,7 @@ export default function Inscription() {
                                     onChange={handleChange}
                                     value={form.email}
                                     type="email"
-                                    required=""
+                                    required={true}
                                     name="emailInput"
                                     id="email"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 focus:shadow-input_neupho"
@@ -142,7 +172,7 @@ export default function Inscription() {
                                 />
                             </div>
                             <div>
-                                <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
                                 <input
                                     {...register('passwordInput', {
                                         required: "Veuillez remplir ce champs",
@@ -152,12 +182,13 @@ export default function Inscription() {
                                         }
                                     })}
                                     onChange={handleChange}
+                                    required={true}
                                     value={form.passwordInput}
                                     type="password"
                                     name="passwordInput"
                                     id="password"
                                     placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 focus:shadow-input_neupho"
-                                    required=""
+                                    
                                 />
                                 <ErrorMessage
                                     errors={errors}
@@ -171,7 +202,7 @@ export default function Inscription() {
                                 />
                             </div>
                             <div>
-                                <label for="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
+                                <label for="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmer votre mot de passe</label>
                                 <input
                                     {...register('confirm_passwordInput',
                                         {
