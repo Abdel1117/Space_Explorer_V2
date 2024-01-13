@@ -46,7 +46,7 @@ function App() {
   const { userAuth, isCheckingToken, isLoading } = useAuth();
   const [showBannerCookie, setShowBannerCookie] = useState(true)
 
-  const cookie = getCookie("acceptCookie")
+
   /* UseEffect to handle the theme of the appplication */
   useEffect(() => {
     const root = window.document.documentElement;
@@ -55,7 +55,7 @@ function App() {
 
   /* UseEffect to handle the cookie autorisation in the application */
   useEffect(() => {
-
+    const cookie = getCookie("acceptCookie")
     try {
 
       cookie === undefined ? setShowBannerCookie(true) : setShowBannerCookie(false)
@@ -95,9 +95,8 @@ function App() {
             <Route path='*' element={<Error_404_Page />} />
           </Routes>
         </Suspense>
-        {showBannerCookie === true ?
+        {showBannerCookie &&
           <CookieBanner />
-          : null
         }
       </main>
 
