@@ -1,17 +1,28 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.1.0
+
 jobs:
-  build: 
-    executor: node/default 
+  build:
+    executor:
+      name: node/default
+      tag: '14.17.0'  # Utilisez la version de Node.js adaptée à votre projet
     steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: npm
-      - run:
-          command: npm run test
-          name: Run tests
-      - run:
-          command: npm run build
-          name: Build app
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - .
+      
+checkout
+node/install-packages:
+      pkg-manager: npm
+run:
+    name: Run Tests
+    command: npm test
+run:
+  name: Build App
+  command: npm run build
+
+workflows:
+  version: 2
+  build_workflow:
+    jobs:
+      
+build
