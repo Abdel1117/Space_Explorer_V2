@@ -17,10 +17,7 @@ jobs:
           name: Run Backend Tests
           command: npm run test
           working_directory: react_back_node
-      - run:
-          name: Build Backend
-          command: npm run build
-          working_directory: react_back_node
+    
 
   build_and_test_frontend:
     executor:
