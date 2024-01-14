@@ -4,23 +4,45 @@ orbs:
   node: circleci/node@4.1.0
 
 jobs:
-  build:
+  build_and_test_backend:
     executor:
       name: node/default
-      tag: '18.17.0'  
+      tag: '18.17.0'
     steps:
-      -checkout
-node/install-packages:
-      pkg-manager: npm
-run:
-    name: Run Tests
-    command: npm test
-run:
-  name: Build App
-  command: npm run build
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+          app-dir: react_back_node
+      - run:
+          name: Run Backend Tests
+          command: npm run test
+          working_directory: react_back_node
+      - run:
+          name: Build Backend
+          command: npm run build
+          working_directory: react_back_node
+
+  build_and_test_frontend:
+    executor:
+      name: node/default
+      tag: '18.17.0'
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+          app-dir: react_front
+      - run:
+          name: Run Frontend Tests
+          command: npm test
+          working_directory: react_front
+      - run:
+          name: Build Frontend
+          command: npm run build
+          working_directory: react_front
 
 workflows:
   version: 2
-  build_workflow:
+  build_and_test_workflow:
     jobs:
-      -build
+      - build_and_test_backend
+      - build_and_test_frontend
