@@ -29,19 +29,18 @@ const Nav = () => {
           <div className="flex items-center justify-between py-4">
             <div>
               <a href="/">
-
                 <img className='w-20 h-10 object-cover cursor-pointer hover:animate-pulse' src={SpaceExplorer} alt="Logo_Space_Explorer" />
               </a>
             </div>
 
             <div className="hidden sm:flex sm:items-center">
-              <a href="/" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 hover:underline mr-4">Accueil</a>
-              <a href="/galerie" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Galerie</a>
-              <a href="/forum" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Forum</a>
-              <a href="#" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600  hover:underline mr-4">A venir</a>
+              <a href="/" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600 hover:underline mr-4">Accueil</a>
+              <a href="/galerie" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Galerie</a>
+              <a href="/forum" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Forum</a>
+              <a href="/soutenir" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Me Soutenir</a>
               {
                 userAuth?.userRole === "Admin" &&
-                <a href="/dashBoard" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</a>
+                <a href="/dashBoard" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</a>
               }
             </div>
             {
@@ -49,18 +48,18 @@ const Nav = () => {
 
                 < div className="hidden sm:flex sm:items-center">
                   <a href="/connexion" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
-                  <a href="/inscription" className="text-gray-800 dark:text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">S'inscrire</a>
+                  <a href="/inscription" className="text-gray-800 dark:text-white text-sm font-semibold border px-2 md:px-4 py-1 md:py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">S'inscrire</a>
                 </div>
                 :
 
                 <div className="hidden sm:flex sm:items-center">
                   <a href={`/profil/${userAuth.userId}`}
-                    className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4 px-4 py-2 rounded-lg border border-transparent hover:border-white ">
+                    className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600 mr-4 px-2 md:px-4 py-1 rounded-lg border border-transparent hover:border-white ">
                     Mon Profil
                   </a>
                   <a
                     onClick={() => logout()}
-                    className="text-gray-800 dark:text-white text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">
+                    className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold border px-2 md:px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">
                     Se Déconnecter
                   </a>
 
@@ -80,10 +79,10 @@ const Nav = () => {
               <a href="/" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Accueil</a>
               <a href="/galerie" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Galerie</a>
               <a href="/forum" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Forum</a>
-              <a href="#" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">A venir</a>
+              <a href="/soutenir" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Me Soutenir</a>
               {
                 userAuth?.userRole === "Admin" &&
-                <a href="/dashBoard" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</a>
+                <a href="/dashBoard" className="text-gray-800 dark:text-white md:text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</a>
               }
               {
                 userAuth === null || userAuth === undefined ?

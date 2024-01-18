@@ -19,6 +19,7 @@ import { themeContext } from "./Context/themeContext"
 import Error_404_Page from './pages/404/Error_404_Page'
 import Ajouter_Image from './pages/AjouterImage/Ajouter_Image'
 import Article from './pages/Article/Article'
+import { MeSoutenir } from "./pages/MeSoutenir/MeSoutenir"
 import { EditImage } from './componants/EditEntity/EditImage/EditImage'
 import { EditArticle } from './componants/EditEntity/EditArticle/EditArticle'
 import { EditSujet } from './componants/EditEntity/EditSujet/EditSujet'
@@ -83,6 +84,7 @@ function App() {
             <Route path='/ajoutSujet' element={<Ajout_Sujet />} />
             <Route path='/article/:id' element={<Article />} />
             <Route path='/Profil/:id' element={<UserDashBoard />} />
+            <Route path="/soutenir" element={<MeSoutenir />} />
             <Route element={<PrivateRoutes />} >
               <Route path="/DashBoard" element={<DashBoard />} />
               <Route path='/ajouterArticle' element={<Ajouter_Article />} />

@@ -6,6 +6,6 @@ describe("Galerie", () => {
         render(<Galerie />)
         const galerieElement = screen.getAllByText("Moins d'image")
         expect(galerieElement.length).toBeGreaterThan(0);
-
     })
 });
+
