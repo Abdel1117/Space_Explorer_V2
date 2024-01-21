@@ -1,5 +1,6 @@
 import { expect } from "vitest";
 import Home from "../src/pages/Home/Home"
+import Article from "../src/componants/Article/Article"
 import { render, screen } from '@testing-library/react';
 
 describe("Home", () => {
@@ -12,3 +13,13 @@ describe("Home", () => {
 
     })
 });
+
+
+describe("Article rendering in homme", () => {
+    it("render article in home page", () => {
+
+        render(<Article />)
+    })
+
+
+})

@@ -8,11 +8,13 @@ export default defineConfig({
   test: {
     // https://vitest.dev/config/
     globals: true,
-    environment: 'jsdom',
+    environment: 'happy-dom',
     setupFiles: ['test/vitest.setup.js'],
     include: ['__tests__/**/*.[jt]s?(x)'],
     exclude: ['**/node_modules/**', '**/dist/**', 'src/test/vitest.setup.js'],
-
+    coverage: {
+      provider: 'istanbul',
+    },
   },
 
   server: {

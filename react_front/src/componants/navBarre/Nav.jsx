@@ -3,12 +3,13 @@ import { useContext } from 'react';
 import { useState, useEffect } from 'react';
 import userContext from '../../Context/userContext';
 import SpaceExplorer from "../../../public/favicon.png"
+import { useNavigate } from 'react-router-dom';
 
 
 const Nav = () => {
   const { userAuth, logout } = useContext(userContext);
   const [toogle, setToogle] = useState(false);
-
+  const navigate = useNavigate()
 
   const resetToogle = () => {
     const innerWidth = window.innerWidth
@@ -34,34 +35,34 @@ const Nav = () => {
             </div>
 
             <div className="hidden sm:flex sm:items-center">
-              <a href="/" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600 hover:underline mr-4">Accueil</a>
-              <a href="/galerie" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Galerie</a>
-              <a href="/forum" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Forum</a>
-              <a href="/soutenir" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Me Soutenir</a>
+              <button onClick={() => { navigate("/") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600 hover:underline mr-4">Accueil</button>
+              <button onClick={() => { navigate("/galerie") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Galerie</button>
+              <button onClick={() => { navigate("/forum") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Forum</button>
+              <button onClick={() => { navigate("/soutenir") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Me Soutenir</button>
               {
                 userAuth?.userRole === "Admin" &&
-                <a href="/dashBoard" className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</a>
+                <button onClick={() => { navigate("/dashBoard") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</button>
               }
             </div>
             {
               userAuth === null || userAuth === undefined ?
 
                 < div className="hidden sm:flex sm:items-center">
-                  <a href="/connexion" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
-                  <a href="/inscription" className="text-gray-800 dark:text-white text-sm font-semibold border px-2 md:px-4 py-1 md:py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">S'inscrire</a>
+                  <button onClick={() => { navigate("/connexion") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mr-4">Connexion</button>
+                  <button onClick={() => { navigate("/inscription") }} className="text-gray-800 dark:text-white text-sm font-semibold border px-2 md:px-4 py-1 md:py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">S'inscrire</button>
                 </div>
                 :
 
                 <div className="hidden sm:flex sm:items-center">
-                  <a href={`/profil/${userAuth.userId}`}
+                  <button onClick={() => { navigate(`/profil/${userAuth.userId}`) }}
                     className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600 mr-4 px-2 md:px-4 py-1 rounded-lg border border-transparent hover:border-white ">
                     Mon Profil
-                  </a>
-                  <a
+                  </button>
+                  <button
                     onClick={() => logout()}
                     className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold border px-2 md:px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">
                     Se Déconnecter
-                  </a>
+                  </button>
 
 
                 </div>
@@ -76,31 +77,31 @@ const Nav = () => {
 
           <div className={` ${toogle ? "block" : "hidden"} bg-white dark:bg-[#1C1E21] border-t-2 py-2`} >
             <div className="flex flex-col">
-              <a href="/" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Accueil</a>
-              <a href="/galerie" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Galerie</a>
-              <a href="/forum" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Forum</a>
-              <a href="/soutenir" className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Me Soutenir</a>
+              <button onClick={() => { navigate("/") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Accueil</button>
+              <button onClick={() => { navigate("/galerie") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Galerie</button>
+              <button onClick={() => { navigate("/forum") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Forum</button>
+              <button onClick={() => { navigate("/soutenir") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Me Soutenir</button>
               {
                 userAuth?.userRole === "Admin" &&
-                <a href="/dashBoard" className="text-gray-800 dark:text-white md:text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</a>
+                <button onClick={() => { navigate("/dashBoard") }} className="text-gray-800 dark:text-white md:text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</button>
               }
               {
                 userAuth === null || userAuth === undefined ?
                   <div className="flex justify-between items-center border-t-2 pt-2">
-                    <a href="/connexion" className="text-gray-800 dark:text-white dark:hover:text-purple-600 text-sm font-semibold hover:text-purple-600 mr-4">Connexion</a>
-                    <a href="/inscription" className="text-gray-800  dark:text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Inscription</a>
+                    <button onClick={() => { navigate("/connexion") }} className="text-gray-800 dark:text-white dark:hover:text-purple-600 text-sm font-semibold hover:text-purple-600 mr-4">Connexion</button>
+                    <button onClick={() => { navigate("/inscription") }} className="text-gray-800  dark:text-white text-sm font-semibold border px-4 py-1 rounded-lg hover:text-purple-600 hover:border-purple-600">Inscription</button>
                   </div>
                   :
-                  <div className="flex justify-between items-center border-t-2 pt-2">
-                    <a href={`/profil/:${userAuth.userId}`} className="text-gray-800  dark:text-white  text-sm font-semibold hover:text-purple-600 mr-4">Mon Profil</a>
-                    <a onClick={() => logout()} className="text-gray-800 dark:text-white  text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">Se Déconnecter</a>
 
+                  <div className="flex justify-between items-center border-t-2 pt-2">
+                    <button onClick={() => { navigate(`/profil/${userAuth.userId}`) }} className="text-gray-800  dark:text-white  text-sm font-semibold hover:text-purple-600 mr-4"> Mon Profil </button>
+                    <button onClick={() => logout()} className="text-gray-800 dark:text-white  text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 cursor-pointer">Se Déconnecter</button>
                   </div>
               }
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </nav >
   );
 }

@@ -1,20 +1,24 @@
 services:
   react_front:
     build:
-      context: .
-      dockefile: Dockerfile.space_explorer_front
+      context: ./react_front
+      dockerfile: Dockerfile.space_explorer_front
     ports:
       - "5173:5173"
     depends_on:
       - db
+    volumes:
+      - ./react_front/:/react_front/
   react_back_node:
     build:
-      context: ./server
+      context: ./react_back_node
       dockerfile: Dockerfile.space_explorer_back
     ports:
       - "4000:4000"
     depends_on:
       - db
+    volumes:
+      - ./react_back_node:/react_back_node
   db:
     volumes:
       - space-explorer-db:/data/db

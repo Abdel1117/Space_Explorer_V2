@@ -49,7 +49,7 @@ export default function Galerie() {
 
           :
           data && data.map((image, id) =>
-            <img className='min-w-full h-[300px] hover:opacity-70 hover:cursor-pointer xl:first-of-type:col-span-2 xl:first-of-type:row-span-2 xl:first-of-type:h-full object-fill' key={id} src={`${apiUrl}/${image.image.replace(/\\/g, "/")}`} alt={image.imageDesc} />
+            <img className='min-w-full h-[300px] hover:opacity-70 hover:cursor-pointer object-cover' key={id} src={`${apiUrl}/${image.image.replace(/\\/g, "/")}`} alt={image.imageDesc} />
           )
         }
 

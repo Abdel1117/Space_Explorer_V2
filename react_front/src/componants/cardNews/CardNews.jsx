@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 export default function CardNews({ index, title, slugs, para, }) {
 
-
+    const navigate = useNavigate()
     const Title = title
     const Slugs = slugs
     const resumer = para
@@ -37,8 +37,8 @@ export default function CardNews({ index, title, slugs, para, }) {
                 <div className='mt-1 dark:text-white'>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis dolorum amet impedit quaerat, ratione nemo reiciendis voluptatum sit eaque perspiciatis molestias odit recusandae vel nobis corporis quis earum dolores. Sed?</p>
                 </div>
-                <button className='bg-black dark:bg-white dark:hover:bg-black dark:text-black text-white hover:bg-white hover:text-black transition-all duration-300 p-4 dark:hover:text-white mt-5'>
-                    <a href={`article/${index}`}>Lire la suite</a>
+                <button onClick={() => { navigate(`article/${index}`) }} className='bg-black dark:bg-white dark:hover:bg-black dark:text-black text-white hover:bg-white hover:text-black transition-all duration-300 p-4 dark:hover:text-white mt-5'>
+                    Lire la suite
                 </button>
             </div>
         </article >

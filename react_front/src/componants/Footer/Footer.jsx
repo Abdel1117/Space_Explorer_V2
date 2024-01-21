@@ -1,31 +1,32 @@
 import React from 'react'
 import Space_Explorer from "../../../public/favicon.png"
 import ThemeButton from '../ThemeButton/ThemeButton'
+import { useNavigate } from 'react-router-dom'
 export default function Footer() {
-
+    const navigate = useNavigate()
     const getFullYear = () => {
         return new Date().getFullYear()
     }
 
     return (
         <footer className="p-4 bg-white shadow md:px-6 md:py-8 dark:bg-[#1C1E21] ">
-            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between">
-                <a href="/" className="flex items-center mb-4 sm:mb-0 mr-14 md:mr-0">
+            <div className="flex flex-col lg:flex-row items-center justify-center sm:justify-between">
+                <button onClick={() => { navigate("/") }} className="flex items-center mb-4 sm:mb-0 mr-14 md:mr-0">
                     <img src={Space_Explorer} className="w-14 h-14 md:mr-3 hover:animate-pulse" alt="Flowbite Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Space Explorer</span>
-                </a>
+                </button>
                 <ul className="flex flex-wrap flex-col  sm:flex-row items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
                     <li>
-                        <a href="/mentions_Legales" className="mr-4 hover:underline md:mr-6 ">Mentions légales</a>
+                        <button onClick={() => { navigate("/mentions_Legales") }} className="mr-4 hover:underline md:mr-6 ">Mentions légales</button>
                     </li>
                     <li>
-                        <a href="/politique_de_confidentialité" className="mr-4 hover:underline md:mr-6">Politique de confidentialité</a>
+                        <button onClick={() => { navigate("/politique_de_confidentialité") }} className="mr-4 hover:underline md:mr-6">Politique de confidentialité</button>
                     </li>
                     <li>
-                        <a href="#" className="mr-4 hover:underline md:mr-6 ">Licensing</a>
+                        <button onClick={() => { navigate("Mentions_légales_de_Vente") }} className="mr-4 hover:underline md:mr-6 ">Licensing</button>
                     </li>
                     <li>
-                        <a href="/contact" className="hover:underline">Nous contacter</a>
+                        <button onClick={() => { navigate("/contact") }} className="hover:underline">Nous contacter</button>
                     </li>
                     <li>
                         <ThemeButton />
@@ -35,6 +36,6 @@ export default function Footer() {
             <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
             <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">@ {getFullYear()} <a href="https://flowbite.com/" className="hover:underline">Space Explorer</a>. Tous droits réservés.
             </span>
-        </footer>
+        </footer >
     )
 }
