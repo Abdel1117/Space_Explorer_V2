@@ -6,9 +6,8 @@ services:
     ports:
       - "5173:5173"
     depends_on:
-      - db
-    volumes:
-      - ./react_front/:/react_front/
+      - react_back_node
+
   react_back_node:
     build:
       context: ./react_back_node
@@ -17,8 +16,7 @@ services:
       - "4000:4000"
     depends_on:
       - db
-    volumes:
-      - ./react_back_node:/react_back_node
+
   db:
     volumes:
       - space-explorer-db:/data/db

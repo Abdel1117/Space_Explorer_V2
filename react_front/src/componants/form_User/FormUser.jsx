@@ -1,27 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import _ from "lodash/fp";
-
-export default function FormUser() {
+import Toast_invalide from '../Toast_invalide/Toast_invalide';
+import Toast_validation from '../Toast_valide/Toast_valide';
+import { useParams } from 'react-router-dom';
+import { useFetch } from '../../Hooks/useFetch';
+export default function FormUser({ user }) {
   const [imageProfil, setImageProfil] = useState(null)
   const [imagePreShow, setImagePreShow] = useState(null)
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+
+  const userId = useParams();
+
   const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
     criteriaMode: 'all',
 
   });
-
+  const apiUrl = import.meta.env.VITE_API_URL
+  const dataUser = { user }
   const sendForm = (e) => {
     try {
       setLoading(true)
       const formData = new FormData();
       formData.append("imageProfil", imageProfil)
       const apiUrl = import.meta.env.VITE_API_URL;
-      useFetch(`${apiUrl}/profilImage/${id}`, "POST", formData)
+      useFetch(`${apiUrl}/editAvatar/${userId.id}`, "PUT", formData)
         .then(response => {
-          if (response.status === 201) {
+          if (response.status === 200) {
             setMessage(response?.data?.message)
           }
           else {
@@ -68,7 +75,9 @@ export default function FormUser() {
     const newState = ""
     setError(newState)
   }
-
+  useEffect(() => {
+    console.log(dataUser.user)
+  }, [])
   return (
     <div className='block w-full '>
 
@@ -77,8 +86,8 @@ export default function FormUser() {
           <Toast_validation
             message={message}
             options={true}
-            doYesAction={resetAll}
-            doNoAction={() => { location.href = "/dashBoard" }}
+            doYesAction={setMessage(null)}
+            doNoAction={setMessage(null)}
           />
         }
         {error &&
@@ -89,7 +98,13 @@ export default function FormUser() {
             Information de l'utilisateur
           </h6>
           <div className='w-full md:w-4/12 my-4 px-1 md:px-4 '>
-            <img src={`${imagePreShow != null ? imagePreShow : "../../src/assets/icon_svg/defaultAvatar.jpg"}`} className='mb-2 w-[100px] h-[100px] lg:w-[100px] lg:h-[100px] border-4 dark:border-white rounded-full' alt="Image du profil" />
+            <img src={
+              imagePreShow != null
+                ? imagePreShow
+                : dataUser.user.avatar !== undefined
+                  ? `${apiUrl}/${dataUser.user.avatar.replace(/\\/g, "/")}`
+                  : "../../src/assets/icon_svg/defaultAvatar.jpg"
+            } className='mb-2 w-[100px] h-[100px] lg:w-[100px] lg:h-[100px] border-4 dark:border-white rounded-full' alt="Image du profil" />
 
             <div className=''>
               <input

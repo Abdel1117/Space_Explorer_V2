@@ -36,6 +36,7 @@ app.use(cookieParser());
 
 app.use('/', express.static(path.join(__dirname, '/image/galerie')));
 app.use('/', express.static(path.join(__dirname, '/image/image_article')));
+app.use('/', express.static(path.join(__dirname, '/image/avatar')));
 
 
 app.use(bodyParser.json({ limit: "100mb" }));

@@ -53,7 +53,9 @@ const Home = () => {
                         :
 
                         articles?.map((article, index) =>
-                            <CardNews key={index} index={article?._id} title={article?.Title} slugs={article?.Slugs} />
+                            <CardNews key={index} index={article?._id} title={article?.Title} slugs={article?.Slugs}
+                                image={article?.Contenu[0]?.image}
+                            />
 
                         )
                 }

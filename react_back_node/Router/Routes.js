@@ -27,6 +27,7 @@ router.get("/refreshToken", refreshTokenController.handleRefreshToken);
 router.get("/userProfil/:id", userControlleur.getInfo)
 router.get("/getAllUsers", userControlleur.getAllUsers)
 router.put("/editUser/:id", userControlleur.editUser)
+router.put("/editAvatar/:id", upload("avatar").single('imageProfil'), userControlleur.editAvatar)
 router.delete("/deleteUser/:id", userControlleur.deleteUser)
 /* Article CRUD */
 router.get("/", articleController.getArticle);

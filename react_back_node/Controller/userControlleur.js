@@ -2,6 +2,7 @@ const User = require('../Model/userShema');
 const bcrypt = require("bcrypt");
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const fs = require("fs")
 
 exports.inscriptionHandler = (req, res, next) => {
 
@@ -16,7 +17,7 @@ exports.inscriptionHandler = (req, res, next) => {
         bcrypt.hash(req.body.passwordInput, 10)
             .then(hash => {
                 const user = new User({
-                    pseudo : req.body.pseudo,
+                    pseudo: req.body.pseudo,
                     email: req.body.emailInput,
                     password: hash
                 });
@@ -148,7 +149,7 @@ exports.editUser = async (req, res, next) => {
 
     try {
         const id = req.params.id
-        const userFind = User.findById(req.param.id)
+        const userFind = User.findById(req.params.id)
         if (userFind) {
 
             const updatedUser = req.body
@@ -165,7 +166,49 @@ exports.editUser = async (req, res, next) => {
 
 }
 
+exports.editAvatar = async (req, res, next) => {
+    const id = req.params.id
+    console.log(id)
+    const userFind = User.findById(req.params.id)
+    if (userFind) {
+        const newImage = req.file
+        const newImagePath = newImage.filename
+        console.log(newImagePath)
+        if (newImage) {
+            // Supprimer l'ancien avatar de l'utilisateur 
+            const currentAvatar = await User.findById(req.params.id)
+            console.log("=============================")
+            console.log(currentAvatar)
+            console.log("=============================")
+            if (currentAvatar.avatar) {
+                await new Promise((resolve, reject) => {
+                    const fullPath = `./image/avatar/${currentAvatar.avatar}`
+                    fs.unlink(fullPath, err => {
+                        if (err) {
+                            console.error("Erreur lors de la suppression de l'ancien fichier image", err);
+                            reject(err);
+                        }
+                        resolve();
+                    });
+                });
+                const newCollection = await User.findByIdAndUpdate(id, { avatar: newImage.filename }, { new: true })
+                console.log(newCollection)
 
+            } else {
+                console.log("qisdjiqsjd")
+
+                const newCollection = await User.findByIdAndUpdate(id, { avatar: newImage.filename }, { new: true })
+                console.log(newCollection)
+                console.log("======================")
+
+            }
+            return res.status(200).json({ message: "Changement d'avatar effectué" })
+        }
+
+    } else {
+        return res.status(404).json({ message: "Aucun utilisateur trouvé" })
+    }
+}
 exports.getInfo = (req, res, next) => {
     User.findById({ _id: req.params.id })
         .then(user => res.status(200).json(user))

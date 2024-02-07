@@ -5,7 +5,7 @@ import { FcHome, FcBusinessman, FcBusinesswoman, FcConferenceCall, FcFeedback, F
 export default function aside(props) {
 
     const { blockSection, setBlockSection } = props;
-
+    const apiUrl = import.meta.env.VITE_API_URL
 
     return (
         <>
@@ -18,7 +18,12 @@ export default function aside(props) {
                     <aside className='w-full md:w-2/6 lg:2/6  xl:w-[350px] shadow-lg border min-h-[500px] md:ml-5 mb-4 md:mb-0 rounded-lg dark:text-white bg-[#fafafa ] dark:bg-[#252525]'>
 
                         <div className='flex flex-col lg:flex-row ml-2 mt-2 '>
-                            <img src="..\..\src\assets\icon_svg\defaultAvatar.jpg" alt="image_profil" className='rounded-full w-20 h-auto x' />
+                            {props.data.avatar != undefined ?
+
+                                <img src={`${apiUrl}/${props.data.avatar.replace(/\\/g, "/")}`} alt="image_profil" className='rounded-full w-20 h-auto x' />
+                                :
+                                <img src="..\..\src\assets\icon_svg\defaultAvatar.jpg" alt="image_profil" className='rounded-full w-20 h-auto x' />
+                            }
                             <div className='block lg:ml-3 my-auto'>
                                 <p className='text-xs md:text-md font-bold'>{props.data.email}</p>
                                 <p className='text-xs md:text-md mt-2 md:mt-0 text-gray-400 -'>id: {props.data._id}</p>

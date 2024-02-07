@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-export default function CardNews({ index, title, slugs, para, }) {
+export default function CardNews({ index, title, slugs, para, image }) {
 
     const navigate = useNavigate()
     const Title = title
     const Slugs = slugs
     const resumer = para
-
+    const apiUrl = import.meta.env.VITE_API_URL
+    useEffect(() => {
+        console.log(image)
+    }, [])
     return (
         <article className='bg-slate-500 col-span-12 lg:col-span-8 mx-auto'>
             <div>
-                <img className='max-h-[350px] w-full object-cover' src="https://media.kasperskydaily.com/wp-content/uploads/sites/93/2019/09/16125613/internet-in-space-featured.jpg" alt="" />
+                <img className='max-h-[350px] w-full object-cover' src={`${apiUrl}/${image}`} alt="" />
 
             </div>
             <div className='p-2 md:p-4'>

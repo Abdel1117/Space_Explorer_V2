@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import userContext from '../../Context/userContext';
+import { BouttonBackWard } from '../../componants/BouttonBackWard/BouttonBackWard';
 export default function Article() {
     const { userAuth } = useContext(userContext);
     const articleId = useParams()
@@ -53,7 +54,7 @@ export default function Article() {
                             </div>
                         </div>
                     ))}
-
+                    <BouttonBackWard />
                 </article>
             }
         </section>

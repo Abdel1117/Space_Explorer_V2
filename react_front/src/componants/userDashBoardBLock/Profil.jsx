@@ -1,9 +1,9 @@
 import React from 'react'
 import FormUser from '../form_User/FormUser'
-const Profil = () => {
+const Profil = ({ user }) => {
   return (
     <div>
-        <FormUser />
+      <FormUser user={user} />
 
     </div>
   )

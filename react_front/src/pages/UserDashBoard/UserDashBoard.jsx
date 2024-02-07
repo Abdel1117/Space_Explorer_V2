@@ -53,7 +53,7 @@ export const UserDashBoard = () => {
                                 <Accueil /> :
 
                                 (blockSection === "Profil") ?
-                                    <Profil /> :
+                                    <Profil user={data} /> :
 
                                     (blockSection === "Amis") ?
                                         <Amis /> :
