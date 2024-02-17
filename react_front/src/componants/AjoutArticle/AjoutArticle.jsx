@@ -5,6 +5,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import _ from "lodash/fp";
 import Toast_validation from '../Toast_valide/Toast_valide';
 import Toast_invalide from '../Toast_invalide/Toast_invalide';
+import { useNavigate } from 'react-router-dom';
 
 export default function AjoutArticle() {
   const [article, setArticle] = useState({});
@@ -20,6 +21,8 @@ export default function AjoutArticle() {
     criteriaMode: 'all',
 
   });
+
+  const navigate = useNavigate()
   /* Handling Section  */
   const addSection = () => {
     const nouvelleSection = {
@@ -102,19 +105,26 @@ export default function AjoutArticle() {
         .then(response => {
           if (response.status === 201) {
             setMessage(response.data.message)
-            window.location.href = "/dashboard"
+            setTimeout(() => {
+              navigate("/dashboard")
+            }, 3000);
+
           }
           else {
-            setErrorMessage("Une erreur inconnu est survenu")
+            setErrorMessage("Une erreur lors de l'insertion de l'article est survenu")
           }
         })
     } catch (err) {
+      setErrorMessage("Une erreur inconnu est survenu")
       console.log(err)
     }
   }
 
 
-
+  const validateSectionLength = (text) => {
+    const length = text.length;
+    return length >= 400 && length <= 4000 ? true : "Veuillez écrire une section d'article avec au minimum 400 caractères et au maximum 4000 caractères";
+  };
   const countingChar = (section) => {
     let value = section;
     return value.length
@@ -153,7 +163,7 @@ export default function AjoutArticle() {
 
             {errors.Article_title && (
 
-              <p className='dark:text-white font-bold text-red-600 '>{errors?.Article_title?.message}</p>)}
+              <p className=' font-bold text-red-500 '>{errors?.Article_title?.message}</p>)}
 
 
           </div>
@@ -239,7 +249,7 @@ export default function AjoutArticle() {
             <div className=' '>
 
               {errors.Slug && (
-                <p className="dark:text-white font-bold text-red-600 ">Veuillez sélectionner au moins un Slug pour l'article en question</p>
+                <p className=" font-bold text-red-500 ">Veuillez sélectionner au moins un Slug pour l'article en question</p>
               )}
 
 
@@ -281,7 +291,7 @@ export default function AjoutArticle() {
               </>
               <>
                 {errors[`Section_titre${index}`] && (
-                  <p className='dark:text-white text-red-600 font-bold text-sm md:text-md ml-1 mt-2'>{errors[`Section_titre${index}`]?.message}</p>
+                  <p className=' text-red-600 font-bold text-sm md:text-md ml-1 mt-2'>{errors[`Section_titre${index}`]?.message}</p>
                 )}
               </>
             </div>
@@ -300,10 +310,7 @@ export default function AjoutArticle() {
                 value={section.contenu}
                 {...register(`Section_${index}`, {
                   required: "Veuillez taper une section d'article",
-                  pattern: {
-                    value: /^.{400,4000}$/,
-                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 4000 charactères"
-                  }
+                  validate: validateSectionLength
                 })}
                 onChange={(e) => {
                   const text = e.target.value
@@ -319,7 +326,7 @@ export default function AjoutArticle() {
               </>
               <>
                 {errors[`Section_${index}`] && (
-                  <p className='dark:text-white text-red-600 font-bold text-sm md:text-md ml-1 mt-2'>{errors[`Section_${index}`]?.message}</p>
+                  <p className=' text-red-500 font-bold text-sm md:text-md ml-1 mt-2'>{errors[`Section_${index}`]?.message}</p>
                 )}
               </>
 
@@ -355,7 +362,7 @@ export default function AjoutArticle() {
 
                 <>
                   {errors[`Image_Section_${index}`] && (
-                    <p className='dark:text-white text-red-600 font-bold text-sm md:text-md  mt-2'>{errors[`Image_Section_${index}`]?.message}</p>
+                    <p className=' text-red-500 font-bold text-sm md:text-md  mt-2'>{errors[`Image_Section_${index}`]?.message}</p>
                   )}
                 </>
               </div>

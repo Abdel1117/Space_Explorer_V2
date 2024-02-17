@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import Toast_valide from '../../componants/Toast_valide/Toast_valide';
 import Toast_invalide from '../../componants/Toast_invalide/Toast_invalide';
 import { useNavigate } from 'react-router-dom';
+
 export default function Inscription() {
     const [form, setForm] = useState([])
     const [loading, setLoading] = useState(false);
@@ -51,7 +52,7 @@ export default function Inscription() {
                         setSucces(true)
                         setMessages(data.message)
                         setTimeout(() => {
-                            navigate("/")
+                            navigate("/connexion")
                         }, 5000);
                     }
                     else {
@@ -66,7 +67,12 @@ export default function Inscription() {
                 })
             })
 
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                const errorsMsg = ["Une erreur innatendu est survenu"]
+                setErrorsMessages(errorsMsg)
+
+            })
     }
     const deletePopUp = index => {
         const newState = [...errorsMessages]

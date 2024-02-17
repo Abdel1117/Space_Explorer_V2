@@ -1,9 +1,9 @@
 import Connexion from '../src/pages/Connexion/Connexion';
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { BrowserRouter as Router } from 'react-router-dom'
-import userContext from '../src/Context/userContext';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { vi } from "vitest"
+import '@testing-library/jest-dom';
+import userContext from "../src/Context/userContext";
+
 
 
 const mockUserContextValue = {
@@ -17,31 +17,30 @@ global.fetch = vi.fn(() =>
     })
 )
 
-/* Mocking Response of the APi */
-const mockApiResponse = [
-    {
-
-    }
-]
-
 
 describe("Connexion page to connect to our profil", () => {
-    beforeEach(() => {
-        vi.clearAllMocks()
+
+    it("Render corrctly the page"), async () => {
         render(
             <userContext.Provider value={mockUserContextValue}>
-                <Router>
-                    <Connexion />
-                </Router>
+                <Connexion />
             </userContext.Provider>
         )
-    })
-    it("Render corrctly the page"), async () => {
-        expect(screen.getByPlaceholderText('name@company.com')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('name@companyy.com')).toBeInTheDocument()
+        console.log(expect(screen.getByPlaceholderText("name@company.com")))
         expect(screen.getByPlaceholderText('••••••••')).toBeInTheDocument()
-        vi.debug()
-        console.log(screen)
 
     }
 
+    it("Submit Form"), async () => {
+
+        render(
+            <Connexion />
+        )
+
+
+
+
+    }
+    
 })
