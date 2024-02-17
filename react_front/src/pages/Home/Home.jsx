@@ -1,11 +1,13 @@
+
 import React, { useEffect, useState } from 'react';
+import { Helmet } from "react-helmet"
 import ImageHolder from '../../componants/imageHolder/imageHolder';
 import NewsLetter from '../../componants/newsLetter/NewsLetter';
 import CardNews from '../../componants/cardNews/CardNews';
 import TagsArticleList from '../../componants/tagsArticlesList/TagsArticleList';
 import Carousel from '../../componants/Carousel/Carousel';
 import { SkeletonArticle } from '../../componants/Skeleton/SkeletonArticle/SkeletonArticle';
-import { CookieBanner } from '../../componants/CookieBanner/CookieBanner';
+
 const Home = () => {
     const [loading, setLoading] = useState(false);
     const [articles, setArticles] = useState(undefined)
@@ -36,9 +38,17 @@ const Home = () => {
     }, [])
     return (
         <section className='w-11/12 md:w-9/12 mx-auto pb-12'>
-
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Space Explorer | Accueil</title>
+                <meta name="description" content="Space Explorer est un site sur l'astronomie et l'espace, découvrez des articles passionnant et des images magnifiques d'étoiles et de planète." />
+            </Helmet>
+            <h1 className='hidden'>Space Explorer</h1>
             <ImageHolder />
-            <Carousel />
+            {articles != undefined ?
+                <Carousel data={articles} loading={loading} />
+                : null
+            }
             <div className='grid md:grid-cols-12 gap-5 mt-10 relative '>
                 {
                     loading === true || articles == undefined ?
@@ -53,7 +63,7 @@ const Home = () => {
                         :
 
                         articles?.map((article, index) =>
-                            <CardNews key={index} index={article?._id} title={article?.Title} slugs={article?.Slugs}
+                            <CardNews key={index} index={article?._id} title={article?.Title} slugs={article?.Slugs} para={article?.Contenu[0]?.contenu}
                                 image={article?.Contenu[0]?.image}
                             />
 

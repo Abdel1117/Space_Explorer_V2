@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message';
 import userContext from '../../Context/userContext';
@@ -7,11 +8,11 @@ import _ from "lodash/fp";
 import { useState, useEffect } from 'react'
 import Toast_valide from '../../componants/Toast_valide/Toast_valide';
 import Toast_invalide from '../../componants/Toast_invalide/Toast_invalide';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 export default function Inscription() {
     const [form, setForm] = useState([])
     const [loading, setLoading] = useState(false);
-    const [loadingEnded, setLoadingEnded] = useState(false);
+    const [succes, setSucces] = useState(false);
     const [errorsMessages, setErrorsMessages] = useState([]);
     const [message, setMessages] = useState("")
     const [checked, setChecked] = useState(false);
@@ -47,15 +48,13 @@ export default function Inscription() {
             .then(res => {
                 res.json().then(data => {
                     if (res.status === 201) {
-
+                        setSucces(true)
                         setMessages(data.message)
                         setTimeout(() => {
-                            location.href = "/"
+                            navigate("/")
                         }, 5000);
                     }
                     else {
-
-
                         const errorsMsg = []
                         data.errors.forEach(element => {
                             errorsMsg.push(element.msg)
@@ -81,6 +80,11 @@ export default function Inscription() {
     }, [])
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{`Space Explorer | Inscription`}</title>
+                <meta name="description" content="Inscription sur le site Space Explorer" />
+            </Helmet>
             {message &&
 
                 <Toast_valide message={message} />
@@ -89,7 +93,7 @@ export default function Inscription() {
             {
                 errorsMessages &&
 
-                <div className='flex flex-col my-1 relative'>
+                <div className='flex flex-col py-1 relative'>
 
                     {
                         errorsMessages.map((message, index) =>
@@ -99,6 +103,9 @@ export default function Inscription() {
                     }
 
                 </div>
+            }
+            {succes === true &&
+                <p data-testid="succes-message">Inscription Réussi</p>
             }
             <section className="flex flex-col items-center min-h-screen py-5">
 
@@ -111,8 +118,8 @@ export default function Inscription() {
 
                         <h1 className='text-xl xl:text-2xl animate-pulse text-white mb-10'>Rejoindre la communauté de Space Explorer</h1>
                         <form onSubmit={handleSubmit(handleForm)} method="POST" className="space-y-4 md:space-y-6 w-9/12 mx-auto" >
-                        <div>
-                                <label for="pseudo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre Pseudo</label>
+                            <div>
+                                <label htmlFor="pseudo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre Pseudo</label>
                                 <input {...register('pseudo', {
                                     required: "Veuillez remplir ce champs",
                                     pattern: {
@@ -136,13 +143,13 @@ export default function Inscription() {
                                     render={({ messages }) =>
                                         messages &&
                                         Object.entries(messages).map(([type, message]) => (
-                                            <p style={{ color: "red" }} key={type}>{message}</p>
+                                            <span role="alert" style={{ color: "red" }} key={type}>{message}</span>
                                         ))
                                     }
                                 />
                             </div>
                             <div>
-                                <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre Email</label>
+                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre Email</label>
                                 <input {...register('emailInput', {
                                     required: "Veuillez remplir ce champs",
                                     pattern: {
@@ -172,7 +179,7 @@ export default function Inscription() {
                                 />
                             </div>
                             <div>
-                                <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
+                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
                                 <input
                                     {...register('passwordInput', {
                                         required: "Veuillez remplir ce champs",
@@ -187,8 +194,9 @@ export default function Inscription() {
                                     type="password"
                                     name="passwordInput"
                                     id="password"
+                                    data-testid="passwordInput"
                                     placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 focus:shadow-input_neupho"
-                                    
+
                                 />
                                 <ErrorMessage
                                     errors={errors}
@@ -202,7 +210,7 @@ export default function Inscription() {
                                 />
                             </div>
                             <div>
-                                <label for="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmer votre mot de passe</label>
+                                <label htmlFor="confirm_passwordInput" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmer votre mot de passe</label>
                                 <input
                                     {...register('confirm_passwordInput',
                                         {
@@ -218,7 +226,7 @@ export default function Inscription() {
                                     value={form.confirm_passwordInput}
                                     type="password"
                                     name="confirm_passwordInput"
-                                    id="confirm_ password"
+                                    id="confirm_passwordInput"
                                     placeholder="••••••••"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 focus:shadow-input_neupho" required="" />
                                 <ErrorMessage
@@ -253,7 +261,7 @@ export default function Inscription() {
                                 </div>
 
                                 <div className="ml-3 text-sm">
-                                    <label for="terms" className="font-light text-white dark:text-white">J'accepte les <a className="font-medium text-white hover:underline dark:text-white" href="#">Termes et Conditions d'utilisation</a></label>
+                                    <label htmlFor="accept_condition" className="font-light text-white dark:text-white">J'accepte les <a className="font-medium (text-white hover:underline dark:text-white cursor-pointer" onClick={() => { navigate("/mentions-legales") }}>Termes et Conditions d'utilisation</a></label>
                                 </div>
 
                             </div>
@@ -271,7 +279,7 @@ export default function Inscription() {
                             </div>
                             <button type="submit" className="w-full text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Crée votre compte</button>
                             <p className="text-sm  text-white ">
-                                Vous possédez déja un compte ? <a href="/connexion" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Connectez vous ici </a>
+                                Vous possédez déja un compte ? <a onClick={() => { useNavigate("/connexion") }} className="font-medium text-primary-600 hover:underline dark:text-primary-500 cursor-pointer">Connectez vous ici </a>
                             </p>
                         </form>
                     </div>

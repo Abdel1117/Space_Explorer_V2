@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
+import { Helmet } from 'react-helmet';
 import { useParams, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import _ from "lodash/fp";
@@ -189,6 +190,11 @@ export const EditSujet = () => {
     }
     return (
         <section className='min-h-screen'>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{`Space Explorer | Modifier Article sur ${article.Title}`}</title>
+                <meta name="description" content="Space Explorer est un site sur l'astronomie et l'espace, découvrez des articles passionnant et des images magnifiques d'étoiles et de planète." />
+            </Helmet>
             {isLoading ?
 
                 (<Spinner />) : (
@@ -206,23 +212,24 @@ export const EditSujet = () => {
                             <div className="mb-6">
                                 <label htmlFor="Titre_Article" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white ml-1">Titre</label>
                                 <input
-
-                                    {...register('Article_title', {
-                                        required: "Veuillez remplir ce champs avec un Titre",
-                                        pattern: {
-                                            value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{1,18}(?<! )$/,
-                                            message: "Veuillez taper un titre qui contient 3 à 20 caractères"
-                                        }
-                                    })}
                                     type="text"
                                     name="Article_title"
                                     id="Titre_Article"
                                     value={editedTitle}
+                                    onChange={(e) => { setEditedTitle(e.target.value) }}
+                                    required
+                                    {...register('Article_title', {
+                                        required: "Veuillez remplir ce champs avec un Titre",
+                                        pattern: {
+                                            value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{1,18}(?<! )$/,
+                                            message: "Veuillez taper un titre qui contient 3 à 50 caractères"
+                                        }
+                                    })}
+
 
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
 
-                                    onChange={(e) => { setEditedTitle(e.target.value) }}
-                                    required
+
                                 />
                                 <div className=''>
 
@@ -374,7 +381,8 @@ export const EditSujet = () => {
                                             {...register(`Section_${index}`, {
                                                 required: "Veuillez taper une section d'article",
                                                 pattern: {
-                                                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 1200 charactères"
+
+                                                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 2000 charactères"
                                                 }
                                             })}
                                             onChange={(e) => {
@@ -387,7 +395,7 @@ export const EditSujet = () => {
                                         ></textarea>
                                         <>
                                             <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
-                                                {countingChar(editedSections[index].contenu)} / 1200 </p>
+                                                {countingChar(editedSections[index].contenu)} / 2000 </p>
                                         </>
                                         <>
                                             {errors[`Section_${index}`] && (

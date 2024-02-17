@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Astronaute_in_front_of_computer from "../../assets/images/cute-astronaut-front-computer-no-bg.png";
 import { TableImage } from '../Table/TableImage';
 import Toast_invalide from '../Toast_invalide/Toast_invalide';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Images() {
 
@@ -11,6 +11,7 @@ export default function Images() {
   const [imageSelected, setImageSelected] = useState([])
   const [dataChanged, setDataChanged] = useState(false)
   const apiUrl = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getImages = async () => {
@@ -116,7 +117,7 @@ export default function Images() {
         </h2>
 
 
-        <a href="/ajouterImage" className='bg-white text-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded-full ml-6 absolute bottom-4' >Publié une nouvelle image</a>
+        <a onClick={() => { navigate("/ajouterImage") }} className='bg-white text-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded-full ml-6 absolute bottom-4' >Publié une nouvelle image</a>
         <img className='w-64 h-auto object-cover bg-transparent absolute sm:top-0 sm:right-0 ' src={Astronaute_in_front_of_computer} alt="Astronaute Devant un ordinateur" />
       </div>
       <div>

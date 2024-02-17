@@ -5,6 +5,7 @@ import "swiper/css"
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Toast_invalide from '../Toast_invalide/Toast_invalide';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Articles() {
@@ -12,6 +13,7 @@ export default function Articles() {
   const [articles, setArticles] = useState([]);
   const [filtre, setFiltre] = useState(null);
   const [articleSelected, setArticleSelected] = useState([])
+  const navigate = useNavigate()
   const apiUrl = import.meta.env.VITE_API_URL;
 
 
@@ -135,7 +137,7 @@ export default function Articles() {
           Publié un nouvel Article
         </h2>
 
-        <a href="/ajouterArticle" className='bg-white text-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded-full ml-6 absolute bottom-4' >Publier une Nouvel Article</a>
+        <a onClick={() => { navigate("/ajouterArticle") }} className='bg-white text-black hover:bg-black hover:text-white font-bold py-2 px-4 rounded-full ml-6 absolute bottom-4' >Publier une Nouvel Article</a>
         <img className='w-64 h-auto object-cover bg-transparent absolute sm:top-0 sm:right-0 ' src={Astronaute_in_front_of_computer} alt="Astronaute Devant un ordinateur" />
       </div>
 

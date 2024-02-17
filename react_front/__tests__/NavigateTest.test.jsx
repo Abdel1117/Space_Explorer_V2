@@ -60,5 +60,51 @@ describe("Testing the navigation between the page of the application", () => {
 
     });
 
+})
+
+
+describe("Testing the navigation between the page of the application", () => {
+    it("Navigate to the right page when the button is clicked", () => {
+
+
+        render(
+            <userContext.Provider value={mockUserContextValue}>
+                <Nav />
+            </userContext.Provider>
+        );
+        /* Here we are goign to test the navigation to home page */
+
+        const ForumButton = screen.getAllByText(/Forum/i);
+        fireEvent.click(ForumButton[0])
+
+        expect(mockNavigate).toHaveBeenNthCalledWith(3, "/forum")
+
+
+    });
 
 })
+
+
+
+
+describe("Testing the navigation between the page of the application", () => {
+    it("Navigate to the right page when the button is clicked", () => {
+
+
+        render(
+            <userContext.Provider value={mockUserContextValue}>
+                <Nav />
+            </userContext.Provider>
+        );
+        /* Here we are goign to test the navigation to home page */
+
+        const meSoutenirButton = screen.getAllByText(/Me Soutenir/i);
+        fireEvent.click(meSoutenirButton[0])
+
+        expect(mockNavigate).toHaveBeenNthCalledWith(4, "/soutenir")
+
+
+    });
+
+})
+

@@ -5,7 +5,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import _ from "lodash/fp";
 import Toast_validation from '../../Toast_valide/Toast_valide';
 import Toast_invalide from '../../Toast_invalide/Toast_invalide';
-
+import { Helmet } from 'react-helmet';
 export const EditArticle = () => {
 
     const [article, setArticle] = useState({});
@@ -24,7 +24,7 @@ export const EditArticle = () => {
     });
 
     useEffect(() => {
-            
+
     }, [])
 
     return (

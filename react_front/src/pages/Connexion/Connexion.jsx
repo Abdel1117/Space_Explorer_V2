@@ -8,7 +8,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import Toast_valide from '../../componants/Toast_valide/Toast_valide';
 import Toast_invalide from '../../componants/Toast_invalide/Toast_invalide';
-
+import { Helmet } from 'react-helmet';
 
 export default function Connexion() {
 
@@ -78,6 +78,13 @@ export default function Connexion() {
   return (
 
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{`Space Explorer | Connexion `}</title>
+        <meta name="description" content="Connecter vous au site Space Explorer afin de pouvoir poster sur le forum et plus encore" />
+      </Helmet>
+
+
       {message &&
 
         <Toast_valide message={message} />
@@ -109,7 +116,7 @@ export default function Connexion() {
             <h1 className='text-xl xl:text-2xl animate-pulse text-white mb-10'>Se connecter</h1>
             <form onSubmit={handleSubmit(handleForm)} method="POST" className="space-y-4 md:space-y-6 w-9/12 mx-auto" >
               <div>
-                <label for="email" className="block mb-2 text-sm font-medium text-white">Votre adresse email</label>
+                <label htmlFor="email" className="block mb-2 text-sm font-medium text-white">Votre adresse email</label>
                 <input {...register('emailInput', {
                   required: "Veuillez remplir ce champs",
                   pattern: {
@@ -139,8 +146,9 @@ export default function Connexion() {
                 />
               </div>
               <div>
-                <label for="password" className="block mb-2 text-sm font-medium text-white">Mot de passe</label>
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-white">Mot de passe</label>
                 <input
+                  value={form.passwordInput}
                   {...register('passwordInput', {
                     required: "Veuillez remplir ce champs",
                     pattern: {
@@ -149,7 +157,6 @@ export default function Connexion() {
                     }
                   })}
                   onChange={handleChange}
-                  value={form.passwordInput}
                   type="password"
                   name="passwordInput"
                   id="password"

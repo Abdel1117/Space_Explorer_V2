@@ -117,8 +117,7 @@ export default function AjoutArticle() {
 
   const countingChar = (section) => {
     let value = section;
-    let counterValue = value.replace(/\s/g, "");
-    return counterValue.length
+    return value.length
   }
   const deletePopUp = () => {
     const newState = ""
@@ -139,8 +138,8 @@ export default function AjoutArticle() {
             {...register('Article_title', {
               required: "Veuillez remplir ce champs avec un Titre",
               pattern: {
-                value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{1,18}(?<! )$/,
-                message: "Veuillez taper un titre qui contient 3 à 20 caractères"
+                value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{1,49}(?<! )$/,
+                message: "Veuillez taper un titre qui contient 3 à 50 caractères"
               }
             })}
             onChange={(e) => { setTitre(e.target.value) }}
@@ -262,7 +261,7 @@ export default function AjoutArticle() {
                   required: "Veuillez taper un titre de section",
                   pattern: {
                     required: true,
-
+                    value: /^.{3,40}$/,
                     message: "Veuillez taper un Titre qui contien au moins 3 caractères et au maxmimum 40 caractères"
                   }
                 })}
@@ -302,7 +301,8 @@ export default function AjoutArticle() {
                 {...register(`Section_${index}`, {
                   required: "Veuillez taper une section d'article",
                   pattern: {
-                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 1200 charactères"
+                    value: /^.{400,4000}$/,
+                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 4000 charactères"
                   }
                 })}
                 onChange={(e) => {
@@ -315,7 +315,7 @@ export default function AjoutArticle() {
               ></textarea>
               <>
                 <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
-                  {countingChar(sections[index].contenu)} / 1200 </p>
+                  {countingChar(sections[index].contenu)} / 4000 </p>
               </>
               <>
                 {errors[`Section_${index}`] && (

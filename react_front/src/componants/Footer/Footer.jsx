@@ -17,16 +17,16 @@ export default function Footer() {
                 </button>
                 <ul className="flex flex-wrap flex-col  sm:flex-row items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
                     <li>
-                        <button onClick={() => { navigate("/mentions_Legales") }} className="mr-4 hover:underline md:mr-6 ">Mentions légales</button>
+                        <button onClick={() => { navigate("/mentions-legales") }} className="mr-4 hover:underline md:mr-6 ">Mentions légales</button>
                     </li>
                     <li>
-                        <button onClick={() => { navigate("/politique_de_confidentialité") }} className="mr-4 hover:underline md:mr-6">Politique de confidentialité</button>
+                        <button onClick={() => { navigate("/politique-confidentialite") }} className="mr-4 hover:underline md:mr-6">Politique de confidentialité</button>
                     </li>
                     <li>
                         <button onClick={() => { navigate("Mentions_légales_de_Vente") }} className="mr-4 hover:underline md:mr-6 ">Licensing</button>
                     </li>
                     <li>
-                        <button onClick={() => { navigate("/contact") }} className="hover:underline">Nous contacter</button>
+                        <button onClick={() => { navigate("/nous-contacter") }} className="hover:underline">Nous contacter</button>
                     </li>
                     <li>
                         <ThemeButton />

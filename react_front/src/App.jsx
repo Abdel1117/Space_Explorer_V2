@@ -7,6 +7,9 @@ const Home = lazy(() => import('./pages/Home/Home'))
 const Connexion = lazy(() => import('./pages/Connexion/Connexion'))
 const Inscription = lazy(() => import('./pages/Inscription/Inscription'))
 const DashBoard = lazy(() => import("./pages/DashBoard/Dashboard"))
+import { MentionLegales } from './pages/MentionsLegales/MentionLegales'
+import { NousContacter } from './pages/NousContacter/NousContacter'
+import { PolitiqueDeConfidentialite } from './pages/PolitiqueDeConfidentialite/PolitiqueDeConfidentialite'
 const Ajouter_Article = lazy(() => import('./pages/Ajouter_Article/Ajouter_Article'))
 const Forum = lazy(() => import('./pages/Forum/Forum'))
 import { Sujet } from './pages/Forum/Sujet'
@@ -19,13 +22,14 @@ import { themeContext } from "./Context/themeContext"
 import Error_404_Page from './pages/404/Error_404_Page'
 import Ajouter_Image from './pages/AjouterImage/Ajouter_Image'
 import Article from './pages/Article/Article'
-import { MeSoutenir } from "./pages/MeSoutenir/MeSoutenir"
+import { NousSoutenir } from "./pages/NousSoutenir/NousSoutenir"
 import { EditImage } from './componants/EditEntity/EditImage/EditImage'
 import { EditArticle } from './componants/EditEntity/EditArticle/EditArticle'
 import { EditSujet } from './componants/EditEntity/EditSujet/EditSujet'
 import { Spinner } from './componants/Spinner/Spinner'
 import { CookieBanner } from './componants/CookieBanner/CookieBanner';
 import { getCookie, setCookie } from './Functions/CookiesFunction/CookiesFunction'
+import { ScrollToTop } from './componants/ScrollToTop/ScrollToTop'
 
 const PrivateRoutes = () => {
   const { userAuth } = useAuth();
@@ -71,8 +75,11 @@ function App() {
   }
   return (
     <>
+      <ScrollToTop />
       <Nav />
+
       <main className='bg-[#F5F5F5] dark:bg-[#252525]'>
+
         <Suspense fallback={<Spinner />}>
           <Routes>
             <Route path='/' element={<Home />} />
@@ -80,11 +87,14 @@ function App() {
             <Route path='/connexion' element={<Connexion />} />
             <Route path='/galerie' element={<Galerie />} />
             <Route path='/forum' element={<Forum />} />
+            <Route path='/mentions-legales' element={<MentionLegales />} />
+            <Route path='/politique-confidentialite' element={< PolitiqueDeConfidentialite />} />
+            <Route path='/nous-contacter' element={<NousContacter />} />
             <Route path='/sujet/:id' element={<Sujet />} />
             <Route path='/ajoutSujet' element={<Ajout_Sujet />} />
             <Route path='/article/:id' element={<Article />} />
             <Route path='/Profil/:id' element={<UserDashBoard />} />
-            <Route path="/soutenir" element={<MeSoutenir />} />
+            <Route path="/soutenir" element={<NousSoutenir />} />
             <Route element={<PrivateRoutes />} >
               <Route path="/DashBoard" element={<DashBoard />} />
               <Route path='/ajouterArticle' element={<Ajouter_Article />} />
@@ -92,7 +102,6 @@ function App() {
               <Route path='/editImage/:id' element={<EditImage />} />
               <Route path='/editArticle/:id' element={<EditArticle />} />
               <Route path='/editSujet/:id' element={<EditSujet />} />
-
             </Route>
             <Route path='*' element={<Error_404_Page />} />
           </Routes>
@@ -100,6 +109,7 @@ function App() {
         {showBannerCookie &&
           <CookieBanner />
         }
+
       </main>
 
       <Footer />

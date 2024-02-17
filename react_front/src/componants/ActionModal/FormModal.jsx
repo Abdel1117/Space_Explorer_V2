@@ -72,7 +72,13 @@ export const FormModal = ({ id, setToggle, setDataChanged, dataChanged }) => {
                         </button>
                     </div>
 
-                    <img class="w-24 h-24 object-cover object-center rounded-full" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80" alt="avatar" />
+                    {data?.avatar != undefined ?
+
+                        <img src={`${apiUrl}/${data?.avatar.replace(/\\/g, "/")}`} alt="image_profil" className='rounded-full w-20 h-20 ' />
+                        :
+                        <img src="..\..\src\assets\icon_svg\defaultAvatar.jpg" alt="image_profil" className='rounded-full w-20 h-auto x' />
+
+                    }
                     <div class="py-4 px-6">
                         <h1 class="text-2xl font-semibold text-black dark:text-white first-letter:uppercase">{data?.email}</h1>
 

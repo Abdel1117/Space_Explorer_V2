@@ -6,8 +6,6 @@ describe("UserDashBoard", () => {
     it("Render UserDashBoard page ", () => {
         render(<UserDashBoard />)
 
-
-
     })
 });
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useAuth } from '../../Context/userContext'
 import Side_Barre_DashBoard from '../../componants/Side_Barre_DashBoard/Side_Barre_DashBoard'
 import Accueil from '../../componants/AdminDashBoard/Accueil'
@@ -12,6 +13,11 @@ export default function Dashboard() {
 
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Space Explorer | BackOffice</title>
+                <meta name="description" content="Back Office de Space Explorer afin de pouvoir gérer les différentes section du site" />
+            </Helmet>
             <section className='flex flex-row relative py-6 min-h-screen'>
 
                 <Side_Barre_DashBoard blockSection={blockSection} setBlockSection={setBlockSection} />

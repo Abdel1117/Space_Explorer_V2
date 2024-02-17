@@ -41,7 +41,7 @@ export default function AjoutImage() {
 
                         setErrorMessage("Veuillez mettre une image qui à une dimention de au moins 1200 pixels sur 900")
                         setImagePreShow()
-                        setImages([{ image: "" }])
+                        setImages(null)
                     }
                 }
                 img.src = event.target.result;
@@ -52,8 +52,7 @@ export default function AjoutImage() {
     };
     const countingChar = () => {
         let value = imageDes
-        let counterValue = value.replace(/\s/g, "");
-        return counterValue.length
+        return value.length
     }
     const deletePopUp = () => {
         const newState = ""
@@ -153,6 +152,7 @@ export default function AjoutImage() {
                             type="file"
                             name={`Image`}
                             id={`Image`}
+
                             {...register(`Image`,
                                 {
                                     required: "Veuillez insérer une image qui puisse accompagner le paragraphe ",
@@ -298,8 +298,8 @@ export default function AjoutImage() {
                                     required: "Veuillez taper un text court qui puisse décrire l'image afin de facilité l'accésibilté",
 
                                     pattern: {
-                                        value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{10,30}(?<! )$/,
-                                        message: "Veuillez taper une décription avec un minimum de 10 caractères et au maximum de 30 caractères"
+                                        value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{10,40}(?<! )$/,
+                                        message: "Veuillez taper une décription avec un minimum de 10 caractères et au maximum de 40 caractères"
                                     }
                                 },
                             )}
@@ -307,7 +307,7 @@ export default function AjoutImage() {
                         />
                         <>
                             <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
-                                {countingChar(imageDes)} / 30
+                                {countingChar(imageDes)} / 40
                             </p>
                         </>
 

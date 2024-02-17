@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet';
 import ForumTable from '../../componants/ForumTable/ForumTable'
 import Loader from '../../componants/Loader/Loader';
 import userContext from '../../Context/userContext';
@@ -7,6 +8,7 @@ export default function Forum() {
 
     const [loading, setIsLoading] = useState(false)
     const [sujets, setSujets] = useState([]);
+    const [errors, setErrors] = useState(false)
     const { userAuth } = useContext(userContext)
     const [columns, setColumns] = useState([])
 
@@ -24,10 +26,12 @@ export default function Forum() {
 
     useEffect(() => {
         try {
+            setIsLoading(true)
             setColumns(["Title", "Slug", "Sujet", "User", "Date"])
             getForum()
         }
         catch (err) {
+            setErrors(true)
             console.log(err)
         }
         finally {
@@ -36,8 +40,22 @@ export default function Forum() {
     }, [])
     return (
         <section className='relative overflow-x-auto shadow-md sm:rounded-lg min-h-[400px] p-2 md:p-6'>
-            <h1 className='mx-auto py-2 md:py-8 text-lg md:text-xl xl:text-2xl dark:text-white text-center'>Forum de Space Explorer</h1>
 
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Space Explorer | Forum </title>
+                <meta name="description" content="Bienvenu sur le forum de Space Explorer, venez rejoindre une communauté afin de discuter de planète, étoiles, comètes ou autre sujet sur l'espace. " />
+            </Helmet>
+            <h1 className='mx-auto py-2 md:py-8 text-lg md:text-xl xl:text-2xl dark:text-white text-center'>Forum de Space Explorer</h1>
+            {errors === true &&
+
+                (<section>
+
+                    <img src="../../assets/images/error.jpg" alt="Une erreur est survenu" />
+
+                </section>)
+
+            }
             <section className='w-full h-[160px] md:h-[250px] mb-10 bg-light-blue dark:bg-dark-blue text-white flex items-center justify-center rounded-md'>
                 <div className="relative w-full md:w-8/12 mx-2 ">
                     <div className="absolute inset-y-0 left-0  items-center pl-3 pointer-events-none hidden md:flex">
@@ -71,7 +89,7 @@ export default function Forum() {
 
 
 
-            {loading === true ?
+            {loading === true && errors === false ?
                 <Loader /> :
                 <ForumTable columns={columns} datas={sujets} loading={loading} />
             }

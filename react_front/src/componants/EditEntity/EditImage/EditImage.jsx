@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
@@ -171,6 +172,11 @@ export const EditImage = () => {
 
     return (
         <section className='min-h-screen py-20'>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{`Space Explorer | Modification d'image`}</title>
+                <meta name="description" content="Modification d'image" />
+            </Helmet>
             {message &&
                 <Toast_validation
                     message={message}

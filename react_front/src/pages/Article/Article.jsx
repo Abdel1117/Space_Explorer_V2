@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom'
 import userContext from '../../Context/userContext';
 import { BouttonBackWard } from '../../componants/BouttonBackWard/BouttonBackWard';
@@ -32,7 +33,11 @@ export default function Article() {
 
     return (
         <section className="min-h-screen py-4">
-
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{`Space Explorer | Article sur ${article?.Title}`}</title>
+                <meta name="description" content="Bienvenu sur la page dédier au image de Space Explorer, ici vous pourez observer des planète, étoiles, comètes, vaiseau et autres magnifique cliché veanant de l'espace" />
+            </Helmet>
             {loading === true ?
 
                 <p>Loading ...</p>
@@ -54,7 +59,6 @@ export default function Article() {
                             </div>
                         </div>
                     ))}
-                    <BouttonBackWard />
                 </article>
             }
         </section>

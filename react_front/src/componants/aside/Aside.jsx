@@ -20,9 +20,9 @@ export default function aside(props) {
                         <div className='flex flex-col lg:flex-row ml-2 mt-2 '>
                             {props.data.avatar != undefined ?
 
-                                <img src={`${apiUrl}/${props.data.avatar.replace(/\\/g, "/")}`} alt="image_profil" className='rounded-full w-20 h-auto x' />
+                                <img src={`${apiUrl}/${props.data.avatar.replace(/\\/g, "/")}`} alt="image_profil" className='rounded-full w-20 h-20 ' />
                                 :
-                                <img src="..\..\src\assets\icon_svg\defaultAvatar.jpg" alt="image_profil" className='rounded-full w-20 h-auto x' />
+                                <img src="..\..\src\assets\icon_svg\defaultAvatar.jpg" alt="image_profil" className='rounded-full w-20 h-auto ' />
                             }
                             <div className='block lg:ml-3 my-auto'>
                                 <p className='text-xs md:text-md font-bold'>{props.data.email}</p>

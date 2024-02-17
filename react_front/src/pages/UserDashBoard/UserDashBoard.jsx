@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom'
 import Aside from '../../componants/aside/Aside';
 import Accueil from '../../componants/userDashBoardBLock/Accueil';
@@ -37,6 +38,11 @@ export const UserDashBoard = () => {
 
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{`Space Explorer | Profile `}</title>
+                <meta name="description" content="Space Explorer section profil, vous pouvez retrouver votre image de profile, ainsi que vos article Favoris" />
+            </Helmet>
             {isLoading === true ?
 
                 <div className='mx-auto w-[200px] h-[200px] p-1 shadow-md mt-5 flex flex-col text-center justify-center border '>Loading ...</div>

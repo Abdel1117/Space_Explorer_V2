@@ -6,8 +6,8 @@ exports.checkArticle = [
         .not()
         .isEmpty()
         .withMessage("Veuillez remplir ce champs avec un Titre")
-        .isLength({ min: 3, max: 18 })
-        .withMessage("Veuillez taper un titre qui contient 3 à 20 caractères"),
+        .isLength({ min: 3, max: 50 })
+        .withMessage("Veuillez taper un titre qui contient 3 à 50 caractères"),
 
     check("slugs")
         .trim()
@@ -30,10 +30,9 @@ exports.checkArticle = [
         .withMessage('Veuillez taper une section d\'article')
         .custom(val => {
 
-            const value = val.replace(/\s/g, "")
 
-            if (value.length > 1200 || value.length < 400) {
-                throw new Error("Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 1200 charactères")
+            if (val.length > 4000 || val.length < 400) {
+                throw new Error("Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 4000 charactères")
             }
             return true
         }),

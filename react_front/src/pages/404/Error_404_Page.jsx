@@ -1,11 +1,17 @@
 import React from 'react'
 import Space_Explorer from "../../../public/favicon.png"
+import { Helmet } from "react-helmet"
 
 
 
 export default function Error_404_Page() {
     return (
         <section>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Space Explorer | 404 </title>
+                <meta name="description" content="Space Explorer est un site sur l'astronomie et l'espace, découvrez des articles passionnant et des images magnifiques d'étoiles et de planète." />
+            </Helmet>
             <div className="h-screen w-screen bg-gray-100 dark:bg-[#252525] flex items-center justify-center">
                 <div className="container flex flex-col-reverse md:flex-row items-center justify-center px-5 text-gray-700">
                     <div className="max-w-md">
