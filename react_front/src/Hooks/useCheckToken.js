@@ -12,7 +12,7 @@ export const getToken = (key) => {
 }
 export const checkToken = async () => {
     try {
-        const response = await fetch(`${apiUrl}/check`,
+        const response = await fetch(`${apiUrl}/tokken/check`,
             {
                 method: "GET",
                 headers: {

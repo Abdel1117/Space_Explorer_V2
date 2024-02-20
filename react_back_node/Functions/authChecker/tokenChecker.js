@@ -1,6 +1,10 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose")
 const User = require('../../Model/userShema');
+require("dotenv").config()
+
+const AUTH_TOKKEN_CODE = process.env.AUTH_TOKKEN_CODE
+const REFRESH_TOKKEN_CODE = process.env.REFRESH_TOKKEN_CODE
 
 
 module.exports = async (req, res, next) => {
@@ -12,7 +16,7 @@ module.exports = async (req, res, next) => {
         const refreshToken = req.headers.refreshtoken;
 
         if (token) {
-            const decodedToken = jwt.verify(token2, 'RANDOM_TOKEN_SECRET', function (err, decoded) {
+            const decodedToken = jwt.verify(token2, AUTH_TOKKEN_CODE, function (err, decoded) {
                 if (err) {
                     if (err instanceof jwt.TokenExpiredError) {
                         console.log('Token Expirer');

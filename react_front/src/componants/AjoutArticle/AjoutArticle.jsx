@@ -101,7 +101,7 @@ export default function AjoutArticle() {
     setArticle((prevArticle) => ({ ...prevArticle, sectionsData }))
     const apiUrl = import.meta.env.VITE_API_URL
     try {
-      useFetch(`${apiUrl}/ajoutArticle`, "POST", formData)
+      useFetch(`${apiUrl}/article/ajoutArticle`, "POST", formData)
         .then(response => {
           if (response.status === 201) {
             setMessage(response.data.message)
@@ -271,8 +271,8 @@ export default function AjoutArticle() {
                   required: "Veuillez taper un titre de section",
                   pattern: {
                     required: true,
-                    value: /^.{3,40}$/,
-                    message: "Veuillez taper un Titre qui contien au moins 3 caractères et au maxmimum 40 caractères"
+                    value: /^.{3,49}$/,
+                    message: "Veuillez taper un Titre qui contien au moins 3 caractères et au maxmimum 50 caractères"
                   }
                 })}
                 onChange={(e) => {
@@ -283,7 +283,7 @@ export default function AjoutArticle() {
               />
               <>
                 <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
-                  {countingChar(sections[index].titre)} / 40 </p>
+                  {countingChar(sections[index].titre)} / 50 </p>
 
 
 

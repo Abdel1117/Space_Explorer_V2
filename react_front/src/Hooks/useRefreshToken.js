@@ -3,7 +3,7 @@ export const useRefreshToken = async () => {
     /* Envoyer une requête de refreshToken  */
     const API_URL = import.meta.env.VITE_API_URL;
     try {
-        const response = await fetch(`${API_URL}/refreshToken`, {
+        const response = await fetch(`${API_URL}/tokken/refreshToken`, {
             method: "GET",
             credentials: "include",
             headers: {

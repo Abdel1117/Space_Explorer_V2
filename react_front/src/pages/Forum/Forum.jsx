@@ -15,7 +15,7 @@ export default function Forum() {
 
     const getForum = async () => {
         const apiUrl = import.meta.env.VITE_API_URL
-        const data = await fetch(`${apiUrl}/forum`,
+        const data = await fetch(`${apiUrl}/forum/forum`,
             {
                 method: "GET"
             })

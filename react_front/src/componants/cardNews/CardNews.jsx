@@ -12,7 +12,7 @@ export default function CardNews({ index, title, slugs, para, image }) {
     return (
         <article className='bg-slate-500 col-span-12 lg:col-span-8 mx-auto'>
             <div>
-                <img className='max-h-[350px] w-full object-cover' src={`${apiUrl}/${image}`} alt="" />
+                <img className='max-h-[350px] w-full object-cover' loading='lazy' src={`${apiUrl}/${image}`} alt="" />
 
             </div>
             <div className='p-2 md:p-4'>

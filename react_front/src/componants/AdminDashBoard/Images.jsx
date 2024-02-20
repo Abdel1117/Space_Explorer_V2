@@ -17,7 +17,7 @@ export default function Images() {
     const getImages = async () => {
       setIsLoading(true)
       try {
-        const data = await fetch(`${apiUrl}/getImage`, {
+        const data = await fetch(`${apiUrl}/image/getImage`, {
           method: "GET",
           credentials: "include",
           headers: { "Content-Type": "application-json" }
@@ -81,7 +81,7 @@ export default function Images() {
     if (windowsConfirm) {
       try {
         setIsLoading(true)
-        const request = await fetch(`${apiUrl}/deleteImage/${id}`,
+        const request = await fetch(`${apiUrl}/image/deleteImage/${id}`,
           {
             method: "DELETE",
             headers: { "Content-Type": "application/json", "authorization": `Bearer ${sessionStorage.getItem('token')}` },

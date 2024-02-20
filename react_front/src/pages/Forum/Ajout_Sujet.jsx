@@ -26,7 +26,7 @@ export const Ajout_Sujet = () => {
 
     const handleForm = async () => {
         try {
-            const response = await fetch(`${apiUrl}/ajoutSujet`, {
+            const response = await fetch(`${apiUrl}/forum/ajoutSujet`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

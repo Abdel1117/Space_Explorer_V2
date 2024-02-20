@@ -15,7 +15,7 @@ export const Sujet = () => {
 
         try {
             setLoading(true)
-            const request = await fetch(`${apiUrl}/forum/${sujetId.id}`, {
+            const request = await fetch(`${apiUrl}/forum/forum/${sujetId.id}`, {
                 method: "GET"
             });
 

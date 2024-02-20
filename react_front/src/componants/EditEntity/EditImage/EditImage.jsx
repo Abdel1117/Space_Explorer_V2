@@ -38,7 +38,7 @@ export const EditImage = () => {
         const getImageById = async () => {
             setIsLoading(true)
             try {
-                const request = await fetch(`${apiUrl}/getImageById/${id}`, { method: "GET" })
+                const request = await fetch(`${apiUrl}/image/getImageById/${id}`, { method: "GET" })
                 const response = await request.json()
                 if (request.status === 200) {
                     setImages(response[0].image)
@@ -145,7 +145,7 @@ export const EditImage = () => {
 
             const apiUrl = import.meta.env.VITE_API_URL;
 
-            fetch(`${apiUrl}/editImage/${id}`, { method: "PUT", body: formData })
+            fetch(`${apiUrl}/image/editImage/${id}`, { method: "PUT", body: formData })
                 .then(response => {
                     if (response.status === 200) {
                         setMessage("Image modifier avec succès, voullez vous en rajouter une autre ?")

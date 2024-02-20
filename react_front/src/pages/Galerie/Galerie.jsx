@@ -12,7 +12,7 @@ export default function Galerie() {
 
   function fetchData() {
     setLoad(true)
-    fetch(`${apiUrl}/getImage`, {
+    fetch(`${apiUrl}/image/getImage`, {
       method: 'GET'
 
     })

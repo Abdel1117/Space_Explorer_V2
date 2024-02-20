@@ -14,7 +14,7 @@ export default function Article() {
         const getArticle = async () => {
             try {
                 setLoading(true)
-                const request = await fetch(`${apiUrl}/article/${articleId.id}`, {
+                const request = await fetch(`${apiUrl}/article/article/${articleId.id}`, {
                     method: "GET"
                 });
                 const data = await request.json()
@@ -50,7 +50,7 @@ export default function Article() {
 
                         <div key={index} className='mb-14' >
                             <h2 className="text-lg md:text-xl xl:text-2xl dark:text-white text-center first-letter:uppercase mb-4 ">{element.titre}</h2>
-                            <div className={`flex ${index % 2 === 0 ? 'flex-col md:flex-row' : 'flex-col md:flex-row-reverse'} my-5 md:my-0 mx-4`}>
+                            <div className={`flex ${index % 2 === 0 ? 'flex-col md:flex-row-reverse' : 'flex-col md:flex-row'} my-5 md:my-0 mx-4`}>
 
                                 <img src={`${apiUrl}/${element.image.replace(/\\/g, "/")}`} alt="Une image liée à un article"
                                     className="object-cover w-[350px] h-[350px] md:w-100 md:h-auto" />

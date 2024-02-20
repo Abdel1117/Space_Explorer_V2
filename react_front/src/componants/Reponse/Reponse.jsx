@@ -15,7 +15,7 @@ export const Reponse = ({ sujetId, messagePosted, setMessagePosted }) => {
     const handleSubmitResponse = async () => {
         try {
 
-            const request = await fetch(`${apiUrl}/ajoutReponse/${sujetId.id}`, {
+            const request = await fetch(`${apiUrl}/forum/ajoutReponse/${sujetId.id}`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

@@ -34,13 +34,21 @@ describe("Connexion page to connect to our profil", () => {
 
     it("Submit Form"), async () => {
 
+        /* Rendering the page  */
         render(
-            <Connexion />
+            <userContext.Provider value={mockUserContextValue}>
+                <Connexion />
+            </userContext.Provider>
         )
+        fireEvent.change(screen.getByPlaceholderText("name@company.com"), { target: { value: "testuser" } });
+        fireEvent.change(screen.getByPlaceholderText("••••••••"), { target: { value: "testMDP" } })
+        fireEvent.click(screen.getByRole("button", { name: /Connexion/i }));
 
 
+        screen.findAllByText("Veuillez renseigner une adresse email valide").toBeInTheDocument()
+        screen.findAllByText("Veuillez tapez un mot de passe valide").toBeInTheDocument()
 
 
     }
-    
+
 })

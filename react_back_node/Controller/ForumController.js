@@ -2,12 +2,16 @@ const forumShema = require("../Model/forumSubject");
 const { validationResult } = require("express-validator")
 const jwt = require("jsonwebtoken");
 const formatDateToDDMMYYYY = require("../Functions/DateFormat/DateFormat");
+require("dotenv").config()
+
+const AUTH_TOKKEN_CODE = process.env.AUTH_TOKKEN_CODE
+const REFRESH_TOKKEN_CODE = process.env.REFRESH_TOKKEN_CODE
 
 exports.addSujet = (req, res, next) => {
     const tokken = req.headers.authorization;
     const tokkenSplited = tokken.split(' ')[1]
     if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
-    const decode = jwt.verify(tokkenSplited, "RANDOM_TOKEN_SECRET", function (err, decoded) {
+    const decode = jwt.verify(tokkenSplited, AUTH_TOKKEN_CODE, function (err, decoded) {
         if (err) {
             return res.status(403).json({ message: "Veuillez vous connecter afin de pouvoir poster un nouveau sujet" })
         } else {
@@ -113,7 +117,7 @@ exports.addReponse = async (req, res, next) => {
     const tokkenSplited = tokken.split(' ')[1]
 
     if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
-    const decode = jwt.verify(tokkenSplited, "RANDOM_TOKEN_SECRET", function (err, decoded) {
+    const decode = jwt.verify(tokkenSplited, REFRESH_TOKKEN_CODE, function (err, decoded) {
         if (err) {
             return res.status(403).json({ message: "Veuillez vous connecter afin de pouvoir poster un nouveau sujet" })
         } else {

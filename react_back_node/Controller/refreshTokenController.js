@@ -1,5 +1,9 @@
 const User = require('../Model/userShema');
 const jwt = require('jsonwebtoken');
+require("dotenv").config()
+
+const AUTH_TOKKEN_CODE = process.env.AUTH_TOKKEN_CODE
+const REFRESH_TOKKEN_CODE = process.env.REFRESH_TOKKEN_CODE
 
 exports.handleRefreshToken = async (req, res, next) => {
 
@@ -18,7 +22,7 @@ exports.handleRefreshToken = async (req, res, next) => {
     /* And after we evaluate the jwt */
     jwt.verify(
         refreshToken,
-        "RANDOM_TOKEN_SECRET_REFRESH",
+        REFRESH_TOKKEN_CODE,
         (err, decoded) => {
             if (err || actualUser.email !== decoded.email) {
 
@@ -31,7 +35,7 @@ exports.handleRefreshToken = async (req, res, next) => {
                     userId: decoded.userId,
                     userRole: decoded.userRole
                 },
-                "RANDOM_TOKEN_SECRET",
+                AUTH_TOKKEN_CODE,
                 { expiresIn: "30min" }
             )
             res.json({

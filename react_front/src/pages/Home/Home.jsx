@@ -17,7 +17,7 @@ const Home = () => {
             const urlBack = import.meta.env.VITE_API_URL
             setLoading(true)
             try {
-                const data = await fetch(`${urlBack}`, {
+                const data = await fetch(`${urlBack}/article`, {
                     method: "GET"
                 })
                 const response = await data.json()

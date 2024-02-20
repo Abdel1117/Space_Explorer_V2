@@ -41,7 +41,7 @@ export default function Inscription() {
 
     const handleForm = () => {
         console.log(form)
-        fetch(`${apiUrl}/inscription`, {
+        fetch(`${apiUrl}/user/inscription`, {
             method: "POST",
             body: JSON.stringify(form),
             headers: { 'Content-Type': 'application/json' },

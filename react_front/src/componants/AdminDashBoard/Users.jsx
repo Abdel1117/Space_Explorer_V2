@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TableUser } from '../Table/TableUser';
 import Toast_invalide from '../Toast_invalide/Toast_invalide';
+import Astronaute_in_front_of_computer from "../../assets/images/cute-astronaut-front-computer-no-bg.png";
 import Toast_validation from '../Toast_valide/Toast_valide';
 import { FormModal } from '../ActionModal/FormModal';
 export default function Users() {
@@ -65,7 +66,7 @@ export default function Users() {
 
       try {
         setLoading(true)
-        const request = await fetch(`${apiUrl}/deleteUser/${id}`, {
+        const request = await fetch(`${apiUrl}/user/deleteUser/${id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json", "authorization": `Bearer ${sessionStorage.getItem('token')}` },
           credentials: "include",
@@ -102,7 +103,7 @@ export default function Users() {
       try {
         setLoading(true)
 
-        const request = await fetch(`${apiUrl}/getAllUsers`)
+        const request = await fetch(`${apiUrl}/user/getAllUsers`)
         if (request.ok) {
           const response = await request.json();
           setUsers(response)
@@ -128,6 +129,15 @@ export default function Users() {
       {users === null ?
         <p>Loading...</p> :
         <>
+
+          <div className='bg-light-blue dark:bg-dark-blue rounded-md my-5 relative h-[400px] sm:h-60'>
+            <h2 className='text-white p-6 font-semibold z-10 '>
+              Utilisateurs de Space Explorer
+            </h2>
+
+
+            <img className='w-64 h-auto object-cover bg-transparent absolute sm:top-0 sm:right-0 ' src={Astronaute_in_front_of_computer} alt="Astronaute Devant un ordinateur" />
+          </div>
           <TableUser
             users={users}
             userSelected={userSelected}

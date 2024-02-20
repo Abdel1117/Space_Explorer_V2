@@ -100,7 +100,7 @@ export default function AjoutImage() {
             formData.append("Slug", JSON.stringify(Slug))
             const apiUrl = import.meta.env.VITE_API_URL;
 
-            useFetch(`${apiUrl}/ajoutImage`, "POST", formData)
+            useFetch(`${apiUrl}/image/ajoutImage`, "POST", formData)
                 .then(response => {
                     if (response.status === 201) {
                         setMessage(response?.data?.message)

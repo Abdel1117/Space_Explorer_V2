@@ -26,7 +26,7 @@ export default function FormUser({ user }) {
       const formData = new FormData();
       formData.append("imageProfil", imageProfil)
       const apiUrl = import.meta.env.VITE_API_URL;
-      useFetch(`${apiUrl}/editAvatar/${userId.id}`, "PUT", formData)
+      useFetch(`${apiUrl}/user/editAvatar/${userId.id}`, "PUT", formData)
         .then(response => {
           if (response.status === 200) {
             setMessage(response?.data?.message)

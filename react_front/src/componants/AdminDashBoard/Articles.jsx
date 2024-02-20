@@ -13,6 +13,7 @@ export default function Articles() {
   const [articles, setArticles] = useState([]);
   const [filtre, setFiltre] = useState(null);
   const [articleSelected, setArticleSelected] = useState([])
+  const [dataChanged, setDataChanged] = useState(false)
   const navigate = useNavigate()
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -21,7 +22,7 @@ export default function Articles() {
 
     try {
       setIsLoading(true)
-      const data = await fetch(`${apiUrl}/searchArticle`, {
+      const data = await fetch(`${apiUrl}/article/searchArticle`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({ query: result }),
@@ -81,7 +82,7 @@ export default function Articles() {
     const getArticle = async () => {
       setIsLoading(true)
       try {
-        const data = await fetch(`${apiUrl}/`, {
+        const data = await fetch(`${apiUrl}/article`, {
           method: "GET",
           credentials: "include",
           headers: { "Content-Type": "application/json" }
@@ -96,7 +97,7 @@ export default function Articles() {
       }
     }
     getArticle();
-  }, [])
+  }, [dataChanged])
 
   const deleteArticle = async (id, title) => {
 
@@ -105,7 +106,7 @@ export default function Articles() {
 
       try {
         setIsLoading(true)
-        const request = await fetch(`${apiUrl}/deleteArticle/${id}`,
+        const request = await fetch(`${apiUrl}/article/deleteArticle/${id}`,
           {
             method: "DELETE",
             headers: { "Content-Type": "application/json", "authorization": `Bearer ${sessionStorage.getItem('token')}` },

@@ -16,12 +16,12 @@ export const UserDashBoard = () => {
     const [data, setData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({})
-
+    const API_URL = import.meta.env.VITE_API_URL
     useEffect(() => {
         setIsLoading(true);
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/userProfil/${userId.id}`, {
+                const response = await fetch(`${API_URL}/user/userProfil/${userId.id}`, {
                     method: "GET"
                 })
                     .then(data => data.json())

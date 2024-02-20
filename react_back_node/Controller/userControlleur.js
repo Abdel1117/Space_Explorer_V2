@@ -1,8 +1,12 @@
+require("dotenv").config()
 const User = require('../Model/userShema');
 const bcrypt = require("bcrypt");
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const fs = require("fs")
+const AUTH_TOKKEN_CODE = process.env.AUTH_TOKKEN_CODE
+const REFRESH_TOKKEN_CODE = process.env.REFRESH_TOKKEN_CODE
+
 
 exports.inscriptionHandler = (req, res, next) => {
 
@@ -54,7 +58,7 @@ exports.connexionHandler = (req, res, next) => {
                                 userId: user._id,
                                 userRole: user.role
                             },
-                            "RANDOM_TOKEN_SECRET",
+                            AUTH_TOKKEN_CODE,
                             { expiresIn: "2h" }
 
                         )
@@ -63,7 +67,7 @@ exports.connexionHandler = (req, res, next) => {
                                 userId: user._id,
                                 userRole: user.role
                             },
-                            "RANDOM_TOKEN_SECRET_REFRESH",
+                            REFRESH_TOKKEN_CODE,
                             { expiresIn: "2h" },
                         )
 
@@ -96,8 +100,6 @@ exports.connexionHandler = (req, res, next) => {
 }
 
 exports.deleteUser = (req, res, next) => {
-
-    console.log("La route de supression ")
 
     try {
         const tokken = req.headers.authorization;

@@ -10,7 +10,7 @@ export const FormModal = ({ id, setToggle, setDataChanged, dataChanged }) => {
         const getData = async (id) => {
             try {
                 setLoading(true)
-                const request = await fetch(`${apiUrl}/userProfil/${id}`, {
+                const request = await fetch(`${apiUrl}/user/userProfil/${id}`, {
                     method: "GET",
                     authhorization: sessionStorage.getItem("tokken"),
 
@@ -32,7 +32,7 @@ export const FormModal = ({ id, setToggle, setDataChanged, dataChanged }) => {
 
         try {
             setLoading(true)
-            const request = await fetch(`${apiUrl}/editUser/${id}`, {
+            const request = await fetch(`${apiUrl}/user/editUser/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json", "authorization": `Bearer ${sessionStorage.getItem('token')}` },
                 credentials: "include",

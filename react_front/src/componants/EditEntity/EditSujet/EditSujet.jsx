@@ -34,7 +34,7 @@ export const EditSujet = () => {
         const getArticleById = async () => {
             setIsLoading(true)
             try {
-                const request = await fetch(`${apiUrl}/article/${id}`, { method: "GET" })
+                const request = await fetch(`${apiUrl}/article/article/${id}`, { method: "GET" })
                 const response = await request.json()
                 setArticle(response)
                 setEditedTitle(response.Title || "")
@@ -123,7 +123,7 @@ export const EditSujet = () => {
             } catch (e) {
                 console.log(e)
             }
-            const request = await fetch(`${apiUrl}/editArticle/${id}`, {
+            const request = await fetch(`${apiUrl}/article/editArticle/${id}`, {
                 method: "PUT",
                 body: formData
             });
