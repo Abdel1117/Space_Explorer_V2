@@ -49,6 +49,7 @@ jobs:
       - run:
           name: Push Docker Image to Docker Hub
           command: |
+            ls -la 
             docker build -t abdel11117/space-explorer .         
             docker push abdel11117/space-explorer:latest
 
