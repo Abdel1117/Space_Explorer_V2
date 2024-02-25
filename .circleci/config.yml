@@ -54,6 +54,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Update packages and install curl
+          command: |
+            apt-get update 
+            apt-get install -y curl
+      - run :
           name: Install Heroku CLI
           command: curl https://cli-assets.heroku.com/install.sh | sh
       - run:
