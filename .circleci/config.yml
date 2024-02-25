@@ -38,7 +38,15 @@ jobs:
           command: curl https://cli-assets.heroku.com/install.sh | sh
       - run:
           name: Login to Heroku
-          command: echo "abderahmane.adjali@live.fr" | heroku login -i
+          command: |
+            expect -c '
+              spawn heroku login -i
+              expect "Email: "
+              send "abderahmane.adjali@live.fr\r"
+              expect "Password: "
+              send "Fermetageule14?"
+              interact
+            '
       - run:
           name: Deploy to Heroku
           command: |
