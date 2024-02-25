@@ -29,7 +29,9 @@ jobs:
           command: npm run build --prefix react_front
 
   build_and_push_docker_image:
-    machine : true
+    docker:
+      - image: ubuntu:22.04
+
  
     steps:
       - checkout
@@ -53,7 +55,9 @@ jobs:
             docker push abdel11117/space-explorer:latest
 
   deploy_heroku:
-    machine: true
+    docker:
+      - image: ubuntu:22.04
+
     steps:
       - checkout
       - run:
