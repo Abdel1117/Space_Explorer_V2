@@ -28,39 +28,28 @@ jobs:
           name: Build Frontend
           command: npm run build --prefix react_front
 
-  build_and_push:
-    machine:
-      image: ubuntu-2004:202104-01
+  deploy_heroku:
+    machine: true
+
+   
+
     steps:
       - checkout
       - run:
-          name: Install Docker, Heroku CLI, and Enable Docker BuildKit
-          command: |
-            curl https://cli-assets.heroku.com/install.sh | sh
-            sudo apt-get update
-            sudo apt-get install docker.io
-            export DOCKER_BUILDKIT=1
-            docker --version
+          name: Install Heroku CLI
+          command: curl https://cli-assets.heroku.com/install.sh | sh
       - run:
-          name: Login to Docker Hub
+          name: Login to Heroku
           command: |
-            echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
-      - run:
-          name: Print Docker Hub Username
-          command: echo $DOCKERHUB_USERNAME
-      - run:
-          name: Build, Tag, and Push Image to Docker Hub
-          command: |
-            docker build -f ./react_front/Dockerfile.space_explorer_front -t $DOCKERHUB_USERNAME/space-explorer:1 ./react_front
-            docker push $DOCKERHUB_USERNAME/space-explorer:1
+              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a space-explorer web
+              HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a space-explorer web
       - run:
           name: Deploy to Heroku
           command: |
-            docker pull $DOCKERHUB_USERNAME/space-explorer:1
-            docker tag $DOCKERHUB_USERNAME/space-explorer:1 registry.heroku.com/space-explorer/web
-            echo "$API_KEY_HEROKU" | docker login --username=_ --password-stdin registry.heroku.com
-            docker push registry.heroku.com/space-explorer/web
-            heroku container:release web -a space-explorer
+            heroku container:login
+            heroku container:push -a <space-explorer> web
+            heroku container:release -a <space-explorer> web
 
 workflows:
   version: 2
@@ -68,6 +57,6 @@ workflows:
     jobs:
       - build_and_test_backend
       - build_and_test_frontend
-      - build_and_push:
+      - deploy_heroku:
           requires:
             - build_and_test_frontend
