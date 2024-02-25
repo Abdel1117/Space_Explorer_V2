@@ -49,6 +49,7 @@ jobs:
       - run:
           name: Push Docker Image to Docker Hub
           command: |
+            docker build -t abdel11117/space-explorer .         
             docker push abdel11117/space-explorer:latest
 
   deploy_heroku:
