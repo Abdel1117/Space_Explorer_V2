@@ -39,8 +39,9 @@ jobs:
       - run:
           name: Login to Heroku
           command: |
-            heroku container:login
-            echo "$API_KEY_HEROKU" | docker login --username=$LOGIN_HEROKU --password-stdin registry.heroku.com
+              HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:login
+              HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:push -a space-explorer web
+              HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:release -a space-explorer web
       - run:
           name: Deploy to Heroku
           command: |
