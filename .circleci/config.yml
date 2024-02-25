@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Login to Docker Hub
           command: | 
-            docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+            echo "$DOCKERHUB_PASS" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
             docker-compose build
             docker-compose push
       - run:
