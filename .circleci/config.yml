@@ -58,12 +58,14 @@ jobs:
           command: |
             apt-get update 
             apt-get install -y curl
-
       - run: 
           name: Install Docker
           command: |
-              apt-get-update
-              apt-get docker
+              apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+              add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+              apt-get update
+              apt-get install -y docker-ce
       - run :
           name: Install Heroku CLI
           command: curl https://cli-assets.heroku.com/install.sh | sh
@@ -77,15 +79,15 @@ jobs:
       - run:
           name: Tag Docker Image for Heroku
           command: |
-            docker tag abdel11117/space-explorer:latest registry.heroku.com/<heroku-app-name>/web
+            docker tag abdel11117/space-explorer:latest registry.heroku.com/space-explorer/web
       - run:
           name: Push Docker Image to Heroku
           command: |
-            docker push registry.heroku.com/<space-explorer>/web
+            docker push registry.heroku.com/space-explorer/web
       - run:
           name: Release Docker Image on Heroku
           command: |
-            HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:release web -a <space-explorer>
+            HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:release web -a space-explorer
 
 workflows:
   version: 2
