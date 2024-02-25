@@ -31,20 +31,16 @@ jobs:
     
   deploy_heroku:
     docker:
-      - image: circleci/cci-demo-docker-primary:0.0.1
+      - image: cimg/base:stable  # Use a base image that supports Docker and other necessary tools
 
     steps:
       - checkout
       - run:
-          name: Update packages and install curl
+          name: Install Required Tools
           command: |
-            apt-get update 
-            apt-get install -y curl
-     
-            
-      - run :
-          name: Install Heroku CLI
-          command: curl https://cli-assets.heroku.com/install.sh | sh
+            sudo apt-get update
+            sudo apt-get install -y curl gnupg docker.io
+            curl https://cli-assets.heroku.com/install.sh | sh
       - run:
           name: Login to Heroku
           command: HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:login
@@ -65,4 +61,8 @@ workflows:
     jobs:
       - build_and_test_backend
       - build_and_test_frontend
-      - deploy_heroku
+         
+      - deploy_heroku:
+          requires:
+            - build_and_test_backend
+            - build_and_test_frontend
