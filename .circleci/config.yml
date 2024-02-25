@@ -39,14 +39,8 @@ jobs:
       - run:
           name: Login to Heroku
           command: |
-            expect -c '
-              spawn heroku login -i
-              expect "Email: "
-              send "abderahmane.adjali@live.fr\r"
-              expect "Password: "
-              send "Fermetageule14?"
-              interact
-            '
+            heroku container:login
+            echo "$API_KEY_HEROKU" | docker login --username=$LOGIN_HEROKU --password-stdin registry.heroku.com
       - run:
           name: Deploy to Heroku
           command: |
