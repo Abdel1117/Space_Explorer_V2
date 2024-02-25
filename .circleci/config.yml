@@ -46,13 +46,7 @@ jobs:
             echo "$DOCKERHUB_PASS" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
             docker-compose build
             docker-compose push
-      - run:
-          name: Push Docker Image to Docker Hub
-          command: |
-            ls -la 
-            docker build -t abdel11117/space-explorer .         
-            docker push abdel11117/space-explorer:latest
-
+    
   deploy_heroku:
     docker:
       - image: ubuntu:22.04
