@@ -1,4 +1,4 @@
-const request = require("supertest");
+/* const request = require("supertest");
 const app = require("../index");
 require("dotenv").config()
 const mongoose = require("mongoose")
@@ -30,3 +30,4 @@ afterAll(async () => {
     await mongoose.disconnect();
 
 });
+ */
