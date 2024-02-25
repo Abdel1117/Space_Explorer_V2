@@ -30,8 +30,8 @@ jobs:
 
     
   deploy_heroku:
-    docker:
-      - image: cimg/base:stable  # Use a base image that supports Docker and other necessary tools
+    machine:
+      image: ubuntu-2004:202010-01
 
     steps:
       - checkout
