@@ -28,26 +28,47 @@ jobs:
           name: Build Frontend
           command: npm run build --prefix react_front
 
-  deploy_heroku:
+  build_and_push_services:
     machine:
       image: ubuntu-2004:202104-01
     steps:
       - checkout
       - run:
-          name: Install Heroku CLI
-          command: curl https://cli-assets.heroku.com/install.sh | sh
-      - run:
-          name: Login to Heroku
+          name: Install Docker and Heroku CLI
           command: |
-              HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:login
-              HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:push -a space-explorer web
-              HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:release -a space-explorer web
+            curl https://cli-assets.heroku.com/install.sh | sh
+            sudo apt-get update
+            sudo apt-get install docker.io
       - run:
-          name: Deploy to Heroku
+          name: Login to Docker Hub
           command: |
-            heroku container:login
-            heroku container:push -a <space-explorer> web
-            heroku container:release -a <space-explorer> web
+            echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - run:
+          name: Build, Tag, and Push Backend to Docker Hub
+          command: |
+            docker build -f ./react_back_node/Dockerfile.space_explorer_back -t $DOCKERHUB_USERNAME/space-explorer-back:latest ./react_back_node
+            docker push $DOCKERHUB_USERNAME/space-explorer-back:latest
+      - run:
+          name: Build, Tag, and Push Frontend to Docker Hub
+          command: |
+            docker build -f ./react_front/Dockerfile.space_explorer_front -t $DOCKERHUB_USERNAME/space-explorer-front:latest ./react_front
+            docker push $DOCKERHUB_USERNAME/space-explorer-front:latest
+      - run:
+          name: Deploy Backend to Heroku
+          command: |
+            docker pull $DOCKERHUB_USERNAME/space-explorer-back:latest
+            docker tag $DOCKERHUB_USERNAME/space-explorer-back:latest registry.heroku.com/space-explorer-back/web
+            echo "$API_KEY_HEROKU" | docker login --username=_ --password-stdin registry.heroku.com
+            docker push registry.heroku.com/space-explorer-back/web
+            heroku container:release web -a space-explorer-back
+      - run:
+          name: Deploy Frontend to Heroku
+          command: |
+            docker pull $DOCKERHUB_USERNAME/space-explorer-front:latest
+            docker tag $DOCKERHUB_USERNAME/space-explorer-front:latest registry.heroku.com/space-explorer-front/web
+            echo "$API_KEY_HEROKU" | docker login --username=_ --password-stdin registry.heroku.com
+            docker push registry.heroku.com/space-explorer-front/web
+            heroku container:release web -a space-explorer-front
 
 workflows:
   version: 2
@@ -55,6 +76,6 @@ workflows:
     jobs:
       - build_and_test_backend
       - build_and_test_frontend
-      - deploy_heroku:
+      - build_and_push_services:
           requires:
             - build_and_test_frontend
