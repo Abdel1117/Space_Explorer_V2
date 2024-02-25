@@ -28,24 +28,6 @@ jobs:
           name: Build Frontend
           command: npm run build --prefix react_front
 
-  build_and_push_docker_image:
-    machine: true
-
-  
-    steps:
-      - checkout
-      - run:
-          name: Install Docker Compose
-          command: |
-           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-           sudo chmod +x /usr/local/bin/docker-compose
-
-      - run:
-          name: Login to Docker Hub
-          command: | 
-            echo "$DOCKERHUB_PASS" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
-            docker-compose build
-            docker-compose push
     
   deploy_heroku:
     docker:
@@ -58,17 +40,7 @@ jobs:
           command: |
             apt-get update 
             apt-get install -y curl
-      - run: 
-          name: Install Docker
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common lsb-release
-            curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-            sudo apt-get update
-            sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-            sudo systemctl start docker
-            sudo systemctl enable docker
+     
             
       - run :
           name: Install Heroku CLI
@@ -76,18 +48,12 @@ jobs:
       - run:
           name: Login to Heroku
           command: HEROKU_API_KEY=${API_KEY_HEROKU} heroku container:login
+
       - run:
-          name: Pull Docker Image from Docker Hub
-          command: |
-            docker pull abdel11117/space-explorer:latest
-      - run:
-          name: Tag Docker Image for Heroku
-          command: |
-            docker tag abdel11117/space-explorer:latest registry.heroku.com/space-explorer/web
-      - run:
-          name: Push Docker Image to Heroku
-          command: |
-            docker push registry.heroku.com/space-explorer/web
+          name: Build and Push Docker Image to Heroku COntainer Registry
+          command : |
+              heroku container:push web -a space-explorer --recursive
+     
       - run:
           name: Release Docker Image on Heroku
           command: |
@@ -99,9 +65,4 @@ workflows:
     jobs:
       - build_and_test_backend
       - build_and_test_frontend
-      - build_and_push_docker_image:
-          requires:
-            - build_and_test_frontend
-      - deploy_heroku:
-          requires:
-            - build_and_push_docker_image
+      - deploy_heroku
