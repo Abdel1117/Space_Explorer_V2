@@ -57,6 +57,10 @@ jobs:
           name: Login into VPS server
           command: | 
             ssh $HOST_VPS@$IP_VPS
+
+      - run:
+          name: Go to the right directory
+          command: |
             cd Space_Explorer_V2/
             
       - run:
