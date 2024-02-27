@@ -47,7 +47,7 @@ jobs:
             docker-compose build
             docker-compose push
     
-  deploy_into_hostinger:
+  deploy_with_vps:
     machine:
       image: ubuntu-2004:202010-01
 
@@ -56,7 +56,7 @@ jobs:
       - run:
           name: Login into VPS server
           command: | 
-            ssh $HOST_VPS@$IP_VPS <<EOF
+            ssh $HOST_VPS@$IP_VPS \<<EOF
               cd Space_Explorer_V2/
               git pull
               cd react_front
@@ -72,7 +72,7 @@ workflows:
       - build_and_test_backend
       - build_and_test_frontend
          
-      - deploy_into_hostinger:
+      - deploy_with_vps:
           requires:
             - build_and_test_backend
             - build_and_test_frontend
