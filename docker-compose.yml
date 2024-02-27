@@ -3,6 +3,7 @@ services:
     build:
       context: ./react_front
       dockerfile: Dockerfile.space_explorer_front
+    image: abdel11117/space-explorer:react_front_latest
     ports:
       - "5173:5173"
     depends_on:
@@ -12,16 +13,18 @@ services:
     build:
       context: ./react_back_node
       dockerfile: Dockerfile.space_explorer_back
+    image: abdel11117/space-explorer:react_back_node_latest
     ports:
       - "4000:4000"
     depends_on:
       - db
 
   db:
+    image: mongo:latest
     volumes:
       - space-explorer-db:/data/db
-    image: mongo:latest
     ports:
       - "27017:27017"
+
 volumes:
   space-explorer-db:
