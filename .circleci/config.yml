@@ -56,17 +56,12 @@ jobs:
       - run:
           name: Login into VPS server
           command: | 
-            ssh $HOST_VPS@$IP_VPS << 'EOF'
+            ssh $HOST_VPS@$IP_VPS <<EOF
               cd Space_Explorer_V2/
               git pull
-            EOF
-
-      - run:
-          name: Build Image
-          command: |
-            cd react_front << 'EOF'
+              cd react_front
               npm run build
-              chown -R 777 dist/ 
+              chmod -R 777 dist/
               cp -R dist/ /
             EOF
 
