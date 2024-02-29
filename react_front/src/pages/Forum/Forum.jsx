@@ -27,7 +27,7 @@ export default function Forum() {
     useEffect(() => {
         try {
             setIsLoading(true)
-            setColumns(["Title", "Slug", "Sujet", "User", "Date"])
+            setColumns(["Titre", "Slug", "Sujet", "Auteur", "Date"])
             getForum()
         }
         catch (err) {

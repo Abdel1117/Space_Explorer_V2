@@ -108,7 +108,7 @@ exports.findSujetById = (req, res, next) => {
     const forums = forumShema.findById({ _id: req.params.id })
         .populate("User")
         .then(forum => res.status(200).json(forum))
-        .catch(e => res.status(400).json(e))
+        .catch(e => res.status(400).json({ message: "Une erreur interne est survenu" }))
 }
 
 exports.addReponse = async (req, res, next) => {
