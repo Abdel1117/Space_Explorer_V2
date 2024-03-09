@@ -2,6 +2,13 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react"
 
 export const themeContext = createContext()
 
+/**
+ * Propaging the value of the theme to display Light or Dark mode
+ * @author Abderahmane Adjali
+ * @date 2023-02-05
+ * @param {ReactComponentElement} {children}
+ * @returns {None}
+ */
 export const ThemeProvider = ({ children }) => {
     const initalState = localStorage.getItem('theme') || 'light';
 

@@ -5,21 +5,7 @@ const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
 
 exports.addArticle = (req, res, next) => {
-    try {
-        const token = req.headers.authorization.split(" ")[1]
-        if (!token) {
-            return res.status(401).json({ message: "Token introuvable !" })
-        }
-        jwt.verify(token, process.env.AUTH_TOKKEN_CODE, (err, decoded) => {
-            if (err) {
-                return res.status(401).json({ message: "Token invalide !" })
-            }
-        })
 
-    }
-    catch (e) {
-        return res.status(500).json({ message: "Une erreure innatendu est survenu" })
-    }
 
     const errors = validationResult(req);
 
@@ -185,4 +171,30 @@ exports.getSearchResultArticle = async (req, res, next) => {
     } catch (error) {
         res.status(500).send("Une erreur lors de la recherche c'est produite")
     }
+}
+
+
+exports.addFavorite = async (req, res, next) => {
+
+    try {
+        const user = req.body.user
+        const article = req.body.idArticle
+
+        const allArticle = await Article.findALl()
+        const foundArticle = allArticle.filter((article, index) => {
+            article._id === article
+        })
+        if (foundArticle.length == 0) {
+            return res.status(404).json({ message: "Aucun article correspondont" })
+        } else {
+            const user = await User.findById(user._id)
+            if (user) {
+                User.save(article)
+            }
+
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Une erreur lors de l'ajout du favoris est survenu" })
+    }
+
 }
