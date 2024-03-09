@@ -73,7 +73,6 @@ workflows:
       - build_and_test_frontend
       - deploy_docker : 
           requires: 
-            - build_and_test_backend
             - build_and_test_frontend
       - deploy_with_vps:
           requires:

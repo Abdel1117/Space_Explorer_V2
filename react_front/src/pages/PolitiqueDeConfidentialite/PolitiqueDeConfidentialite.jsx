@@ -24,7 +24,7 @@ export const PolitiqueDeConfidentialite = () => {
                 </p>
             </div>
 
-            <h2 className="text-xl md:text-2xl dark:text-white ">Collecte des renseignements personnels</h2>
+            <h2 className="text-xl md:text-2xl dark:text-white mb-6">Collecte des renseignements personnels</h2>
             <div className='mb-8'>
                 <ul className="text-sm md:text-md dark:text-white">
                     <li>Prénom</li>
