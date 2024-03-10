@@ -4,8 +4,8 @@ require("dotenv").config()
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const corsOptions = require('./config/corsOptions')
 const { logger } = require('./Functions/logEvent/logEvent')
+const corsOption = require("./config/corsOptions")
 const errorHandler = require('./Functions/errorHandler/errorHandler');
 const credentials = require("./Functions/credentials/credentials");
 const cookieParser = require('cookie-parser');
@@ -30,7 +30,12 @@ app.use(logger);
 
 app.use(credentials);
 
-app.use(cors(corsOptions));
+app.use(cors(corsOption));
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -65,3 +70,4 @@ app.all('*', (req, res) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+ 
