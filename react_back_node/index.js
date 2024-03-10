@@ -4,8 +4,8 @@ require("dotenv").config()
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const corsOptions = require('./config/corsOptions')
 const { logger } = require('./Functions/logEvent/logEvent')
+const corsOption = require("./config/corsOptions")
 const errorHandler = require('./Functions/errorHandler/errorHandler');
 const credentials = require("./Functions/credentials/credentials");
 const cookieParser = require('cookie-parser');
@@ -17,6 +17,7 @@ const articleRoute = require("./Router/ArticleRoute")
 const identifiationRoute = require("./Router/IdentificationRoute")
 const paiementRoute = require("./Router/PaiementRoute")
 const PORT = process.env.PORT || 4000;
+const FRONT_URL = process.env.FRONT_ORIGIN
 const BDD_USER = process.env.DATABASE_USERNAME
 const BDD_PASS = process.env.DATA_BASE_PASS
 const BDD_NAME = process.env.BDD_NAME
@@ -30,7 +31,12 @@ app.use(logger);
 
 app.use(credentials);
 
-app.use(cors(corsOptions));
+app.use(cors(corsOption));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', FRONT_URL);
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -65,6 +71,3 @@ app.all('*', (req, res) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
-module.exports = app
