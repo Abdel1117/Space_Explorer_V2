@@ -60,6 +60,7 @@ jobs:
               cd Space_Explorer_V2/
               git pull
               cd react_front
+              npm install
               npm run build
               chmod -R 777 dist/
               cp -R dist/ /

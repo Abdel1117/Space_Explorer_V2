@@ -28,9 +28,8 @@ export function setCookie(name, value, options = {}) {
 
     options = {
         path: '/',
-        secure: true, /*  */
+        secure: true,
         sameSite: "Lax",
-        // Ajoute d'autres valeurs par défaut si nécessaire
         ...options
     };
 

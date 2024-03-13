@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, lazy, Suspense } from 'react'
+import { useState, useEffect, useContext, useMemo, lazy, Suspense } from 'react'
 import { useAuth } from "./Context/userContext"
 import { Navigate, Outlet } from 'react-router-dom'
 import Nav from './componants/navBarre/Nav'
@@ -58,17 +58,21 @@ function App() {
     theme === "light" ? root.classList.remove("dark") : root.classList.add('dark');
   }, [theme])
 
-  /* UseEffect to handle the cookie autorisation in the application */
-  useEffect(() => {
-    const cookie = getCookie("acceptCookie")
+  /* useMemo to handle the showBannerCookie state */
+  const memoizedShowBannerCookie = useMemo(() => {
+    const cookie = getCookie("acceptCookie");
     try {
-
-      cookie === undefined ? setShowBannerCookie(true) : setShowBannerCookie(false)
+      return cookie === undefined;
     } catch (e) {
-      console.log(e)
+      console.log(e);
+      return false;
     }
-  }, [setCookie])
+  }, [setCookie]);
 
+  /* Update showBannerCookie state */
+  useEffect(() => {
+    setShowBannerCookie(memoizedShowBannerCookie);
+  }, [memoizedShowBannerCookie]);
 
   if (isLoading) {
     return <Spinner />;

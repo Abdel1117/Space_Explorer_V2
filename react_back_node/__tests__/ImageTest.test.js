@@ -5,15 +5,7 @@ const mongoose = require("mongoose")
 const app = require("../index");
 
 describe('Tests pour les routes GET Forum', function () {
-    let server;
 
-    beforeAll(() => {
-        server = app.listen(4003);
-    });
-
-    afterAll(async () => {
-        server.close()
-    });
 
 
     it('Devrait récupérer tout les sujets ', async function () {

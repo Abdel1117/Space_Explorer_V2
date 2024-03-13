@@ -2,16 +2,10 @@
 const request = require('supertest');
 const app = require("../index");
 
+
 describe('Tests pour les routes GET User', function () {
-    let server;
 
-    beforeAll(() => {
-        server = app.listen(4001);
-    });
 
-    afterAll(async () => {
-       server.close()
-    });
     it('Devrait récupérer les informations d\'un utilisateur par son ID', async function () {
         const response = await request(app).get('/user/getAllUsers');
         expect(response.status).toBe(200);

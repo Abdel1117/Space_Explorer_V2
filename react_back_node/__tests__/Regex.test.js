@@ -1,12 +1,12 @@
 const request = require('supertest');
 const app = require('../index');
-describe('Test de la création d\'un utilisateur', () => {
 
+describe('Test de la création d\'un utilisateur', () => {
 
     test('Création d\'un utilisateur avec des données valides', async () => {
         const userData = {
-            "pseudo": "Adelddsddddddsdsddd",
-            "emailInput": "Abzzddddddddsdsdsdddzzbbbbb.adjalilive.fr",
+            "pseudo": "Adelddsddddddsdsddd14",
+            "emailInput": "Abzzddddddddsdsdsdddzzbbbbb.adjali@live.fr",
             "passwordInput": "Fermetageule14?",
             "confirm_passwordInput": "Fermetageule14?",
             "accept_condition": true
@@ -15,7 +15,9 @@ describe('Test de la création d\'un utilisateur', () => {
         const response = await request(app)
             .post('/user/inscription')
             .send(userData);
-        expect(response.statusCode).toBe(200);
+        console.log(response)
+        expect(response.statusCode).toBe(201);
+
     });
 
 
@@ -33,6 +35,7 @@ describe('Test de la création d\'un utilisateur', () => {
             .send(userData);
         expect(response.statusCode).toBe(400);
     });
+
 });
 
 

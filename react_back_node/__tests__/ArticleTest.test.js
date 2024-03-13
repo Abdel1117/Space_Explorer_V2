@@ -3,15 +3,7 @@ const request = require('supertest');
 const app = require("../index");
 
 describe('Tests pour les routes GET User', function () {
-    let server;
 
-    beforeAll(() => {
-        server = app.listen(4001);
-    });
-
-    afterAll(async () => {
-        server.close()
-    });
     it('Devrait récupérer tout les Articles', async function () {
         const response = await request(app).get('/article');
         expect(response.status).toBe(200);

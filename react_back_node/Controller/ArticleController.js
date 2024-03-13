@@ -21,7 +21,6 @@ exports.addArticle = (req, res, next) => {
             let Year = date.getFullYear();
             let dateOfPublication = `${day}-${month}-${Year}`
             if (req.files && req.files.length === contenu.length) {
-                console.log(req.files.length)
                 contenu.forEach((element, index) => {
                     const image = req.files[index]
                     element.image = image.filename
@@ -109,12 +108,10 @@ exports.getArticle = (req, res, next) => {
         .catch(err => res.status(400).json({ err }))
 }
 exports.getUniqueArticle = (req, res, next) => {
-    console.log(`${req.params.id} est mon id`)
     const uniqueArticle = Article.findById({ _id: req.params.id })
         .then(article => res.status(200).json(article))
         .catch(err => res.status(401).json({ message: " Une erreure innatendu est survenu" + err }))
 
-    console.log(uniqueArticle)
 }
 
 
