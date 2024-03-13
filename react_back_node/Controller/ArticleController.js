@@ -2,6 +2,8 @@ const { cp } = require("fs");
 const Article = require("../Model/articleShema");
 const { validationResult } = require('express-validator')
 const mongoose = require("mongoose")
+const jwt = require("jsonwebtoken")
+
 exports.addArticle = (req, res, next) => {
 
 
@@ -42,27 +44,43 @@ exports.addArticle = (req, res, next) => {
 }
 
 exports.deleteArticle = (req, res, next) => {
-    console.log("La route de supression ")
-
     try {
-        const tokken = req.headers.authorization;
-        const tokkenSplited = tokken.split(' ')[1]
-        if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
-
+        try {
+            const token = req.headers.authorization.split(" ")[1]
+            if (!token) {
+                return res.status(401).json({ message: "Token introuvable !" })
+            }
+            jwt.verify(token, process.env.AUTH_TOKKEN_CODE, (err, decoded) => {
+                if (err) {
+                    return res.status(401).json({ message: "Token invalide !" })
+                }
+            })
+        }
+        catch (e) {
+            return res.status(500).json({ message: "Une erreure innatendu est survenu" })
+        }
         const articletId = req.params.id
         Article.find()
             .then(article => {
                 try {
                     const allArticle = article
-
                     const result = allArticle.filter((uniqueArticle) => uniqueArticle._id.toString() === req.params.id)
-
-                    console.log(result)
-
                     if (result.length === 0) {
                         return res.status(200).json({ message: "Aucun article correspondant retrouvé" })
                     }
                     else {
+                        for (let i = 0; i < result.Contenu.length; i++) {
+                            const filePath = result.Contenu[i].image;
+
+                            const fullPath = `./image/galerie/${filePath}`
+
+                            fs.unlink(fullPath, (err) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).json({ message: "Erreur lors de la suppression du fichier" });
+                                }
+                            })
+                        }
                         Article.deleteOne({ "_id": articletId })
                             .then(() => {
                                 return res.status(200).json({ message: `L'article à bien était supprimé` })
@@ -71,33 +89,24 @@ exports.deleteArticle = (req, res, next) => {
                                 return res.status(500).json({ message: "Impossible de supprimer l'article" });
                             })
                     }
-
-
                 } catch (error) {
                     console.log(error)
                 }
-
             })
             .catch((e) => {
                 console.log(e)
-
                 return res.status(500).json({ message: "Impossible de supprimer l'article " })
             })
-
     } catch (error) {
         console.log(error)
         return res.status(500).json({ message: "Impossible d'éffectuer l'action" })
     }
-
 }
 
 exports.getArticle = (req, res, next) => {
     const article = Article.find()
         .then(articles => res.status(200).json(articles))
         .catch(err => res.status(400).json({ err }))
-
-
-    console.log(article)
 }
 exports.getUniqueArticle = (req, res, next) => {
     console.log(`${req.params.id} est mon id`)
@@ -162,4 +171,30 @@ exports.getSearchResultArticle = async (req, res, next) => {
     } catch (error) {
         res.status(500).send("Une erreur lors de la recherche c'est produite")
     }
+}
+
+
+exports.addFavorite = async (req, res, next) => {
+
+    try {
+        const user = req.body.user
+        const article = req.body.idArticle
+
+        const allArticle = await Article.findALl()
+        const foundArticle = allArticle.filter((article, index) => {
+            article._id === article
+        })
+        if (foundArticle.length == 0) {
+            return res.status(404).json({ message: "Aucun article correspondont" })
+        } else {
+            const user = await User.findById(user._id)
+            if (user) {
+                User.save(article)
+            }
+
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Une erreur lors de l'ajout du favoris est survenu" })
+    }
+
 }

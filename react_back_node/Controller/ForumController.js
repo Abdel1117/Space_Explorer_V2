@@ -8,16 +8,7 @@ const AUTH_TOKKEN_CODE = process.env.AUTH_TOKKEN_CODE
 const REFRESH_TOKKEN_CODE = process.env.REFRESH_TOKKEN_CODE
 
 exports.addSujet = (req, res, next) => {
-    const tokken = req.headers.authorization;
-    const tokkenSplited = tokken.split(' ')[1]
-    if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
-    const decode = jwt.verify(tokkenSplited, AUTH_TOKKEN_CODE, function (err, decoded) {
-        if (err) {
-            return res.status(403).json({ message: "Veuillez vous connecter afin de pouvoir poster un nouveau sujet" })
-        } else {
-            return decoded
-        }
-    })
+
 
     const errors = validationResult(req);
     const { Forum_title, Slug, Sujet } = req.body;
@@ -46,10 +37,7 @@ exports.deleteSujet = (req, res, next) => {
     console.log("La route de supression d'article")
 
     try {
-        const tokken = req.headers.authorization;
-        const tokkenSplited = tokken.split(' ')[1]
-        if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
-
+      
         const sujetId = req.params.id
         forumShema.find()
             .then(forum => {
@@ -108,22 +96,12 @@ exports.findSujetById = (req, res, next) => {
     const forums = forumShema.findById({ _id: req.params.id })
         .populate("User")
         .then(forum => res.status(200).json(forum))
-        .catch(e => res.status(400).json(e))
+        .catch(e => res.status(400).json({ message: "Une erreur interne est survenu" }))
 }
 
 exports.addReponse = async (req, res, next) => {
 
-    const tokken = req.headers.authorization;
-    const tokkenSplited = tokken.split(' ')[1]
-
-    if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
-    const decode = jwt.verify(tokkenSplited, REFRESH_TOKKEN_CODE, function (err, decoded) {
-        if (err) {
-            return res.status(403).json({ message: "Veuillez vous connecter afin de pouvoir poster un nouveau sujet" })
-        } else {
-            return decoded
-        }
-    })
+  
 
     const errors = validationResult(req);
 

@@ -13,11 +13,11 @@ exports.inscriptionHandler = (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-
+        /* If error is appening in the body vlidation message are sent */
         return res.status(400).json({ errors: errors.array() });
     }
     else {
-
+        /* Crypting passowrd */
         bcrypt.hash(req.body.passwordInput, 10)
             .then(hash => {
                 const user = new User({
@@ -70,7 +70,6 @@ exports.connexionHandler = (req, res, next) => {
                             REFRESH_TOKKEN_CODE,
                             { expiresIn: "2h" },
                         )
-
                         user.refreshToken = refreshToken;
                         user.save()
                             .then(updatedUser => {
@@ -93,9 +92,7 @@ exports.connexionHandler = (req, res, next) => {
                     })
                     .catch(err => console.log(err));
             })
-
             .catch(err => res.status(500).json({ erreur: "Une erreur inconne est survenue" }))
-
     };
 }
 

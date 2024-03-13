@@ -36,9 +36,7 @@ exports.addImage = (req, res, next) => {
 exports.deleteImage = (req, res, next) => {
 
     try {
-        const tokken = req.headers.authorization;
-        const tokkenSplited = tokken.split(' ')[1]
-        if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
+
 
         const imageId = req.params.id
         Image.find()

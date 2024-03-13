@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function TagsArticleList() {
     return (
-        <div className='bg-slate-500 h-full p-1 md:p-5 sm:w-6/12 lg:w-full'>
+        <div className='bg-slate-500  md:h-full p-1 md:p-5 sm:w-6/12 lg:w-full'>
             <h2 className='text-white text-md md:text-xl my-4'>Categories</h2>
 
             <div className='flex flex-col justify-between align-super'>
