@@ -176,9 +176,7 @@ exports.editAvatar = async (req, res, next) => {
         if (newImage) {
             // Supprimer l'ancien avatar de l'utilisateur 
             const currentAvatar = await User.findById(req.params.id)
-            console.log("=============================")
-            console.log(currentAvatar)
-            console.log("=============================")
+
             if (currentAvatar.avatar) {
                 await new Promise((resolve, reject) => {
                     const fullPath = `./image/avatar/${currentAvatar.avatar}`

@@ -8,9 +8,7 @@ import "swiper/css/pagination";
 
 export default function Carousel({ data, loading }) {
     const apiUrl = import.meta.env.VITE_API_URL
-    useEffect(() => {
-        console.log(data)
-    }, [])
+
     return (
         <div>
             {!loading ? (
@@ -39,11 +37,11 @@ export default function Carousel({ data, loading }) {
                     <SwiperSlide>
 
                         <div className=' min-w-full w-full'>
-                            <a href="#">
-                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="" />
+                            <a href="#" aria-label={data[0]?.Title}>
+                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
-                                <div className='mx-auto w-6/12 bg-violet-400 md:px-4 md:py-2 text-white'>
+                                <div className='mx-auto w-6/12 bg-violet-400 dark:bg-dark-blue md:px-4 md:py-2 text-white'>
                                     {data[0].Slugs[0]}
                                 </div>
                                 <h2 className='my-2 font-bold dark:text-white'>{data[0]?.Title}</h2>
@@ -54,11 +52,11 @@ export default function Carousel({ data, loading }) {
                     <SwiperSlide>
 
                         <div className=' min-w-full w-full'>
-                            <a href="#">
-                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[1].Contenu[0]?.image}`} alt="" />
+                            <a href="#" aria-label={data[1]?.Title}>
+                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[1].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
-                                <div className='mx-auto w-6/12 bg-violet-400 md:px-4 md:py-2 text-white'>
+                                <div className='mx-auto w-6/12 bg-violet-400 dark:bg-dark-blue md:px-4 md:py-2 text-white'>
                                     {data[1].Slugs[0]}
                                 </div>
                                 <h2 className='my-2 font-bold dark:text-white'>{data[1]?.Title}</h2>
@@ -69,11 +67,11 @@ export default function Carousel({ data, loading }) {
                     <SwiperSlide>
 
                         <div className=' min-w-full w-full'>
-                            <a href="#">
-                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[2].Contenu[0]?.image}`} alt="" />
+                            <a href="#" aria-label={data[2]?.Title}>
+                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[2].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
-                                <div className='mx-auto w-6/12 bg-violet-400 md:px-4 md:py-2 text-white'>
+                                <div className='mx-auto w-6/12 bg-violet-400 dark:bg-dark-blue md:px-4 md:py-2 text-white'>
                                     {data[2].Slugs[0]}
                                 </div>
                                 <h2 className='my-2 font-bold dark:text-white'>{data[2]?.Title}</h2>
@@ -84,11 +82,11 @@ export default function Carousel({ data, loading }) {
                     <SwiperSlide>
 
                         <div className=' min-w-full w-full'>
-                            <a href="#">
-                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="" />
+                            <a href="#" aria-label={data[3]?.Title}>
+                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
-                                <div className='mx-auto w-6/12 bg-violet-400 md:px-4 md:py-2 text-white'>
+                                <div className='mx-auto w-6/12 bg-violet-400 dark:bg-dark-blue md:px-4 md:py-2 text-white'>
                                     Catégorie                                </div>
                                 <h2 className='my-2 font-bold dark:text-white'>Mon Titre</h2>
 
@@ -98,13 +96,13 @@ export default function Carousel({ data, loading }) {
                     <SwiperSlide>
 
                         <div className=' min-w-full w-full'>
-                            <a href="#">
-                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="" />
+                            <a href="#" aria-label={data[0]?.Title}>
+                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
-                                <div className='mx-auto w-6/12 bg-violet-400 md:px-4 md:py-2 text-white'>
+                                <div className='mx-auto w-6/12 bg-violet-400 dark:bg-dark-blue md:px-4 md:py-2 text-white'>
                                     Catégorie                                </div>
-                                <h2 className='my-2 font-bold dark:text-white'>Mon Titre</h2>
+                                <h2 className='my-2 font-bold dark:text-white'>{data[0]?.Title}</h2>
 
                             </div>
                         </div>

@@ -45,8 +45,8 @@ export default function Galerie() {
         <title>Space Explorer | Galerie </title>
         <meta name="description" content="Bienvenu sur la page dédier au image de Space Explorer, ici vous pourez observer des planète, étoiles, comètes, vaiseau et autres magnifique cliché veanant de l'espace" />
       </Helmet>
-      <section className=' min-h-[100vh] w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-2 pb-12'>
-        <h1>Galerie</h1>
+      <section className='min-h-[100vh] w-4/5 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-2 pb-12'>
+        <h1 className='mx-auto py-2 md:py-8 text-lg md:text-xl xl:text-2xl dark:text-white text-center'>Galerie</h1>
         {load === true ?
 
           Array(numberOfDivs).fill().map((_, i) => {

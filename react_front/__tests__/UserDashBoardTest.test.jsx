@@ -32,6 +32,5 @@ describe("UserDashBoard", () => {
         expect(screen.getByText(/Loading .../i)).toBeInTheDocument();
     })
 
-
 });
 

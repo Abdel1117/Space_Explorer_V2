@@ -11,7 +11,7 @@ export default function Footer() {
     return (
         <footer className="p-4 bg-white shadow md:px-6 md:py-8 dark:bg-[#1C1E21] ">
             <div className="flex flex-col lg:flex-row items-center justify-center sm:justify-between">
-                <button onClick={() => { navigate("/") }} className="flex items-center mb-4 sm:mb-0 mr-14 md:mr-0">
+                <button role='button' aria-label='Theme' onClick={() => { navigate("/") }} className="flex items-center mb-4 sm:mb-0 mr-14 md:mr-0">
                     <img src={Space_Explorer} className="w-14 h-14 md:mr-3 hover:animate-pulse" alt="Flowbite Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Space Explorer</span>
                 </button>
