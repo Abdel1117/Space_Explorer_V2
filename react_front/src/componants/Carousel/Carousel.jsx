@@ -96,13 +96,13 @@ export default function Carousel({ data, loading }) {
                     <SwiperSlide>
 
                         <div className=' min-w-full w-full'>
-                            <a href="#" aria-label={data[0]?.Title}>
-                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="Image liée à l'article" />
+                            <a href="#" aria-label={data[4]?.Title}>
+                                <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[4].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
                                 <div className='mx-auto w-6/12 bg-violet-400 dark:bg-dark-blue md:px-4 md:py-2 text-white'>
                                     Catégorie                                </div>
-                                <h2 className='my-2 font-bold dark:text-white'>{data[0]?.Title}</h2>
+                                <h2 className='my-2 font-bold dark:text-white'>{data[4]?.Title}</h2>
 
                             </div>
                         </div>

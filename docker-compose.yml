@@ -18,6 +18,8 @@ services:
       - "4000:4000"
     depends_on:
       - db
+    volumes:
+      - ./react_back_node/image:/react_back_node/image
 
   db:
     image: mongo:latest

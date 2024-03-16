@@ -36,7 +36,7 @@ export default function Article() {
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>{`Space Explorer | Article sur ${article?.Title}`}</title>
-                <meta name="description" content="Bienvenu sur la page dédier au image de Space Explorer, ici vous pourez observer des planète, étoiles, comètes, vaiseau et autres magnifique cliché veanant de l'espace" />
+                <meta name="description" content="Bienvenue sur la page dédier au image de Space Explorer, ici vous pourez observer des planète, étoiles, comètes, vaiseau et autres magnifique cliché veanant de l'espace" />
             </Helmet>
             {loading === true ?
 
@@ -50,11 +50,11 @@ export default function Article() {
 
                         <div key={index} className='mb-14' >
                             <h2 className="text-lg md:text-xl xl:text-2xl dark:text-white text-center first-letter:uppercase mb-4 ">{element.titre}</h2>
-                            <div className={`flex ${index % 2 === 0 ? 'flex-col md:flex-row-reverse' : 'flex-col md:flex-row'} my-5 md:my-0 mx-4`}>
+                            <div className={`flex ${index % 2 === 0 ? 'flex-col lg:flex-row-reverse' : 'flex-col lg:flex-row'} my-5 md:my-0 mx-4`}>
 
                                 <img src={`${apiUrl}/${element.image.replace(/\\/g, "/")}`} alt="Une image liée à un article"
-                                    className="object-cover w-[350px] h-[350px] md:w-100 md:h-auto" />
-                                <p className=' md:text-base text-black dark:text-white w-fit first-letter:uppercase px-0 md:px-4 '>{element.contenu}</p>
+                                    className="object-contain w-full h-auto lg:w-[350px] lg:h-full" />
+                                <p className=' md:text-base text-black dark:text-white w-fit first-letter:uppercase px-0 md:px-4 text-justify'>{element.contenu}</p>
 
                             </div>
                         </div>

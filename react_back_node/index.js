@@ -16,6 +16,7 @@ const imageRoute = require("./Router/ImageRoute")
 const articleRoute = require("./Router/ArticleRoute")
 const identifiationRoute = require("./Router/IdentificationRoute")
 const paiementRoute = require("./Router/PaiementRoute")
+const countEntityRoute = require("./Router/CountEntityRoute")
 const PORT = process.env.PORT || 4000;
 const FRONT_URL = process.env.FRONT_ORIGIN
 const BDD_USER = process.env.DATABASE_USERNAME
@@ -57,7 +58,7 @@ app.use("/image", imageRoute)
 app.use("/article", articleRoute)
 app.use("/tokken", identifiationRoute)
 app.use("/paiment", paiementRoute)
-
+app.use('/count/', countEntityRoute)
 app.all('*', (req, res) => {
   res.status(404);
   if (req.accepts('html')) {

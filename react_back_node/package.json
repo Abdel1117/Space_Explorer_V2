@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "test": "jest --detectOpenHandles --runInBand  --verbose",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc jest --detectOpenHandles --runInBand --verbose"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -36,11 +36,12 @@
   },
   "nyc": {
     "include": [
-      "../react_back_node/**/*.js"
+      "**/*.js"
     ],
     "exclude": [
-      "test/",
-      "**/*.spec.js"
+      "__tests__/",
+      "**/*.spec.js",
+      "node_modules/"
     ],
     "reporter": [
       "text",
@@ -51,5 +52,21 @@
     "branches": 90,
     "functions": 90,
     "lines": 90
+  },
+  "jest": {
+    "coverageProvider": "v8",
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text-summary",
+      "html"
+    ],
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/node_modules/**",
+      "!**/__tests__/**",
+      "!**/*.spec.js"
+    ]
   }
 }

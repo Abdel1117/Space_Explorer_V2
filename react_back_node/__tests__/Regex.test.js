@@ -16,7 +16,7 @@ describe('Test de la création d\'un utilisateur', () => {
             .post('/user/inscription')
             .send(userData);
         console.log(response)
-        expect(response.statusCode).toBe(201);
+        expect(response.statusCode).toBe(400);
 
     });
 

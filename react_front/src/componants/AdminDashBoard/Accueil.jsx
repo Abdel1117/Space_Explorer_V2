@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Loader from '../Loader/Loader'
 import Article from "../../assets/icon_svg/un-journal.png"
 import Galery from "../../assets/icon_svg/galery.png"
@@ -8,8 +8,29 @@ import User from "../../assets/icon_svg/utilisateur.png"
 
 export default function Accueil(props) {
     const [isLoading, setIsLoading] = useState(false)
+    const [count, setCount] = useState({})
     const { blockSection, setBlockSection } = props
 
+    useEffect(() => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+
+        const callApiForCount = async () => {
+            try {
+                setIsLoading(true)
+                const request = await fetch(`${apiUrl}/count/allEntity`, {
+                    method: "GET"
+                })
+                const response = await request.json()
+                setCount(response)
+            } catch (error) {
+
+            } finally {
+                setIsLoading(false)
+            }
+
+        }
+        callApiForCount()
+    }, [])
 
     return (
         <div className=' w-full h-full shadow-lg  bg-white dark:bg-[#252525] p-2 md:p-5'>
@@ -23,7 +44,7 @@ export default function Accueil(props) {
                     {isLoading === true ?
                         <Loader />
                         :
-                        <span className='text-white font-semibold p-2'>12</span>
+                        <span className='text-white font-semibold p-2'>{count.Articles}</span>
                     }
                 </div>
 
@@ -34,7 +55,7 @@ export default function Accueil(props) {
                     {isLoading === true ?
                         <Loader />
                         :
-                        <span className='text-white font-semibold p-2'>12</span>
+                        <span className='text-white font-semibold p-2'>{count.Images}</span>
                     }
                 </div>
 
@@ -54,7 +75,7 @@ export default function Accueil(props) {
                     {isLoading === true ?
                         <Loader />
                         :
-                        <span className='text-white font-semibold p-2'>12</span>
+                        <span className='text-white font-semibold p-2'>{count.Users}</span>
                     }
                 </div>
 
