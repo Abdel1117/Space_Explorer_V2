@@ -58,7 +58,7 @@ app.use("/image", imageRoute)
 app.use("/article", articleRoute)
 app.use("/tokken", identifiationRoute)
 app.use("/paiment", paiementRoute)
-app.use('/count/', countEntityRoute)
+app.use('/count', countEntityRoute)
 app.all('*', (req, res) => {
   res.status(404);
   if (req.accepts('html')) {

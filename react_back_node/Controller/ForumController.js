@@ -37,7 +37,7 @@ exports.deleteSujet = (req, res, next) => {
     console.log("La route de supression d'article")
 
     try {
-      
+
         const sujetId = req.params.id
         forumShema.find()
             .then(forum => {
@@ -101,8 +101,6 @@ exports.findSujetById = (req, res, next) => {
 
 exports.addReponse = async (req, res, next) => {
 
-  
-
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -128,5 +126,21 @@ exports.addReponse = async (req, res, next) => {
             console.log(error)
             return res.status(500).json("Une erreur interne est survenu")
         }
+    }
+}
+
+exports.getSearchResultForum = async (req, res, next) => {
+
+    try {
+        const { query } = req.body;
+        const forum = await forumShema.find({
+            $or: [
+                { Title: new RegExp(query, 'i') },
+                { "Slug": new RegExp(query, 'i') }
+            ]
+        });
+        return res.json(forum)
+    } catch (error) {
+        res.status(500).send("Une erreur lors de la recherche c'est produite")
     }
 }

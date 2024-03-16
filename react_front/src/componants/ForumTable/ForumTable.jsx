@@ -41,7 +41,7 @@ export default function ForumTable({ columns, datas, loading }) {
                                         scope="row"
                                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-sm md:text-base"
                                     >
-                                        {data.Title}
+                                        {truncate(data.Title, 15)}
                                     </td>
 
                                     <td className="px-6 py-4 text-sm md:text-base">{data.Slug}</td>
