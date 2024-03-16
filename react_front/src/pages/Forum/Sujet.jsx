@@ -92,8 +92,8 @@ export const Sujet = () => {
                                             <article key={index} className='shadow-lg bg-[#ffffff] rounded-lg dark:bg-[#1C1C1C] mb-6'>
                                                 <div className='flex flex-col md:flex-row justify-center md:justify-start items-center py-1 px-1 w-full'>
                                                     <div className="relative h-auto md:h-[75px] overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 py-1 px-1 ml-2 mt-4 md:mt-0">
-                                                        {sujet?.User.avatar != undefined ?
-                                                            <img src={`${apiUrl}/${sujet?.User.avatar}`} alt="image_profil" className='rounded-full w-20 h-20 z-50' />
+                                                        {rep?.user.avatar != undefined ?
+                                                            <img src={`${apiUrl}/${rep?.user.avatar}`} alt="image_profil" className='rounded-full w-20 h-20 z-50' />
                                                             :
                                                             <img src="..\..\src\assets\icon_svg\defaultAvatar.jpg" alt="image_profil" className='rounded-full w-20 h-auto z-50' />
                                                         }
@@ -101,7 +101,7 @@ export const Sujet = () => {
                                                     </div>
                                                     <div className='min-h-[70px] flex flex-col md:flex-row justify-center md:justify-between items-center md:p-2  ml-0 md:ml-10 w-full '>
                                                         <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit first-letter:uppercase text-center'>
-                                                            {sujet?.User.pseudo}
+                                                            {rep?.user.pseudo}
                                                         </p>
                                                         <p className='text-sm md:text-base text-black dark:text-white mt-2 w-fit first-letter:uppercase text-center'>
                                                             {rep?.FormattedDate}

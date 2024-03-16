@@ -31,5 +31,5 @@ npm install
 npm run dev
 cd react_back_node
 npm install
-nodemon
+nodemon index.js
 ```

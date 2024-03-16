@@ -1,9 +1,12 @@
 import React from 'react'
 import FormUser from '../form_User/FormUser'
-const Profil = ({ user }) => {
+const Profil = ({ user, dataChanged, setDataChanged }) => {
   return (
     <div>
-      <FormUser user={user} />
+      <FormUser
+        user={user}
+        dataChanged={dataChanged}
+        setDataChanged={setDataChanged} />
 
     </div>
   )

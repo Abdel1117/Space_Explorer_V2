@@ -5,13 +5,12 @@ import Toast_invalide from '../Toast_invalide/Toast_invalide';
 import Toast_validation from '../Toast_valide/Toast_valide';
 import { useParams } from 'react-router-dom';
 import { useFetch } from '../../Hooks/useFetch';
-export default function FormUser({ user }) {
+export default function FormUser({ user, dataChanged, setDataChanged }) {
   const [imageProfil, setImageProfil] = useState(null)
   const [imagePreShow, setImagePreShow] = useState(null)
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-
   const userId = useParams();
 
   const { register, formState: { errors }, handleSubmit, getValues, watch, setValue } = useForm({
@@ -30,6 +29,7 @@ export default function FormUser({ user }) {
         .then(response => {
           if (response.status === 200) {
             setMessage(response?.data?.message)
+            setDataChanged(true)
           }
           else {
             setError("Une erreur est survenu")
@@ -40,6 +40,7 @@ export default function FormUser({ user }) {
       console.log(error)
       setError("Une erreur est survenu")
     } finally {
+      setDataChanged(false)
       setLoading(false)
     }
   }
@@ -52,7 +53,6 @@ export default function FormUser({ user }) {
         img.onload = function () {
           if (img.width > 300 && img.height > 300) {
             const myImage = URL.createObjectURL(e.target.files[0])
-            console.log(myImage)
             setImagePreShow(myImage);
             setImageProfil(
               file
@@ -75,9 +75,7 @@ export default function FormUser({ user }) {
     const newState = ""
     setError(newState)
   }
-  useEffect(() => {
-    console.log(dataUser.user)
-  }, [])
+
   return (
     <div className='block w-full '>
 

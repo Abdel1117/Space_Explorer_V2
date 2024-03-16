@@ -16,6 +16,8 @@ export const UserDashBoard = () => {
     const [data, setData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState({})
+    const [dataChanged, setDataChanged] = useState(false)
+
     const API_URL = import.meta.env.VITE_API_URL
     useEffect(() => {
         setIsLoading(true);
@@ -33,7 +35,7 @@ export const UserDashBoard = () => {
             }
         }
         fetchData()
-    }, [])
+    }, [dataChanged])
 
 
     return (
@@ -59,7 +61,8 @@ export const UserDashBoard = () => {
                                 <Accueil /> :
 
                                 (blockSection === "Profil") ?
-                                    <Profil user={data} /> :
+                                    <Profil user={data} dataChanged={dataChanged}
+                                        setDataChanged={setDataChanged} /> :
 
                                     (blockSection === "Amis") ?
                                         <Amis /> :
