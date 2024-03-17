@@ -13,8 +13,12 @@ export default function Forum() {
     const { userAuth } = useContext(userContext)
     const [columns, setColumns] = useState([])
     const apiUrl = import.meta.env.VITE_API_URL
-
-
+    /**
+     * Call api to get the all the subjects
+     * @author Abderahmane Adjali
+     * @date 2023-04-11
+     * @returns {Void}
+     */
     const getForum = async () => {
         const data = await fetch(`${apiUrl}/forum/forum`,
             {
@@ -24,8 +28,13 @@ export default function Forum() {
         const response = await data.json()
         setSujets(response)
     }
-
-
+    /**
+     * This function is here to search a particular forum by title 
+     * @author Abderahmane Adjali
+     * @date 2024-03-17
+     * @param {String} result
+     * @returns {Void}
+     */
     const findForum = async (result) => {
         try {
             setIsLoading(true)
@@ -46,7 +55,6 @@ export default function Forum() {
             setIsLoading(false)
         }
     }
-
 
     useEffect(() => {
         try {

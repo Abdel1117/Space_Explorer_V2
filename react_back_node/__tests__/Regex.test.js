@@ -15,7 +15,6 @@ describe('Test de la création d\'un utilisateur', () => {
         const response = await request(app)
             .post('/user/inscription')
             .send(userData);
-        console.log(response)
         expect(response.statusCode).toBe(400);
 
     });

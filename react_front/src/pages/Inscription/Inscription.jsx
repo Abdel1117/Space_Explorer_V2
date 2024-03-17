@@ -27,11 +27,24 @@ export default function Inscription() {
         }
     });
 
+    /**
+     * Handling the selection of the field accept_condition
+     * @author Abderahmane Adjali
+     * @date 2023-01-23
+     * @returns {Void}
+     */
     const handleCheck = () => {
         setChecked(!checked);
         setForm(value => ({ ...value, ["accept_condition"]: !checked }));
     }
 
+    /**
+     * Hanglind the rest of the form field 
+     * @author Abderahmane Adjali
+     * @date 2023-01-23
+     * @param {Event}
+     * @returns {Void}
+     */
     const handleChange = e => {
         const name = e.target.name;
         const value = e.target.value;
@@ -73,11 +86,25 @@ export default function Inscription() {
 
             })
     }
+
+
+    /**
+     * Delete the popup via the index
+     * @author Abderahmane Adjali
+     * @date 2023-01-23
+     * @param {Number} index
+     * @returns {Void}
+     */
     const deletePopUp = index => {
         const newState = [...errorsMessages]
         newState.splice(index, 1)
         setErrorsMessages(newState)
     }
+    /**
+     * Prevent a user already logged to navigate to this Page
+     * @author Abderahmane Adjali
+     * @date 2023-01-23
+     */
     useEffect(() => {
         if (userAuth != undefined) {
             navigate(`/profil/${userAuth.userId}`)
