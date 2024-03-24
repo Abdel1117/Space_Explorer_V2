@@ -12,7 +12,7 @@ export const EditSujet = () => {
     const [article, setArticle] = useState({})
     const [message, setMessage] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
-    const [editedTitle, setEditedTitle] = useState(null)
+    const [editedTitle, setEditedTitle] = useState("")
     const [editedSlug, setEditedSlug] = useState(null)
     const [editedSections, setEditedSections] = useState(null)
     const [imageHeaderEdited, setImageHeaderEdited] = useState({})
@@ -88,7 +88,6 @@ export const EditSujet = () => {
             });
         });
     };
-
 
 
     const editArticle = async () => {
@@ -212,12 +211,6 @@ export const EditSujet = () => {
                             <div className="mb-6">
                                 <label htmlFor="Titre_Article" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white ml-1">Titre</label>
                                 <input
-                                    type="text"
-                                    name="Article_title"
-                                    id="Titre_Article"
-                                    value={editedTitle}
-                                    onChange={(e) => { setEditedTitle(e.target.value) }}
-                                    required
                                     {...register('Article_title', {
                                         required: "Veuillez remplir ce champs avec un Titre",
                                         pattern: {
@@ -226,10 +219,14 @@ export const EditSujet = () => {
                                         }
                                     })}
 
-
+                                    value={editedTitle}
+                                    onChange={(e) => {
+                                        setEditedTitle(e.target.value)
+                                    }}
+                                    type="text"
+                                    name="Article_title"
+                                    id="Titre_Article"
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-
-
                                 />
                                 <div className=''>
 
@@ -382,7 +379,7 @@ export const EditSujet = () => {
                                                 required: "Veuillez taper une section d'article",
                                                 pattern: {
 
-                                                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 2000 charactères"
+                                                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 4000 charactères"
                                                 }
                                             })}
                                             onChange={(e) => {
@@ -395,7 +392,7 @@ export const EditSujet = () => {
                                         ></textarea>
                                         <>
                                             <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
-                                                {countingChar(editedSections[index].contenu)} / 2000 </p>
+                                                {countingChar(editedSections[index].contenu)} / 4000 </p>
                                         </>
                                         <>
                                             {errors[`Section_${index}`] && (
