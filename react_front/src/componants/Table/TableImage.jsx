@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Loader from '../Loader/Loader'
+import { useNavigate } from 'react-router-dom'
 import Toast_validation from '../Toast_valide/Toast_valide'
 export const TableImage = ({ images, imageSelected, handleImageSelection, selectAllImage, deselectAllImage, handleSelectAllChange, handleSearch, loading, deleteArticle }) => {
 
     const [toogle, setToogle] = useState(false)
 
-
+    const navigate = useNavigate()
     const myStyle = {
         position: "absolute",
         inset: "40px auto 0px 0px",
@@ -64,7 +65,7 @@ export const TableImage = ({ images, imageSelected, handleImageSelection, select
 
 
                                     <td className="px-2 py-2 md:px-6 md:py-4 flex flex-col lg:flex-row justify-between">
-                                        <a href={`/editImage/${image._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifié</a>
+                                        <a onClick={() => { navigate(`/editImage/${image._id}`) }} className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Modifié</a>
                                         <a onClick={() => { deleteArticle(image._id) }} className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Supprimer</a>
                                     </td>
                                 </tr>

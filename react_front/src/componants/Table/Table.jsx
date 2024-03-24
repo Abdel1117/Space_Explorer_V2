@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Loader from '../Loader/Loader'
-
+import { useNavigate } from 'react-router-dom'
 export default function Table({ articles, articleSelected, handleArticleSelection, selectAllImage, deselectAllArticles, handleSelectAllChange, handleSearch, loading, deleteArticle }) {
 
     const [toogle, setToogle] = useState(false)
-
+    const navigate = useNavigate()
     const myStyle = {
         position: "absolute",
         inset: "40px auto 0px 0px",
@@ -60,7 +60,7 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
 
 
                                     <td className="px-6 py-4 flex  justify-between  flex-col lg:flex-row ">
-                                        <a href={`/editSujet/${article._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifié</a>
+                                        <a onClick={() => { navigate(`/editSujet/${article._id}`) }} className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Modifié</a>
                                         <a onClick={() => deleteArticle(article._id, article.Title)} className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Supprimer</a>
                                     </td>
                                 </tr>
