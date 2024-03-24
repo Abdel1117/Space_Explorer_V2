@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom'
 import userContext from '../../Context/userContext';
 import { BouttonBackWard } from '../../componants/BouttonBackWard/BouttonBackWard';
+import { Spinner } from '../../componants/Spinner/Spinner';
 export default function Article() {
     const { userAuth } = useContext(userContext);
     const articleId = useParams()
@@ -40,7 +41,7 @@ export default function Article() {
             </Helmet>
             {loading === true ?
 
-                <p>Loading ...</p>
+                <Spinner />
                 :
                 <article className='container mx-auto mb-5 p-2 md:p-4 min-h-screen'>
                     <h1 className='mx-auto py-2 md:py-8 text-lg md:text-xl xl:text-2xl dark:text-white text-center first-letter:uppercase '>{article?.Title}</h1>
@@ -59,8 +60,15 @@ export default function Article() {
                             </div>
                         </div>
                     ))}
+                    <div className='flex justify-start'>
+
+                        <BouttonBackWard />
+                    </div>
+
                 </article>
             }
+
+
         </section>
     )
 }

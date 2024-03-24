@@ -62,7 +62,7 @@ export const TableUser = ({ users, userSelected, handleUserSelection, selectAllU
 
                             return user._id !== userAuth.userId ? (
 
-                                < tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
+                                <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
                                     <td className="w-4 p-4">
                                         <div className="flex items-center">
                                             <input onChange={() => handleUserSelection(index)} id="checkbox-table-search-1"
@@ -73,20 +73,20 @@ export const TableUser = ({ users, userSelected, handleUserSelection, selectAllU
                                         </div>
                                     </td>
 
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <th scope="row" className="px-2 py-2 md:px-6 md:py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {user._id === undefined ? "NA" : user._id}
                                     </th>
 
-                                    <td className="px-6 py-4">
+                                    <td className="px-2 py-2 md:px-6 md:py-4">
                                         {user.email}
 
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td className="px-2 py-2 md:px-6 md:py-4">
                                         {user.role}
 
                                     </td>
 
-                                    <td className="px-6 py-4 flex justify-between">
+                                    <td className="px-2 py-2 md:px-6 md:py-4 flex flex flex-col lg:flex-row justify-between">
                                         <a onClick={() => { OpenModal(user._id) }} className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Modifié</a>
                                         <a onClick={() => { banUser(user._id, user.email) }} className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Supprimer</a>
                                     </td>

@@ -49,7 +49,7 @@ const PrivateRoutes = () => {
 function App() {
   const { theme, setTheme } = useContext(themeContext);
   const { userAuth, isCheckingToken, isLoading } = useAuth();
-  const [showBannerCookie, setShowBannerCookie] = useState(true)
+  const [showBannerCookie, setShowBannerCookie] = useState(false)
 
 
   /* UseEffect to handle the theme of the appplication */
@@ -61,13 +61,8 @@ function App() {
   /* useMemo to handle the showBannerCookie state */
   const memoizedShowBannerCookie = useMemo(() => {
     const cookie = getCookie("acceptCookie");
-    try {
-      return cookie === undefined;
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-  }, [setCookie]);
+    return cookie === undefined;
+  }, []); //
 
   /* Update showBannerCookie state */
   useEffect(() => {

@@ -22,9 +22,7 @@ export default function Footer() {
                     <li>
                         <button onClick={() => { navigate("/politique-confidentialite") }} className="mr-4 hover:underline md:mr-6">Politique de confidentialité</button>
                     </li>
-                    <li>
-                        <button onClick={() => { navigate("Mentions_légales_de_Vente") }} className="mr-4 hover:underline md:mr-6 ">Licensing</button>
-                    </li>
+
                     <li>
                         <button onClick={() => { navigate("/nous-contacter") }} className="hover:underline">Nous contacter</button>
                     </li>

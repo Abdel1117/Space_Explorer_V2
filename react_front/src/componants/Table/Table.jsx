@@ -46,9 +46,7 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
                         <th scope="col" className="px-6 py-3">
                             Catégorie
                         </th>
-                        <th scope="col" className="px-6 py-3">
-                            Note
-                        </th>
+
                         <th scope="col" className="px-6 py-3">
                             Action
                         </th>
@@ -79,9 +77,7 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
 
                                     </td>
 
-                                    <td className="px-6 py-4">
-                                        $2999
-                                    </td>
+
                                     <td className="px-6 py-4 flex justify-between">
                                         <a href={`/editSujet/${article._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifié</a>
                                         <a onClick={() => deleteArticle(article._id, article.Title)} className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Supprimer</a>

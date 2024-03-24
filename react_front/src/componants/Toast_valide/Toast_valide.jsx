@@ -20,7 +20,7 @@ export default function Toast_validation({ message, options = false, doYesAction
 
 
     return (
-        <div className='bg-white border rounded-md shadow-xl min-w-[fit-content] mx-auto p-3 md:p-5 animate-fadeIn fixed bottom-[50%] right-[50%] translate-x-[50%] translate-y-[50%] flex flex-col  items-center justify-center'>
+        <div className='bg-white border rounded-md shadow-xl min-w-[fit-content] mx-auto p-3 md:p-5 animate-fadeIn fixed bottom-[50%] right-[50%] translate-x-[50%] translate-y-[50%] flex flex-col  items-center justify-center z-50'>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 mr-1 text-green-500" viewBox="0 0 20 20"
                 fill="currentColor">
                 <path fillRule="evenodd"

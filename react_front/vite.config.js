@@ -14,6 +14,7 @@ export default defineConfig({
     exclude: ['**/node_modules/**', '**/dist/**', 'src/test/vitest.setup.js'],
     coverage: {
       provider: 'istanbul',
+      exclude: ['**/node_modules/**', '**/dist/**', '**/tailwind.config.cjs', '**/postcss.config.cjs', '**/vite.config.ts'], 
     },
   },
 

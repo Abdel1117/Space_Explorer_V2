@@ -68,7 +68,7 @@ export const Ajout_Sujet = () => {
 
 
     const goToYourSujet = (idSujet) => {
-        navigate(`sujet/${idSujet}`)
+        navigate(`/sujet/${idSujet}`)
     }
 
     const isIncludeWord = (str, arr) => {
@@ -112,7 +112,7 @@ export const Ajout_Sujet = () => {
                                 {...register('Forum_title', {
                                     required: "Veuillez remplir ce champs avec un Titre",
                                     pattern: {
-                                        value: /^(?! )[a-zA-Z0-9\-()À-ÿ ]{3,}$/,
+                                        value: /^.{3,}$/,
                                         message: "Veuillez taper un titre qui contient 3 à 20 caractères"
                                     }
                                 })}

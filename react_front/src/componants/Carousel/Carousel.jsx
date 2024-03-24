@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Navigation, Pagination } from "swiper";
+import { useNavigate } from "react-router-dom"
 import { Swiper, SwiperSlide } from "swiper/react";
 import Loader from "../../componants/Loader/Loader"
 import "swiper/css"
@@ -8,7 +9,7 @@ import "swiper/css/pagination";
 
 export default function Carousel({ data, loading }) {
     const apiUrl = import.meta.env.VITE_API_URL
-
+    const navigate = useNavigate()
     return (
         <div>
             {!loading ? (
@@ -36,8 +37,8 @@ export default function Carousel({ data, loading }) {
                 >
                     <SwiperSlide>
 
-                        <div className=' min-w-full w-full'>
-                            <a href="#" aria-label={data[0]?.Title}>
+                        <div className=' min-w-full w-full cursor-pointer hover:opacity-60 hover:scale-90 transition-scale duration-300'>
+                            <a onClick={() => { navigate(`article/${data[0]?._id}`) }} aria-label={data[0]?.Title}>
                                 <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
@@ -51,8 +52,8 @@ export default function Carousel({ data, loading }) {
                     </SwiperSlide>
                     <SwiperSlide>
 
-                        <div className=' min-w-full w-full'>
-                            <a href="#" aria-label={data[1]?.Title}>
+                        <div className=' min-w-full w-full cursor-pointer  hover:opacity-60 hover:scale-90 transition-scale duration-300'>
+                            <a onClick={() => { navigate(`article/${data[1]?._id}`) }} aria-label={data[1]?.Title}>
                                 <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[1].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
@@ -66,8 +67,8 @@ export default function Carousel({ data, loading }) {
                     </SwiperSlide>
                     <SwiperSlide>
 
-                        <div className=' min-w-full w-full'>
-                            <a href="#" aria-label={data[2]?.Title}>
+                        <div className=' min-w-full w-full cursor-pointer  hover:opacity-60 hover:scale-90 transition-scale duration-300'>
+                            <a onClick={() => { navigate(`article/${data[2]?._id}`) }} aria-label={data[2]?.Title}>
                                 <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[2].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
@@ -81,8 +82,8 @@ export default function Carousel({ data, loading }) {
                     </SwiperSlide>
                     <SwiperSlide>
 
-                        <div className=' min-w-full w-full'>
-                            <a href="#" aria-label={data[3]?.Title}>
+                        <div className=' min-w-full w-full cursor-pointer  hover:opacity-60 hover:scale-90 transition-scale duration-300'>
+                            <a onClick={() => { navigate(`article/${data[3]?._id}`) }} aria-label={data[3]?.Title}>
                                 <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[0].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
@@ -95,8 +96,8 @@ export default function Carousel({ data, loading }) {
                     </SwiperSlide>
                     <SwiperSlide>
 
-                        <div className=' min-w-full w-full'>
-                            <a href="#" aria-label={data[4]?.Title}>
+                        <div className=' min-w-full w-full cursor-pointer  hover:opacity-60 hover:scale-90 transition-scale duration-300'>
+                            <a onClick={() => { navigate(`article/${data[4]?._id}`) }} aria-label={data[4]?.Title}>
                                 <img className='w-full h-[250px] object-cover' src={`${apiUrl}/${data[4].Contenu[0]?.image}`} alt="Image liée à l'article" />
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
@@ -118,5 +119,5 @@ export default function Carousel({ data, loading }) {
                 )
             }
 
-        </div>)
+        </div >)
 }

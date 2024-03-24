@@ -22,6 +22,12 @@ const Nav = () => {
 
     return () => window.removeEventListener('resize', resetToogle)
   }, [])
+
+  useEffect(() => {
+
+    setToogle(false)
+  }, [navigate])
+
   return (
 
     <nav className="bg-gray-100 font-sans w-full m-0">
@@ -29,9 +35,9 @@ const Nav = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-4">
             <div>
-              <a href="/">
-                <img className='w-20 h-10 object-cover cursor-pointer hover:animate-pulse' src={SpaceExplorer} alt="Logo_Space_Explorer" />
-              </a>
+
+              <img onClick={() => { navigate("/") }} className='w-20 h-10 object-cover cursor-pointer hover:animate-pulse' src={SpaceExplorer} alt="Logo_Space_Explorer" />
+
             </div>
 
             <div className="hidden sm:flex sm:items-center">

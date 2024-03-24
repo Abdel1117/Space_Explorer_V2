@@ -46,7 +46,7 @@ export default function Connexion() {
           setUserAuth(data);
           setMessages(data.message);
           sessionStorage.setItem("token", data.token);
-          location.href = "/";
+          navigate("/");
         } else {
           let errorsMsg = [];
           if (Array.isArray(data.errors)) {
@@ -157,7 +157,7 @@ export default function Connexion() {
                     }
                   })}
                   onChange={handleChange}
-                  value={form.passwordInput}
+                  value={form.passwordInput || ""}
                   type="password"
                   name="passwordInput"
                   id="passwordInput"
@@ -191,7 +191,7 @@ export default function Connexion() {
               </div>
               <button type="submit" className="w-full text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Connexion</button>
               <p className="text-sm  text-white ">
-                Vous n'avez pas de compte ? <a href="/inscription" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Crée un compte ici </a>
+                Vous n'avez pas de compte ? <a onClick={() => navigate("/")} className="font-medium text-primary-600 hover:underline dark:text-primary-500">Crée un compte ici </a>
               </p>
             </form>
           </div>
@@ -199,7 +199,7 @@ export default function Connexion() {
 
         </div>
 
-      </section>
+      </section >
     </>
   )
 }

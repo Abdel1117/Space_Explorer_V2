@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import ForumTable from '../../componants/ForumTable/ForumTable'
 import Loader from '../../componants/Loader/Loader';
 import userContext from '../../Context/userContext';
+import { useNavigate } from "react-router-dom"
 
 export default function Forum() {
 
@@ -12,6 +13,10 @@ export default function Forum() {
     const [errors, setErrors] = useState(false)
     const { userAuth } = useContext(userContext)
     const [columns, setColumns] = useState([])
+    const navigate = useNavigate()
+
+
+
     const apiUrl = import.meta.env.VITE_API_URL
     /**
      * Call api to get the all the subjects
@@ -106,13 +111,13 @@ export default function Forum() {
                 <section className='w-full md:w-8/12 bg-light-blue dark:bg-dark-blue h-[150px] text-center mb-10 flex flex-col md:flex-row items-center justify-center md:justify-between p-4 rounded-md'>
                     <p className='text-sm md:text-base text-white mb-4 md:mb-0'>Veuillez vous inscrire pour pouvoir poster un sujet</p>
 
-                    <a href="/inscription" className='text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'>S'inscrire</a>
+                    <button onClick={() => { navigate("/inscription") }} className='text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'>S'inscrire</button>
                 </section>
                 :
                 <section className='w-full md:w-8/12 bg-light-blue dark:bg-dark-blue h-[150px] text-center mb-10 flex flex-col md:flex-row items-center justify-center md:justify-between p-4 rounded-md'>
                     <p className='text-sm md:text-base text-white mb-4 md:mb-0'>Vous n'avez pas trouver votre réponse ? Postez un sujet ! </p>
 
-                    <a href="/ajoutSujet" className='text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'>Ouvrir un nouveau sujet</a>
+                    <button onClick={() => { navigate("/ajoutSujet") }} className='text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'>Ouvrir un nouveau sujet</button>
                 </section>
 
             }

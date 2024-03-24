@@ -49,9 +49,7 @@ export const TableImage = ({ images, imageSelected, handleImageSelection, select
                             Catégorie
                         </th>
 
-                        <th scope="col" className="px-6 py-3">
-                            Note
-                        </th>
+
                         <th scope="col" className="px-6 py-3">
                             Action
                         </th>
@@ -75,19 +73,17 @@ export const TableImage = ({ images, imageSelected, handleImageSelection, select
                                         </div>
                                     </td>
 
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <th scope="row" className="px-2 py-2 md:px-6 md:py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-xs">
                                         {image.image === undefined ? "NA" : image.image}
                                     </th>
 
-                                    <td className="px-6 py-4">
+                                    <td className="px-2 py-2 md:px-6 md:py-4 ">
                                         {image.Slugs.join(", ")}
 
                                     </td>
 
-                                    <td className="px-6 py-4">
-                                        $2999
-                                    </td>
-                                    <td className="px-6 py-4 flex justify-between">
+
+                                    <td className="px-2 py-2 md:px-6 md:py-4 flex flex-col lg:flex-row justify-between">
                                         <a href={`/editImage/${image._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifié</a>
                                         <a onClick={() => { deleteArticle(image._id) }} className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Supprimer</a>
                                     </td>

@@ -9,6 +9,19 @@ const REFRESH_TOKKEN_CODE = process.env.REFRESH_TOKKEN_CODE
 
 exports.addSujet = (req, res, next) => {
 
+    const tokken = req.headers.authorization;
+    const tokkenSplited = tokken.split(' ')[1]
+
+    console.log(tokkenSplited)
+    if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
+    const decode = jwt.verify(tokkenSplited, "RANDOM_TOKEN_SECRET", function (err, decoded) {
+        if (err) {
+            res.status(403).json({ message: "Veuillez vous connecter afin de pouvoir poster un nouveau sujet" })
+        } else {
+            return decoded
+        }
+    })
+
 
     const errors = validationResult(req);
     const { Forum_title, Slug, Sujet } = req.body;
