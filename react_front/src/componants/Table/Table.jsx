@@ -27,18 +27,7 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" className="p-4">
-                            <div className="flex items-center">
-                                <input
-                                    onChange={handleSelectAllChange}
-                                    checked={articleSelected.length === articles.length}
-                                    id="checkbox-all-search"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
-                                />
-                                <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
-                            </div>
-                        </th>
+
 
                         <th scope="col" className="px-6 py-3">
                             Titre
@@ -58,15 +47,7 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
                         articles.map((article, index) => {
                             return (
                                 <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" >
-                                    <td className="w-4 p-4">
-                                        <div className="flex items-center">
-                                            <input onChange={() => handleArticleSelection(index)} id="checkbox-table-search-1"
-                                                type="checkbox"
-                                                checked={articleSelected.includes(index)}
-                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 cursor-pointer" />
-                                            <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
-                                        </div>
-                                    </td>
+
 
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {article.Title === undefined ? "NA" : article.Title}
@@ -78,7 +59,7 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
                                     </td>
 
 
-                                    <td className="px-6 py-4 flex justify-between">
+                                    <td className="px-6 py-4 flex  justify-between  flex-col lg:flex-row ">
                                         <a href={`/editSujet/${article._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifié</a>
                                         <a onClick={() => deleteArticle(article._id, article.Title)} className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer">Supprimer</a>
                                     </td>

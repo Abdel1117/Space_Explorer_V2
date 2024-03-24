@@ -61,8 +61,9 @@ function App() {
   /* useMemo to handle the showBannerCookie state */
   const memoizedShowBannerCookie = useMemo(() => {
     const cookie = getCookie("acceptCookie");
+    console.log(cookie)
     return cookie === undefined;
-  }, []); //
+  }, [document.cookie]); //
 
   /* Update showBannerCookie state */
   useEffect(() => {

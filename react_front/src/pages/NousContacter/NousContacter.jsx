@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
 export const NousContacter = () => {
+    const [formDone, setFormDone] = useState(false)
     return (
         <section className='min-h-[100vh] '>
             <Helmet>
@@ -80,26 +81,7 @@ export const NousContacter = () => {
                                 </li>
                             </ul>
                         </div>
-                        <div className="bg-amber-500 p-6 rounded-lg">
 
-                            <form className="mt-8 space-y-4">
-                                <input type='text' placeholder='Nom complet'
-                                    className="w-full rounded-md py-3 px-4 text-sm outline-[#a91079]" />
-                                <input type='email' placeholder='Email'
-                                    className="w-full rounded-md py-3 px-4 text-sm outline-[#a91079]" />
-                                <input type='text' placeholder='Sujet'
-                                    className="w-full rounded-md py-3 px-4 text-sm outline-[#a91079]" />
-                                <textarea placeholder='Votre message' rows="6"
-                                    className="w-full rounded-md px-4 text-sm pt-3 outline-[#a91079]"></textarea>
-                                <button type='button'
-                                    className="w-full text-white bg-violet-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center" >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill='#fff' className="mr-2" viewBox="0 0 548.244 548.244">
-                                        <path fill-rule="evenodd" d="M392.19 156.054 211.268 281.667 22.032 218.58C8.823 214.168-.076 201.775 0 187.852c.077-13.923 9.078-26.24 22.338-30.498L506.15 1.549c11.5-3.697 24.123-.663 32.666 7.88 8.542 8.543 11.577 21.165 7.879 32.666L390.89 525.906c-4.258 13.26-16.575 22.261-30.498 22.338-13.923.076-26.316-8.823-30.728-22.032l-63.393-190.153z" clip-rule="evenodd" data-original="#000000" />
-                                    </svg>
-                                    Send Message
-                                </button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>

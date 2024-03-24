@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import userContext from '../../Context/userContext.jsx';
-
+import DonationAstro from "../../assets/images/GiveAway-removebg.png"
 import { Locked } from "../../componants/Locked/Locked.jsx"
 import StripeDonationForm from '../../componants/StipeDonationForm/StripeDonationForm';
 
@@ -30,7 +30,7 @@ export const NousSoutenir = () => {
                 <Locked /> :
 
                 <div className='rounded-lg  mx-auto w-9/12 md:w-[800px] min-h-[400px] bg-light-blue dark:bg-dark-blue relative'>
-                    <img className='max-w-[300px] md:max-w-[400px] h-auto mx-auto' src='../../../src/assets/images/GiveAway-removebg.png' alt="Image astronaute tenant un sac remplie d'argent" />
+                    <img className='max-w-[300px] md:max-w-[400px] h-auto mx-auto' src={DonationAstro} alt="Image astronaute tenant un sac remplie d'argent" />
 
                     <div className='grid grid-cols-3 gap-4'>
                         <div className='h-[200px] w-auto rounded-md shadow-xl bg-light-violet dark:bg-dark-violet'>
