@@ -61,7 +61,6 @@ function App() {
   /* useMemo to handle the showBannerCookie state */
   const memoizedShowBannerCookie = useMemo(() => {
     const cookie = getCookie("acceptCookie");
-    console.log(cookie)
     return cookie === undefined;
   }, [document.cookie]); //
 
@@ -78,7 +77,7 @@ function App() {
       <ScrollToTop />
       <Nav />
 
-      <main className='bg-[#F5F5F5] dark:bg-[#252525]'>
+      <main className='bg-[#F5F5F5] dark:bg-[#252525] overflow-scroll'>
 
         <Suspense fallback={<Spinner />}>
           <Routes>

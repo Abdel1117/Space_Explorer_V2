@@ -88,8 +88,9 @@ export default function Carousel({ data, loading }) {
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
                                 <div className='mx-auto w-6/12 bg-violet-400 dark:bg-dark-blue md:px-4 md:py-2 text-white'>
-                                    Catégorie                                </div>
-                                <h2 className='my-2 font-bold dark:text-white'>Mon Titre</h2>
+                                    {data[3].Slugs[0]}
+                                </div>
+                                <h2 className='my-2 font-bold dark:text-white'>{data[3]?.Title}</h2>
 
                             </div>
                         </div>
@@ -102,7 +103,7 @@ export default function Carousel({ data, loading }) {
                             </a>
                             <div className='mx-auto mt-4 md:mt-0 text-center md:p-4'>
                                 <div className='mx-auto w-6/12 bg-violet-400 dark:bg-dark-blue md:px-4 md:py-2 text-white'>
-                                    Catégorie                                </div>
+                                    {data[4].Slugs[0]}                                </div>
                                 <h2 className='my-2 font-bold dark:text-white'>{data[4]?.Title}</h2>
 
                             </div>

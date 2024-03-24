@@ -1,5 +1,6 @@
 require("dotenv").config()
 const User = require('../Model/userShema');
+const Sub = require("../Model/SubShema")
 const bcrypt = require("bcrypt");
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -222,3 +223,28 @@ exports.getAllUsers = async (req, res, next) => {
         res.status(500).json({ message: "Une erreur est survenue" });
     }
 };
+
+
+exports.addSub = async (req, res, next) => {
+    try {
+        const {email}  = req.body
+        if(!email) {
+            return res.status(400).json({message : "Un email est requis"})
+        }
+       const sub = await Sub.findOne({email : email }); 
+        if(sub){
+            return res.status(400).json({message : "Vous êtes déja abonné à notre newsletter"})
+           
+            
+        }else{
+            
+            const createdSub = await Sub.create( {email : email})
+            
+            return res.status(201).json({message : "Vous êtes maintenant abonné "})
+        }
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({message : "Une erreur est survenu"})
+    }
+}

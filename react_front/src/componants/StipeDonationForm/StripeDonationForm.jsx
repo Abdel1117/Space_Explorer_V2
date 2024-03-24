@@ -8,14 +8,13 @@ import { useNavigate } from 'react-router-dom';
 export const StripeDonationForm = ({ amount, user }) => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [form, setForm] = useState({})
     const [successMessage, setSuccessMessage] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
     const apiUrl = import.meta.env.VITE_API_URL
     /* Handling Form here */
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     const navigate = useNavigate()
-    const cardHolderName = watch("cardholderName");
+    const cardHolderName = watch("cardHolderName");
     const cardHolderEmail = watch("cardHolderEmail ");
 
     /* End of handling Form */
@@ -28,13 +27,14 @@ export const StripeDonationForm = ({ amount, user }) => {
      * @date 2024-02-23
      * @returns {Void}
      */
-    const onSubmit = async (event) => {
+    const onSubmit = async () => {
         try {
-            event.preventDefault();
+
             setIsLoading(true);
             if (!stripe || !elements) {
                 setErrorMessage("Le système de paiement n'est pas disponible.");
             }
+
             const cardElement = elements.getElement(CardElement);
             const billingDetails = {
                 billing_details: {
@@ -106,12 +106,20 @@ export const StripeDonationForm = ({ amount, user }) => {
             setIsLoading(false);
         }
     };
+    /**
+     * Description
+     * @author Abderahmane Adjali
+     * @date 2024-03-24
+     * @returns {None}
+     */
 
-
+    const deletePopUp = () => {
+        setErrorMessage("")
+    }
     return (
 
 
-        <form onSubmit={(e) => { handleSubmit(onSubmit(e)) }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             {
                 successMessage &&
                 <Toast_valide
@@ -125,7 +133,7 @@ export const StripeDonationForm = ({ amount, user }) => {
             }
             {
                 errorMessage &&
-                <Toast_invalide message={errorMessage} />
+                <Toast_invalide message={errorMessage} deletePopUp={deletePopUp} />
             }
             <div className="max-w-sm mx-auto mt-20 bg-white rounded-md shadow-md overflow-hidden">
                 <div className="px-6 py-4 bg-gray-900 text-white">
@@ -142,13 +150,18 @@ export const StripeDonationForm = ({ amount, user }) => {
                             Nom du titulaire de la carte
                         </label>
                         <input
-                            onChange={(e) => { handleChange(e) }}
+                            {...register("cardHolderName", {
+                                required: true,
+                                pattern: {
+                                    value: /^[A-Za-zÀ-ÖØ-öø-ÿ-']+( [A-Za-zÀ-ÖØ-öø-ÿ-']+)*$/
+                                }
+                            })}
+                            placeholder="Full Name"
                             id="cardHolderName"
                             name='cardHolderName'
                             className="appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            {...register("cardHolderName", { required: true })}
-                            placeholder="Full Name" />
-                        {errors.cardHolderName && <p className="text-red-500">Le nom du donateur est requis.</p>}
+                        />
+                        {errors.cardHolderName && <p className="text-red-500">Un Nom + Prénom Valide est requis</p>}
                     </div>
                     {/*End of Full Name Input */}
 
@@ -158,13 +171,18 @@ export const StripeDonationForm = ({ amount, user }) => {
                             Email
                         </label>
                         <input
-                            onChange={(e) => { handleChange(e) }}
+                            {...register("cardHolderEmail", {
+                                required: true, pattern: {
+                                    value: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
+                                    message: "Veuillez renseigner une adresse email valide"
+                                }
+                            })}
                             id='cardHolderEmail'
                             name='cardHolderEmail'
                             className="appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            {...register("cardholderEmail", { required: true })}
+
                             placeholder="Email" />
-                        {errors.cardholderName && <p className="text-red-500">L'Email est requis.</p>}
+                        {errors.cardHolderEmail && <p className="text-red-500">Un Email est requis.</p>}
                     </div>
 
                     {/* End of Email Input */}

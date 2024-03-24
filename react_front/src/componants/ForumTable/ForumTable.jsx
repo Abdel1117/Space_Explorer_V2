@@ -27,7 +27,7 @@ export default function ForumTable({ columns, datas, loading }) {
 
                         </tr>
                     </thead>
-                    <tbody className='shadow-lg dark:shadow-none '>
+                    <tbody className='shadow-lg dark:shadow-none'>
                         {datas &&
                             datas.map((data, index) => (
 

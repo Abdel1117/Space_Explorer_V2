@@ -8,6 +8,8 @@ const upload = require("../Functions/FileHandler/imagHandler");
 /* User Route */
 router.post("/inscription", checkInscription.createUser, userControlleur.inscriptionHandler);
 router.post("/connexion", validationUser.checkUser, userControlleur.connexionHandler);
+router.post("/sub",userControlleur.addSub)
+
 router.get("/userProfil/:id", userControlleur.getInfo)
 router.get("/getAllUsers", userControlleur.getAllUsers)
 router.put("/editUser/:id", userControlleur.editUser)
