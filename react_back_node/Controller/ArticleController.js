@@ -3,7 +3,7 @@ const Article = require("../Model/articleShema");
 const { validationResult } = require('express-validator')
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
-
+const fs = require("fs")
 exports.addArticle = (req, res, next) => {
 
 
@@ -68,17 +68,24 @@ exports.deleteArticle = (req, res, next) => {
                         return res.status(200).json({ message: "Aucun article correspondant retrouvé" })
                     }
                     else {
-                        for (let i = 0; i < result.Contenu.length; i++) {
-                            const filePath = result.Contenu[i].image;
+                        const article = result[0]
+                        if (article && article.Contenu ) {
+                        
+                        for (let i = 0; i < article.Contenu.length; i++) {
+                            const filePath = article.Contenu[i].image;
 
-                            const fullPath = `./image/galerie/${filePath}`
-
-                            fs.unlink(fullPath, (err) => {
-                                if (err) {
-                                    console.error(err);
-                                    return res.status(500).json({ message: "Erreur lors de la suppression du fichier" });
-                                }
-                            })
+                            const fullPath = `./image/Image_Article/${filePath}`
+                            try {
+                                fs.unlink(fullPath, (err) => {
+                                    if (err) {
+                                        console.error(err);
+                                        return res.status(500).json({ message: "Erreur lors de la suppression du fichier" });
+                                    }
+                                })
+                            } catch (error) {
+                                console.log(error)
+                            }
+                           
                         }
                         Article.deleteOne({ "_id": articletId })
                             .then(() => {
@@ -88,6 +95,7 @@ exports.deleteArticle = (req, res, next) => {
                                 return res.status(500).json({ message: "Impossible de supprimer l'article" });
                             })
                     }
+                }
                 } catch (error) {
                     console.log(error)
                 }
