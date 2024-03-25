@@ -68,33 +68,16 @@ exports.deleteArticle = (req, res, next) => {
                         return res.status(200).json({ message: "Aucun article correspondant retrouvé" })
                     }
                     else {
-                        const article = result[0]
-                        if (article && article.Contenu ) {
                         
-                        for (let i = 0; i < article.Contenu.length; i++) {
-                            const filePath = article.Contenu[i].image;
-
-                            const fullPath = `./image/Image_Article/${filePath}`
-                            try {
-                                fs.unlink(fullPath, (err) => {
-                                    if (err) {
-                                        console.error(err);
-                                        return res.status(500).json({ message: "Erreur lors de la suppression du fichier" });
-                                    }
-                                })
-                            } catch (error) {
-                                console.log(error)
-                            }
-                           
-                        }
                         Article.deleteOne({ "_id": articletId })
                             .then(() => {
                                 return res.status(200).json({ message: `L'article à bien était supprimé` })
                             })
                             .catch((err) => {
+                                console.log(err)
                                 return res.status(500).json({ message: "Impossible de supprimer l'article" });
                             })
-                    }
+                  
                 }
                 } catch (error) {
                     console.log(error)
