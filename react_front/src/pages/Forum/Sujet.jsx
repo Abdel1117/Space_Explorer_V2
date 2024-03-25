@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Spinner } from '../../componants/Spinner/Spinner';
 import { Reponse } from '../../componants/Reponse/Reponse';
 import userContext from '../../Context/userContext';
+import defaultAvatar from "../../assets/icon_svg/defaultAvatar.jpg"
 export const Sujet = () => {
     const sujetId = useParams()
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -57,7 +58,7 @@ export const Sujet = () => {
 
                                             <img src={`${apiUrl}/${sujet?.User.avatar.replace(/\\/g, "/")}`} alt="image_profil" className='rounded-full w-20 h-20 ' />
                                             :
-                                            <img src="..\..\src\assets\icon_svg\defaultAvatar.jpg" alt="image_profil" className='rounded-full w-20 h-auto x' />
+                                            <img src={defaultAvatar} alt="image_profil" className='rounded-full w-20 h-auto x' />
 
                                         }
 
