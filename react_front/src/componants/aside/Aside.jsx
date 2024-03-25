@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { FcHome, FcBusinessman, FcBusinesswoman, FcConferenceCall, FcFeedback, FcSettings } from "react-icons/fc"
-
+import defaultProfilPage from "../../assets/icon_svg/defaultAvatar.jpg"
 export default function aside(props) {
 
     const { blockSection, setBlockSection } = props;
@@ -22,7 +22,7 @@ export default function aside(props) {
 
                                 <img src={`${apiUrl}/${props.data.avatar.replace(/\\/g, "/")}`} alt="image_profil" className='rounded-full w-20 h-20 ' />
                                 :
-                                <img src="..\..\src\assets\icon_svg\defaultAvatar.jpg" alt="image_profil" className='rounded-full w-20 h-auto ' />
+                                <img src={defaultProfilPage} alt="image_profil" className='rounded-full w-20 h-auto ' />
                             }
                             <div className='block lg:ml-3 my-auto'>
                                 <p className='text-xs md:text-md font-bold'>{props.data.email}</p>
