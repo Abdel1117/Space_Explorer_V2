@@ -143,9 +143,7 @@ exports.deleteUser = (req, res, next) => {
 
 exports.editUser = async (req, res, next) => {
 
-    console.log("Edit User Route")
     const authorization = req.headers.authorization;
-    console.log(authorization)
 
     try {
         const id = req.params.id
@@ -193,7 +191,6 @@ exports.editAvatar = async (req, res, next) => {
                 console.log(newCollection)
 
             } else {
-                console.log("qisdjiqsjd")
 
                 const newCollection = await User.findByIdAndUpdate(id, { avatar: newImage.filename }, { new: true })
                 console.log(newCollection)
@@ -224,6 +221,24 @@ exports.getAllUsers = async (req, res, next) => {
     }
 };
 
+/* Getting Sub */
+
+exports.getAllSub = async (req, res, next) => {
+    try {
+        const subs = await Sub.find();
+        
+        if(subs.length === 0 ){
+            return res.status(404).json({message : "Aucun abonnée retrouvé"})
+        }else{
+            return res.status(200).json(subs)
+        }
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({message : "Une erreur est survenu"})
+    }
+}
+
 
 exports.addSub = async (req, res, next) => {
     try {
@@ -248,3 +263,34 @@ exports.addSub = async (req, res, next) => {
         return res.status(500).json({message : "Une erreur est survenu"})
     }
 }
+
+
+exports.deleteSub = async (req, res, next) => {
+    try {
+        // Extract email from the request
+        const { email } = req.body;
+
+        // Check if the email was provided
+        if (!email) {
+            return res.status(400).json({ message: "Un email est requis pour se désabonner." });
+        }
+
+        // Try to find the subscription by email
+        const sub = await Sub.findOne({ email: email });
+
+        // If no subscription exists for the email, return a 404
+        if (!sub) {
+            return res.status(404).json({ message: "Aucun abonnement trouvé pour cet email." });
+        }
+
+        // Delete the subscription
+        await Sub.deleteOne({ email: email });
+
+        // Return a success response
+        return res.status(200).json({ message: "L'abonnement a été supprimé avec succès." });
+    } catch (error) {
+        // Log the error and return a 500 status code for any server errors
+        console.error(error);
+        return res.status(500).json({ message: "Une erreur est survenue lors de la tentative de désabonnement." });
+    }
+};

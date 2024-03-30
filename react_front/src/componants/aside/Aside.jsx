@@ -78,9 +78,7 @@ export default function aside(props) {
                             </ul>
                         </div>
 
-                        <div className=''>
-                            <p className='ml-2 text-sm lg:text-md text-gray-400 '>Membres depuis le 20 Janvier 2023</p>
-                        </div>
+
                     </aside>
                 )}</>
     )

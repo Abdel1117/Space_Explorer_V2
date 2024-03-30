@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GrHome, GrArticle, GrImage, GrVideo, GrUser } from "react-icons/gr"
+import { GrHome, GrArticle, GrImage, GrVideo, GrUser, GrAlert, GrMailOption } from "react-icons/gr"
 import { BsList, BsXLg } from "react-icons/bs"
 export default function Side_Barre_DashBoard(props) {
 
@@ -93,6 +93,19 @@ export default function Side_Barre_DashBoard(props) {
                                     {
                                         toogle === true &&
                                         <span className="text-dark dark:text-gray-100">Utilisateurs</span>
+                                    }
+                                </button>
+                            </li>
+                            <li className="rounded-sm">
+                                <button
+                                    onClick={() => { setBlockSection("Sub") }}
+                                    href="#"
+                                    className="flex items-center p-2 space-x-3 rounded-md"
+                                >
+                                    <GrMailOption size={20} />
+                                    {
+                                        toogle === true &&
+                                        <span className="text-dark dark:text-gray-100">Abonné</span>
                                     }
                                 </button>
                             </li>

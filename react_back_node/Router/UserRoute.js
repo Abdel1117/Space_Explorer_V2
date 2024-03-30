@@ -9,7 +9,10 @@ const upload = require("../Functions/FileHandler/imagHandler");
 router.post("/inscription", checkInscription.createUser, userControlleur.inscriptionHandler);
 router.post("/connexion", validationUser.checkUser, userControlleur.connexionHandler);
 router.post("/sub",userControlleur.addSub)
+router.delete("/deleteSub",userControlleur.deleteSub)
 
+
+router.get("/getAllSubs", userControlleur.getAllSub)
 router.get("/userProfil/:id", userControlleur.getInfo)
 router.get("/getAllUsers", userControlleur.getAllUsers)
 router.put("/editUser/:id", userControlleur.editUser)

@@ -59,7 +59,7 @@ export default function Accueil(props) {
                     }
                 </div>
 
-                <div onClick={() => { setBlockSection("Users") }} className=' cursor-pointer bg-light-violet dark:bg-dark-violet w-full h-[100px] rounded-md flex flex-col  justify-between p-2 relative'>
+                <div onClick={() => { setBlockSection("Sub") }} className=' cursor-pointer bg-light-violet dark:bg-dark-violet w-full h-[100px] rounded-md flex flex-col  justify-between p-2 relative'>
                     <h2 className='text-white py-2 px-2 font-semibold '>Total Abonnées</h2>
                     <img className='absolute top-1 right-0 p-2 w-[50px] h-auto ' src={Subscription} alt="Icône représentant un article" />
                     {isLoading === true ?

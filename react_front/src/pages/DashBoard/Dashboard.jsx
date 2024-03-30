@@ -6,6 +6,7 @@ import Accueil from '../../componants/AdminDashBoard/Accueil'
 import Images from '../../componants/AdminDashBoard/Images'
 import Articles from '../../componants/AdminDashBoard/Articles'
 import Users from '../../componants/AdminDashBoard/Users'
+import Sub from "../../componants/AdminDashBoard/Sub.jsx"
 export default function Dashboard() {
     const { userAuth } = useAuth()
 
@@ -36,8 +37,9 @@ export default function Dashboard() {
 
                                     (blockSection === "Users") ?
                                         <Users /> :
-
-                                        <Accueil />
+                                        (blockSection === "Sub") ?
+                                            <Sub /> :
+                                            <Accueil />
                         :
                         <Accueil />
 
