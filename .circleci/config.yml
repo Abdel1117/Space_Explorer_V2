@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Login into VPS server
           command: |
-            ssh $HOST_VPS@$IP_VPS <<EOF
+            ssh $HOST_VPS@$IP_VPS << 'EOF'
               echo "✅ Connexion au VPS réussie"
               
               cd Space_Explorer_V2/
