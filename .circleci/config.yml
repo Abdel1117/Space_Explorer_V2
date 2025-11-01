@@ -31,7 +31,7 @@ jobs:
 
   deploy_docker:
     docker:
-       - image: cimg/node:18.17.0
+      - image: cimg/node:18.17.0
     steps:
       - checkout
       - setup_remote_docker:
@@ -46,33 +46,38 @@ jobs:
           command: |
             docker-compose build
             docker-compose push
-    
+
   deploy_with_vps:
     machine:
       image: ubuntu-2004:202010-01
-
     steps:
       - checkout
       - run:
           name: Login into VPS server
-          command: | 
-            ssh $HOST_VPS@$IP_VPS \<<EOF
+          command: |
+            ssh $HOST_VPS@$IP_VPS <<EOF
+              echo "✅ Connexion au VPS réussie"
+              
               cd Space_Explorer_V2/
               git pull
-              cd react_front
-              npm install
-              npm run build
-              chmod -R 777 dist/
-              cp -R dist/ /
+              docker compose down --volumes --remove-orphans
+              
+              docker container prune -f
+              docker image prune -f
+              
+              docker compose build --no-cache || exit 1
+              
+              docker images
+              
+              docker compose -f docker-compose.prod.yml up -d || exit 1
             EOF
 
 workflows:
-  version: 2
   build_and_test_workflow:
     jobs:
       - build_and_test_backend
       - build_and_test_frontend
-      - deploy_docker : 
+      - deploy_docker:
           requires: 
             - build_and_test_frontend
       - deploy_with_vps:

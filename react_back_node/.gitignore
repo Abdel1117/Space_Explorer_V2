@@ -25,3 +25,6 @@ dist-ssr
 *.sw?
 coverage/
 .nyc_output
+
+Dockerfile
+nginx.conf

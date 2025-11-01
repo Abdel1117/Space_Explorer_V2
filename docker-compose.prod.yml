@@ -2,32 +2,31 @@ services:
   react_front:
     build:
       context: ./react_front
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
+      target: production  
     image: abdel11117/space-explorer:react_front_latest
     ports:
-      - "${FRONT_PORT}:5173"
+      - "${FRONT_PORT:-5173}:80"
     environment:
-      - NODE_ENV=${NODE_ENV:-development}
-      - VITE_API_URL=http://localhost:${BACK_PORT}
-    depends_on:
-      - react_back_node
+      - NODE_ENV=production
+      - VITE_API_URL=${API_URL}
+    # Pas de volumes en prod (code dans l'image)
     restart: unless-stopped
 
   react_back_node:
     build:
       context: ./react_back_node
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
+      target: production  # Stage de production
     image: abdel11117/space-explorer:react_back_node_latest
     ports:
-      - "${BACK_PORT}:4000"
+      - "${BACK_PORT:-4000}:4000"
     environment:
-      - NODE_ENV=${NODE_ENV:-development}
-      - PORT=${BACK_PORT}
+      - NODE_ENV=production
+      - PORT=4000
       - MONGODB_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${DATA_BASE_PASS}@db:27017/${BDD_NAME}
-    depends_on:
-      - db
     volumes:
-      - ./react_back_node/image:/react_back_node/image
+      - ./react_back_node/image:/app/image  # Seulement les uploads
     restart: unless-stopped
 
   db:
@@ -37,10 +36,8 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${DATA_BASE_PASS}
       - MONGO_INITDB_DATABASE=${BDD_NAME}
     volumes:
-      - space-explorer-db:/data/db
-    ports:
-      - "${DB_PORT}:27017"
+      - space-explorer-db-prod:/data/db
     restart: unless-stopped
 
 volumes:
-  space-explorer-db:
+  space-explorer-db-prod:

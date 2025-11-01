@@ -1,8 +1,0 @@
-FROM node:bullseye
-WORKDIR /react_front
-COPY package.json .
-RUN npm install 
-COPY . .
-ENV PATH=$PATH:/app/node_modules/.bin
-EXPOSE 5173
-CMD [ "npm", "run", "dev" ]

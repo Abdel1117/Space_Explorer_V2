@@ -1,0 +1,18 @@
+FROM node:18-alpine AS base
+WORKDIR /react_back_node
+COPY package*.json ./
+
+# Production stage
+FROM base AS production
+RUN npm ci --only=production && npm cache clean --force
+
+RUN npm install -g pm2 
+COPY . .
+
+# Créer un utilisateur non-root pour la sécurité
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /react_back_node
+USER nodejs
+EXPOSE 4000
+CMD ["pm2-runtime", "start", "index.js"]
