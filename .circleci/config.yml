@@ -34,8 +34,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - setup_remote_docker: # démarre le daemon docker géré par CircleCI
-          version: 20.10.18
+      - setup_remote_docker
       - run: |
           sudo apt-get update
           sudo apt-get install -y docker-ce-cli
