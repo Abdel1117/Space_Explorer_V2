@@ -38,8 +38,8 @@ jobs:
           name: Install Docker Daemon
           command: |
             sudo apt-get update
-            sudo apt-get install -y docker.ce-cli docker-compose-plugin
-            docker --version 
+            sudo apt-get install -y docker-ce-cli docker-compose-plugin
+            docker --version
             docker compose version
       - run:
           name: Login to Docker Hub
