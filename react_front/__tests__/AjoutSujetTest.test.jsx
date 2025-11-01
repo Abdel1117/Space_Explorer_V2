@@ -36,7 +36,7 @@ describe('Ajout_Sujet Component', () => {
         );
 
         // Simulez la saisie de données valides
-        fireEvent.change(screen.getByPlaceholderText('Titre du Sujet'), { target: { value: 'Mon nouveau sujet' } });
+        fireEvent.change(screen.getByPlaceholderText('Titre du sujet'),{ target: { value: 'Mon nouveau sujet' } });
         fireEvent.change(screen.getByPlaceholderText('Ecrivez votre sujet ici'), { target: { value: 'Contenu de mon sujet' } });
 
         // Simulez la soumission du formulaire

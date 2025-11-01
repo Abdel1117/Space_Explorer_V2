@@ -53,9 +53,26 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Login into VPS server
-          command: |
-            ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && git pull && docker compose down --volumes --remove-orphans && docker container prune -f && docker image prune -f && docker compose build --no-cache && docker compose -f docker-compose.prod.yml up -d'
+          name: Connect to VPS
+          command: ssh $HOST_VPS@$IP_VPS 'echo "✅ Connexion au VPS réussie"'
+      - run:
+          name: Navigate to project directory
+          command: ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/'
+      - run:
+          name: Pull latest code
+          command: ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && git pull'
+      - run:
+          name: Stop existing containers
+          command: ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && docker compose down --volumes --remove-orphans'
+      - run:
+          name: Clean up Docker resources
+          command: ssh $HOST_VPS@$IP_VPS 'docker container prune -f && docker image prune -f'
+      - run:
+          name: Build Docker images
+          command: ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && docker compose build --no-cache'
+      - run:
+          name: Deploy production containers
+          command: ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && docker compose -f docker-compose.prod.yml up -d'
 
 workflows:
   build_and_test_workflow:
