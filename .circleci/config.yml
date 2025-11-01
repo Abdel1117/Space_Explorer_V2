@@ -55,22 +55,7 @@ jobs:
       - run:
           name: Login into VPS server
           command: |
-            ssh $HOST_VPS@$IP_VPS << 'EOF'
-              echo "✅ Connexion au VPS réussie"
-              
-              cd Space_Explorer_V2/
-              git pull
-              docker compose down --volumes --remove-orphans
-              
-              docker container prune -f
-              docker image prune -f
-              
-              docker compose build --no-cache || exit 1
-              
-              docker images
-              
-              docker compose -f docker-compose.prod.yml up -d || exit 1
-            EOF
+            ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && git pull && docker compose down --volumes --remove-orphans && docker container prune -f && docker image prune -f && docker compose build --no-cache && docker compose -f docker-compose.prod.yml up -d'
 
 workflows:
   build_and_test_workflow:
