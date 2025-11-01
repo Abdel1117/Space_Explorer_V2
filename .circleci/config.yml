@@ -31,26 +31,21 @@ jobs:
 
   deploy_docker:
     docker:
-      - image: cimg/node:18.17.0
+      - image: cimg/base:stable
     steps:
       - checkout
-      - run:
-          name: Install Docker Daemon
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y docker-ce-cli docker-compose-plugin
-            docker --version
-            docker compose version
-      - run:
-          name: Login to Docker Hub
-          command: |
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin     
-      - run:
-          name: Build and Push Docker Images
-          command: |
-            TAG=${CIRCLE_SHA1:0:7}
-            docker compose -f docker-compose.prod.yml build
-            docker compose -f docker-compose.prod.yml push
+      - setup_remote_docker: # démarre le daemon docker géré par CircleCI
+          version: 20.10.18
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-ce-cli
+      - run: echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      - run: |
+          TAG=${CIRCLE_SHA1:0:7}
+          docker build -t $DOCKERHUB_USERNAME/space-explorer:$TAG .
+          docker push $DOCKERHUB_USERNAME/space-explorer:$TAG
+          docker tag  $DOCKERHUB_USERNAME/space-explorer:$TAG $DOCKERHUB_USERNAME/space-explorer:latest
+          docker push $DOCKERHUB_USERNAME/space-explorer:latest
 
   deploy_with_vps:
     machine:
