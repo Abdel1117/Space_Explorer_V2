@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
 
   db:
-    image: mongo:latest7.0-alpine
+    image: mongo:latest
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${DATA_BASE_PASS}

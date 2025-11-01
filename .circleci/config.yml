@@ -35,14 +35,21 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Docker Daemon
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y docker.io docker-compose-plugin
+            docker --version && docker compose version
+      - run:
           name: Login to Docker Hub
           command: |
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin     
       - run:
           name: Build and Push Docker Images
           command: |
-            docker-compose build
-            docker-compose push
+            TAG=${CIRCLE_SHA1:0:7}
+            docker compose -f docker-compose.prod.yml build
+            docker compose -f docker-compose.prod.yml push
 
   deploy_with_vps:
     machine:
