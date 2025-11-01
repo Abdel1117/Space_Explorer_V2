@@ -34,9 +34,6 @@ jobs:
       - image: cimg/node:18.17.0
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.7
-          docker_layer_caching: true
       - run:
           name: Login to Docker Hub
           command: |
@@ -49,7 +46,7 @@ jobs:
 
   deploy_with_vps:
     machine:
-      image: ubuntu-2004:202010-01
+      image: ubuntu-2204:2022.10.2
     steps:
       - checkout
       - run:
