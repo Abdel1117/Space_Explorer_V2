@@ -35,16 +35,19 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-ce-cli
-      - run: echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-      - run: |
-          TAG=${CIRCLE_SHA1:0:7}
-          docker build -t $DOCKERHUB_USERNAME/space-explorer:$TAG .
-          docker push $DOCKERHUB_USERNAME/space-explorer:$TAG
-          docker tag  $DOCKERHUB_USERNAME/space-explorer:$TAG $DOCKERHUB_USERNAME/space-explorer:latest
-          docker push $DOCKERHUB_USERNAME/space-explorer:latest
+      - run:
+          name: Install Docker Compose
+          command: |
+            sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+      - run:
+          name: Login to Docker Hub
+          command: echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      - run:
+          name: Build and Push Docker Images
+          command: |
+            docker-compose -f docker-compose.prod.yml build
+            docker-compose -f docker-compose.prod.yml push
 
   deploy_with_vps:
     machine:
@@ -68,20 +71,18 @@ jobs:
           command: ssh $HOST_VPS@$IP_VPS 'docker container prune -f && docker image prune -f'
       - run:
           name: Build Docker images
-          command: ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && docker compose build --no-cache'
+          command: ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && docker compose -f docker-compose.prod.yml build --no-cache'
       - run:
           name: Deploy production containers
           command: ssh $HOST_VPS@$IP_VPS 'cd Space_Explorer_V2/ && docker compose -f docker-compose.prod.yml up -d'
-
+      - run: 
+          name: Verify deployment
+          command: ssh $HOST_VPS@$IP_VPS 'docker ps -a'
+          
 workflows:
   build_and_test_workflow:
     jobs:
       - build_and_test_backend
       - build_and_test_frontend
-      - deploy_docker:
-          requires: 
-            - build_and_test_frontend
-      - deploy_with_vps:
-          requires:
-            - build_and_test_frontend
-            - deploy_docker
+      - deploy_docker
+      - deploy_with_vps
