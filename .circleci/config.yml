@@ -78,11 +78,16 @@ jobs:
       - run: 
           name: Verify deployment
           command: ssh $HOST_VPS@$IP_VPS 'docker ps -a'
-          
+
 workflows:
   build_and_test_workflow:
     jobs:
       - build_and_test_backend
       - build_and_test_frontend
-      - deploy_docker
-      - deploy_with_vps
+      - deploy_docker:
+          requires:
+            - build_and_test_backend
+            - build_and_test_frontend
+      - deploy_with_vps:
+          requires:
+            - deploy_docker
