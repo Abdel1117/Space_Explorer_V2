@@ -45,6 +45,7 @@ const Nav = () => {
               <button onClick={() => { navigate("/galerie") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Galerie</button>
               <button onClick={() => { navigate("/forum") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Forum</button>
               <button onClick={() => { navigate("/soutenir") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">Me Soutenir</button>
+              <button onClick={() => { navigate("/a_venir") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline mr-4">A venir</button>
               {
                 userAuth?.userRole === "Admin" &&
                 <button onClick={() => { navigate("/dashBoard") }} className="text-gray-800 dark:text-white text-xs md:text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</button>
@@ -87,6 +88,8 @@ const Nav = () => {
               <button onClick={() => { navigate("/galerie") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Galerie</button>
               <button onClick={() => { navigate("/forum") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Forum</button>
               <button onClick={() => { navigate("/soutenir") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">Me Soutenir</button>
+              <button onClick={() => { navigate("/a_venir") }} className="text-gray-800 dark:text-white text-sm font-semibold hover:text-purple-600 mb-1">A venir</button>
+
               {
                 userAuth?.userRole === "Admin" &&
                 <button onClick={() => { navigate("/dashBoard") }} className="text-gray-800 dark:text-white md:text-sm font-semibold hover:text-purple-600  hover:underline">DashBoard</button>
