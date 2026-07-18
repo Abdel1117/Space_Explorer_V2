@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { Helmet } from "react-helmet"
-import ImageHolder from '../../componants/imageHolder/imageHolder';
+import Hero from '../../componants/Hero/Hero';
+import RecentArticles from '../../componants/RecentArticles/RecentArticles';
+import ThemeSection from '../../componants/ThemeSection/ThemeSection';
 import NewsLetter from '../../componants/newsLetter/NewsLetter';
-import CardNews from '../../componants/cardNews/CardNews';
-import TagsArticleList from '../../componants/tagsArticlesList/TagsArticleList';
-import Carousel from '../../componants/Carousel/Carousel';
 import { SkeletonArticle } from '../../componants/Skeleton/SkeletonArticle/SkeletonArticle';
+
+const CATEGORIES = ["Etoile", "Planète", "Systeme Solaire", "Objet Stélaire", "Météorite"]
 
 const Home = () => {
     const [loading, setLoading] = useState(false);
@@ -32,6 +33,17 @@ const Home = () => {
         getArticle()
 
     }, [])
+
+    const heroArticle = articles?.[0]
+    const otherArticles = articles?.slice(1) ?? []
+    const recentArticles = otherArticles.slice(0, 5)
+    const themeSections = CATEGORIES
+        .map((theme) => ({
+            theme,
+            articles: otherArticles.filter((article) => article.Slugs?.includes(theme))
+        }))
+        .filter((section) => section.articles.length > 0)
+
     return (
         <section className='w-11/12 md:w-9/12 mx-auto pb-12'>
             <Helmet>
@@ -40,37 +52,35 @@ const Home = () => {
                 <meta name="description" content="Space Explorer est un site sur l'astronomie et l'espace, découvrez des articles passionnant et des images magnifiques d'étoiles et de planète." />
             </Helmet>
             <h1 className='hidden'>Space Explorer</h1>
-            <ImageHolder />
-            {articles != undefined ?
-                <Carousel data={articles} loading={loading} />
-                : null
-            }
-            <div className='grid md:grid-cols-12 gap-5 mt-10 relative '>
-                {
-                    loading === true || articles == undefined ?
-                        <>
-                            <SkeletonArticle />
-                            <SkeletonArticle />
-                            <SkeletonArticle />
-                            <SkeletonArticle />
-                            <SkeletonArticle />
-                        </>
 
+            <div className='grid lg:grid-cols-12 gap-5 mb-12'>
+                <div className='lg:col-span-8'>
+                    {loading || articles === undefined ?
+                        <div className='w-full h-[380px] md:h-[560px] rounded-xl bg-gray-200 dark:bg-gray-700 animate-pulse' />
                         :
-
-                        articles?.map((article, index) =>
-                            <CardNews key={index} index={article?._id} title={article?.Title} slugs={article?.Slugs} para={article?.Contenu[0]?.contenu}
-                                image={article?.Contenu[0]?.image}
-                            />
-
-                        )
-                }
-                <div className='col-span-12 lg:col-span-3 sm:flex lg:flex-col sm:justify-between lg:absolute lg:top-0 lg:-right-12 xl:right-2 2xl:right-18  w-full lg:w-[300px]'>
-
-                    <NewsLetter />
-                    <TagsArticleList />
+                        <Hero article={heroArticle} />
+                    }
                 </div>
-            </div >
+                <div className='lg:col-span-4 flex flex-col gap-5'>
+                    {!loading && recentArticles.length > 0 &&
+                        <RecentArticles articles={recentArticles} />
+                    }
+                    <NewsLetter />
+                </div>
+            </div>
+
+            {
+                loading === true || articles === undefined ?
+                    <div className='grid md:grid-cols-12 gap-5'>
+                        <SkeletonArticle />
+                        <SkeletonArticle />
+                        <SkeletonArticle />
+                    </div>
+                    :
+                    themeSections.map((section) =>
+                        <ThemeSection key={section.theme} theme={section.theme} articles={section.articles} />
+                    )
+            }
         </section>
     );
 }

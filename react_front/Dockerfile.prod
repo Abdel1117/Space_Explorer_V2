@@ -2,7 +2,8 @@
 FROM node:18-alpine AS builder
 WORKDIR /react_front
 COPY package*.json ./
-RUN npm ci 
+COPY scripts ./scripts
+RUN npm ci
 
 COPY . .
 RUN npm run build

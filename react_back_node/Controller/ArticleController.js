@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator')
 const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken")
 const fs = require("fs")
+const { sanitizeArticleHtml } = require("../Functions/Sanitize/sanitizeArticleHtml")
 exports.addArticle = (req, res, next) => {
 
 
@@ -26,6 +27,9 @@ exports.addArticle = (req, res, next) => {
                     element.image = image.filename
                 });
             }
+            contenu.forEach((element) => {
+                element.contenu = sanitizeArticleHtml(element.contenu)
+            });
             const articleEntry = new Article({
                 Title: JSON.parse(req.body.titre),
                 Slugs: JSON.parse(req.body.slugs),
@@ -143,7 +147,7 @@ exports.editArticle = async (req, res) => {
             return {
                 _id: section._id || new mongoose.Types.ObjectId(),
                 titre: section.titre,
-                contenu: section.contenu,
+                contenu: sanitizeArticleHtml(section.contenu),
                 image: Object.keys(section.image).length !== 0 ? section.image : images.shift()
             };
         });

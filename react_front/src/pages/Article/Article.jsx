@@ -55,7 +55,10 @@ export default function Article() {
 
                                 <img src={`${apiUrl}/${element.image.replace(/\\/g, "/")}`} alt="Une image liée à un article"
                                     className="object-contain w-full h-auto lg:w-[350px] lg:h-full" />
-                                <p className=' md:text-base text-black dark:text-white w-fit first-letter:uppercase px-0 md:px-4 text-justify'>{element.contenu}</p>
+                                <div
+                                    className='article-content md:text-base text-black dark:text-white w-fit px-0 md:px-4 text-justify'
+                                    dangerouslySetInnerHTML={{ __html: element.contenu }}
+                                />
 
                             </div>
                         </div>

@@ -11,6 +11,9 @@ services:
       - VITE_API_URL=http://localhost:${BACK_PORT}
     depends_on:
       - react_back_node
+    volumes:
+      - ./react_front:/react_front
+      - react_front_node_modules:/react_front/node_modules
     restart: unless-stopped
 
   react_back_node:
@@ -44,3 +47,4 @@ services:
 
 volumes:
   space-explorer-db:
+  react_front_node_modules:

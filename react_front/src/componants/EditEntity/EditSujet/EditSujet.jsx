@@ -6,6 +6,8 @@ import _ from "lodash/fp";
 import { Spinner } from '../../Spinner/Spinner';
 import Toast_validation from '../../Toast_valide/Toast_valide';
 import Toast_invalide from '../../Toast_invalide/Toast_invalide';
+import RichTextEditor from '../../RichTextEditor/RichTextEditor';
+import { stripHtml } from '../../../Functions/TextRendering/stripHtml';
 
 export const EditSujet = () => {
     /* Les States sont ici */
@@ -170,12 +172,15 @@ export const EditSujet = () => {
         });
     }
 
-    /* This function is here to count the charactères */
+    /* This function compte les caractères visibles (hors balises HTML) */
     const countingChar = (section) => {
-        let value = section;
-        let counterValue = value.replace(/\s/g, "");
-        return counterValue.length
+        return stripHtml(section).length
     }
+
+    const validateSectionLength = (html) => {
+        const length = stripHtml(html).length;
+        return length >= 400 && length <= 4000 ? true : "Veuillez écrire une section d'article avec au minimum 400 caractères et au maximum 4000 caractères";
+    };
 
     /* Handle Yes action in Succès Modal */
     const handleYesAction = () => {
@@ -329,7 +334,12 @@ export const EditSujet = () => {
                             </div>
 
                             {/* JSX For the textArea */}
-                            {editedSections?.map((section, index) => (
+                            {editedSections?.map((section, index) => {
+                                register(`Section_${index}`, {
+                                    required: "Veuillez taper une section d'article",
+                                    validate: validateSectionLength
+                                });
+                                return (
                                 <div key={index}>
                                     <div className="mb-6">
                                         <label htmlFor={`Section_titre_${index}`} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titre de la Section</label>
@@ -368,28 +378,15 @@ export const EditSujet = () => {
                                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             Section
                                         </label>
-                                        <textarea
-                                            className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light'
-                                            cols="30"
-                                            rows="10"
-                                            name={`Section_${index}`}
-                                            id={`Section_${index}`}
-                                            value={section.contenu}
-                                            {...register(`Section_${index}`, {
-                                                required: "Veuillez taper une section d'article",
-                                                pattern: {
-
-                                                    message: "Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 4000 charactères"
-                                                }
-                                            })}
-                                            onChange={(e) => {
-                                                const text = e.target.value
+                                        <RichTextEditor
+                                            initData={section.contenu}
+                                            onChange={(html) => {
                                                 const updatedSections = [...editedSections];
-                                                updatedSections[index].contenu = e.target.value;
+                                                updatedSections[index].contenu = html;
                                                 setEditedSections(updatedSections);
-
+                                                setValue(`Section_${index}`, html, { shouldValidate: true });
                                             }}
-                                        ></textarea>
+                                        />
                                         <>
                                             <p className='dark:text-white text-sm md:text-md ml-1 mt-2'>
                                                 {countingChar(editedSections[index].contenu)} / 4000 </p>
@@ -439,7 +436,8 @@ export const EditSujet = () => {
                                         <a role='button' onClick={() => { deleteLastSection(index) }} className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >Supprimer la section</a>
                                     </div>
                                 </div>
-                            ))}
+                                );
+                            })}
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-3 mt-8 mb-6'  >
                                 <a role='button' onClick={() => { addSection() }} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
                                     Ajouter une Section

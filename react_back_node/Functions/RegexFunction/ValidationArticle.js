@@ -1,4 +1,5 @@
 const { check, validationResult } = require("express-validator");
+const { stripHtml } = require("../Sanitize/sanitizeArticleHtml");
 
 exports.checkArticle = [
     check("titre")
@@ -29,9 +30,9 @@ exports.checkArticle = [
         .isEmpty()
         .withMessage('Veuillez taper une section d\'article')
         .custom(val => {
+            const textLength = stripHtml(val).length;
 
-
-            if (val.length > 4000 || val.length < 400) {
+            if (textLength > 4000 || textLength < 400) {
                 throw new Error("Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 4000 charactères")
             }
             return true
