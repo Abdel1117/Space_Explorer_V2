@@ -4,6 +4,40 @@ import { useParams } from 'react-router-dom'
 import userContext from '../../Context/userContext';
 import { BouttonBackWard } from '../../componants/BouttonBackWard/BouttonBackWard';
 import { Spinner } from '../../componants/Spinner/Spinner';
+
+const normalizeCkEditorContent = (html, apiUrl) => {
+    if (!html) return '';
+
+    if (typeof window === 'undefined') {
+        return html;
+    }
+
+    const container = document.createElement('div');
+    container.innerHTML = html;
+
+    const rewriteAttribute = (node, attribute) => {
+        const value = node.getAttribute(attribute);
+        if (!value) return;
+
+        if (/^(https?:)?\/\//i.test(value) || value.startsWith('data:') || value.startsWith('mailto:') || value.startsWith('#')) {
+            return;
+        }
+
+        if (value.startsWith('/')) {
+            node.setAttribute(attribute, `${apiUrl}${value}`);
+        } else {
+            node.setAttribute(attribute, `${apiUrl}/${value}`);
+        }
+    };
+
+    container.querySelectorAll('img, a, source').forEach((node) => {
+        if (node.hasAttribute('src')) rewriteAttribute(node, 'src');
+        if (node.hasAttribute('href')) rewriteAttribute(node, 'href');
+    });
+
+    return container.innerHTML;
+};
+
 export default function Article() {
     const { userAuth } = useContext(userContext);
     const articleId = useParams()
@@ -38,6 +72,7 @@ export default function Article() {
                 <meta charSet="utf-8" />
                 <title>{`Space Explorer | Article sur ${article?.Title}`}</title>
                 <meta name="description" content="Bienvenue sur la page dédier au image de Space Explorer, ici vous pourez observer des planète, étoiles, comètes, vaiseau et autres magnifique cliché veanant de l'espace" />
+                <link rel="stylesheet" href="/ckeditor4/contents.css" />
             </Helmet>
             {loading === true ?
 
@@ -56,8 +91,8 @@ export default function Article() {
                                 <img src={`${apiUrl}/${element.image.replace(/\\/g, "/")}`} alt="Une image liée à un article"
                                     className="object-contain w-full h-auto lg:w-[350px] lg:h-full" />
                                 <div
-                                    className='article-content md:text-base text-black dark:text-white w-fit px-0 md:px-4 text-justify'
-                                    dangerouslySetInnerHTML={{ __html: element.contenu }}
+                                    className='article-content ck-content md:text-base text-black dark:text-white w-fit px-0 md:px-4 text-justify max-w-full'
+                                    dangerouslySetInnerHTML={{ __html: normalizeCkEditorContent(element.contenu, apiUrl) }}
                                 />
 
                             </div>

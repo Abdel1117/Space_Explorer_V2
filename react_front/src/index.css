@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body{
+  margin: 0 !important;
+}
 .article-content p {
   margin-bottom: 1rem;
 }
