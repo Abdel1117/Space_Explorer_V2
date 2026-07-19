@@ -73,7 +73,6 @@ exports.deleteArticle = (req, res, next) => {
                     }
                     else {
                         const article = result[0]
-                        console.log(article.Contenu)
                         if (article && article.Contenu ) {
                         
                         for (let i = 0; i < article.Contenu.length; i++) {
