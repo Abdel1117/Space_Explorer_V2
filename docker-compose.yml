@@ -1,31 +1,31 @@
 services:
-  react_front:
+  front:
     build:
+      target: dev
       context: ./react_front
       dockerfile: Dockerfile
-    image: abdel11117/space-explorer:react_front_latest
+    image: abdel11117/space-explorer:front
     ports:
       - "${FRONT_PORT}:5173"
     environment:
       - NODE_ENV=${NODE_ENV:-development}
       - VITE_API_URL=http://localhost:${BACK_PORT}
     depends_on:
-      - react_back_node
+      - back_node
     volumes:
       - ./react_front:/react_front
       - react_front_node_modules:/react_front/node_modules
-    restart: unless-stopped
 
-  react_back_node:
+  back_node:
     build:
       context: ./react_back_node
       dockerfile: Dockerfile
-    image: abdel11117/space-explorer:react_back_node_latest
+    image: abdel11117/space-explorer:back_node
     ports:
       - "${BACK_PORT}:4000"
     environment:
       - NODE_ENV=${NODE_ENV:-development}
-      - PORT=${BACK_PORT}
+      - PORT=4000
       - MONGODB_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${DATA_BASE_PASS}@db:27017/${BDD_NAME}
     depends_on:
       - db
@@ -44,7 +44,16 @@ services:
     ports:
       - "${DB_PORT}:27017"
     restart: unless-stopped
-
+  
+  nginx: 
+      image: nginx:alpine
+      ports: 
+        - 80:80
+      volumes: 
+        - ./nginx/nginx.local.conf:/etc/nginx/nginx.conf
+      depends_on:
+        - front
+        - back_node
 volumes:
   space-explorer-db:
   react_front_node_modules:

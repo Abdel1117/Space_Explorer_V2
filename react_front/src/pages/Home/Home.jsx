@@ -52,7 +52,7 @@ const Home = () => {
                 <meta name="description" content="Space Explorer est un site sur l'astronomie et l'espace, découvrez des articles passionnant et des images magnifiques d'étoiles et de planète." />
             </Helmet>
             <h1 className='hidden'>Space Explorer</h1>
-
+            
             <div className='grid lg:grid-cols-12 gap-5 mb-12'>
                 <div className='lg:col-span-8'>
                     {loading || articles === undefined ?
