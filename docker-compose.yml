@@ -30,6 +30,8 @@ services:
     depends_on:
       - db
     volumes:
+      - ./react_back_node:/react_back_node
+      - /react_back_node/node_modules
       - ./react_back_node/image:/react_back_node/image
     restart: unless-stopped
 

@@ -22,7 +22,7 @@ const Home = () => {
                     method: "GET"
                 })
                 const response = await data.json()
-                setArticles(response)
+                    setArticles(response)
             } catch (error) {
                 console.log(error)
             }
