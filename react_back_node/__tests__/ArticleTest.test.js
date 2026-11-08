@@ -3,10 +3,32 @@ const request = require('supertest');
 const fs = require("fs");
 const path = require("path");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const app = require("../index");
 const Article = require("../Model/articleShema")
 
 describe('Tests pour les routes GET et Post Article', function () {
+    let testArticle;
+
+    beforeAll(async function () {
+        await mongoose.connection.asPromise();
+        testArticle = await Article.create({
+            Title: `Jest article ${Date.now()}`,
+            Slug: "Planète",
+            Image: "jest-test-article.jpg",
+            Contenu: "<p>Jest test article</p>"
+        });
+    });
+
+    afterAll(async function () {
+        try {
+            if (testArticle) {
+                await Article.deleteOne({ _id: testArticle._id });
+            }
+        } finally {
+            await mongoose.disconnect();
+        }
+    });
 
     it('Devrait récupérer tout les Articles', async function () {
         const response = await request(app).get('/article');
@@ -15,9 +37,10 @@ describe('Tests pour les routes GET et Post Article', function () {
     });
 
     it('Devrait récupérer un Article avec son Id', async function () {
-        const response = await request(app).get('/article/article/658ae675006cc5c0abc7e91b');
+        const response = await request(app).get(`/article/article/${testArticle._id}`);
         expect(response.status).toBe(200);
         expect(response.body).toBeInstanceOf(Object);
+        expect(response.body._id).toBe(testArticle._id.toString());
 
     });
 

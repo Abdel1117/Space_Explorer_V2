@@ -6,6 +6,13 @@ const app = require("../index");
 
 describe('Tests pour les routes GET Forum', function () {
 
+    beforeAll(async function () {
+        await mongoose.connection.asPromise();
+    });
+
+    afterAll(async function () {
+        await mongoose.disconnect();
+    });
 
 
     it('Devrait récupérer tout les sujets ', async function () {
