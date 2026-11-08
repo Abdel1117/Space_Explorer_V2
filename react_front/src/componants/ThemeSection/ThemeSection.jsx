@@ -13,9 +13,9 @@ export default function ThemeSection({ theme, articles }) {
                         key={article._id}
                         index={article._id}
                         title={article.Title}
-                        slugs={article.Slugs}
-                        para={article.Contenu?.[0]?.contenu}
-                        image={article.Contenu?.[0]?.image}
+                        slug={article.Slug}
+                        para={article.Contenu}
+                        image={article.Image}
                     />
                 ))}
             </div>

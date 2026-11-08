@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { truncate } from '../../Functions/TextRendering/truncate'
 import { stripHtml } from '../../Functions/TextRendering/stripHtml'
 
-export default function CardNews({ index, title, slugs, para, image }) {
+export default function CardNews({ index, title, slug, para, image }) {
 
     const navigate = useNavigate()
     const apiUrl = import.meta.env.VITE_API_URL
@@ -19,18 +19,16 @@ export default function CardNews({ index, title, slugs, para, image }) {
                 <img
                     className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
                     loading='lazy'
-                    src={`${apiUrl}/${image}`}
+                    src={`${apiUrl}/${encodeURIComponent(image)}`}
                     alt={title}
                 />
             </div>
             <div className='p-4 md:p-5'>
-                <div className='flex flex-wrap gap-2 mb-3'>
-                    {slugs.map((slug, index) =>
-                        <span key={index} className='bg-gradient-to-r from-violet-500 to-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full'>
-                            {slug}
-                        </span>
-                    )}
-                </div>
+                {slug &&
+                    <span className='inline-block mb-3 bg-gradient-to-r from-violet-500 to-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full'>
+                        {slug}
+                    </span>
+                }
                 <h2 className='text-lg font-bold dark:text-white mb-2'>{title}</h2>
                 <p className='text-sm text-gray-600 dark:text-gray-300 mb-4'>{truncate(stripHtml(para), 150)}</p>
                 <button

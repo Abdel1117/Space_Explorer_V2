@@ -1,116 +1,59 @@
-const { cp } = require("fs");
 const Article = require("../Model/articleShema");
 const { validationResult } = require('express-validator')
-const mongoose = require("mongoose")
-const jwt = require("jsonwebtoken")
-const fs = require("fs")
+const multer = require("multer")
 const { sanitizeArticleHtml } = require("../Functions/Sanitize/sanitizeArticleHtml")
-exports.addArticle = (req, res, next) => {
+const { removeArticleImage } = require("../Functions/FileHandler/articleImage")
+const {
+    MAX_CONTENT_IMAGE_SIZE,
+    uploadContentImage,
+    contentImageUrl,
+    extractContentImageFiles,
+    removeContentImages
+} = require("../Functions/FileHandler/articleContentImage")
 
+// Un article : Title, Slug (une catégorie), Image (image représentant l'article) et Contenu (HTML CKEditor).
+// Champs reçus en multipart/form-data : titre, slug, contenu et le fichier "image".
 
+exports.addArticle = async (req, res) => {
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
+        removeArticleImage(req.file?.filename)
         return res.status(400).json({ errors: errors.array() });
-    } else {
-        try {
-            let contenu = JSON.parse(req.body.contenu)
-            const date = new Date();
-            let day = date.getDate();
+    }
+    if (!req.file) {
+        return res.status(400).json({ errors: [{ msg: "Veuillez ajouter une image représentant l'article", param: "image" }] });
+    }
 
-            let month = date.getMonth() + 1;
-            let Year = date.getFullYear();
-            let dateOfPublication = `${day}-${month}-${Year}`
-            if (req.files && req.files.length === contenu.length) {
-                contenu.forEach((element, index) => {
-                    const image = req.files[index]
-                    element.image = image.filename
-                });
-            }
-            contenu.forEach((element) => {
-                element.contenu = sanitizeArticleHtml(element.contenu)
-            });
-            const articleEntry = new Article({
-                Title: JSON.parse(req.body.titre),
-                Slugs: JSON.parse(req.body.slugs),
-                Contenu: contenu,
-                dateOfPublication
-            })
-
-            articleEntry.save()
-                .then(() => { return res.status(201).json({ message: "Article crée avec succées" }) })
-                .catch(error => { return res.status(400).json({ error }) })
-        } catch (error) {
-            return res.status(400).json({ message: "Une erreur inconnue est survenu" })
-        }
+    try {
+        await new Article({
+            Title: req.body.titre,
+            Slug: req.body.slug,
+            Image: req.file.filename,
+            Contenu: sanitizeArticleHtml(req.body.contenu)
+        }).save();
+        return res.status(201).json({ message: "Article crée avec succées" })
+    } catch (error) {
+        console.error(error)
+        removeArticleImage(req.file.filename)
+        return res.status(500).json({ message: "Une erreur inconnue est survenue" })
     }
 }
 
-exports.deleteArticle = (req, res, next) => {
+exports.deleteArticle = async (req, res) => {
     try {
-        try {
-            const token = req.headers.authorization.split(" ")[1]
-            if (!token) {
-                return res.status(401).json({ message: "Token introuvable !" })
-            }
-            jwt.verify(token, process.env.AUTH_TOKKEN_CODE, (err, decoded) => {
-                if (err) {
-                    return res.status(401).json({ message: "Token invalide !" })
-                }
-            })
+        const article = await Article.findByIdAndDelete(req.params.id)
+        if (!article) {
+            return res.status(404).json({ message: "Aucun article correspondant retrouvé" })
         }
-        catch (e) {
-            return res.status(500).json({ message: "Une erreure innatendu est survenu" })
-        }
-        const articletId = req.params.id
-        Article.find()
-            .then(article => {
-                try {
-                    const allArticle = article
-                    const result = allArticle.filter((uniqueArticle) => uniqueArticle._id.toString() === req.params.id)
-                    if (result.length === 0) {
-                        return res.status(200).json({ message: "Aucun article correspondant retrouvé" })
-                    }
-                    else {
-                        const article = result[0]
-                        if (article && article.Contenu ) {
-                        
-                        for (let i = 0; i < article.Contenu.length; i++) {
-                            const filePath = article.Contenu[i].image;
-
-                            const fullPath = `./image/Image_Article/${filePath}`
-                            try {
-                                fs.unlink(fullPath, (err) => {
-                                    if (err) {
-                                        console.error(err);
-                                        return res.status(500).json({ message: "Erreur lors de la suppression du fichier" });
-                                    }
-                                })
-                            } catch (error) {
-                                console.log(error)
-                            }
-                           
-                        }
-                        Article.deleteOne({ "_id": articletId })
-                            .then(() => {
-                                return res.status(200).json({ message: `L'article à bien était supprimé` })
-                            })
-                            .catch((err) => {
-                                return res.status(500).json({ message: "Impossible de supprimer l'article" });
-                            })
-                    }
-                }
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-            .catch((e) => {
-                console.log(e)
-                return res.status(500).json({ message: "Impossible de supprimer l'article " })
-            })
+        removeArticleImage(article.Image)
+        removeContentImages(extractContentImageFiles(article.Contenu))
+        return res.status(200).json({ message: `L'article à bien était supprimé` })
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({ message: "Impossible d'éffectuer l'action" })
+        if (error.name === "CastError") {
+            return res.status(404).json({ message: "Aucun article correspondant retrouvé" })
+        }
+        console.error(error)
+        return res.status(500).json({ message: "Impossible de supprimer l'article" })
     }
 }
 
@@ -126,45 +69,81 @@ exports.getUniqueArticle = (req, res, next) => {
 
 }
 
-
+// L'image est facultative en modification : sans nouveau fichier, l'image actuelle est conservée
 exports.editArticle = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        removeArticleImage(req.file?.filename)
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+        const update = {
+            Title: req.body.titre,
+            Slug: req.body.slug,
+            Contenu: sanitizeArticleHtml(req.body.contenu)
+        };
+        if (req.file) {
+            update.Image = req.file.filename;
         }
 
-        let title = JSON.parse(req.body.titre);
-        let slugs = JSON.parse(req.body.slugs);
-        let contenu = JSON.parse(req.body.contenu)
+        const previousArticle = await Article.findByIdAndUpdate(req.params.id, update, { new: false, runValidators: true });
+        if (!previousArticle) {
+            removeArticleImage(req.file?.filename)
+            return res.status(404).json({ message: "Aucun article correspondant retrouvé" })
+        }
 
-        const images = req.files.map(file => file.filename);
+        // Nettoie les fichiers devenus inutiles : ancienne image et images retirées du corps de l'article
+        if (req.file) {
+            removeArticleImage(previousArticle.Image)
+        }
+        const keptImages = new Set(extractContentImageFiles(update.Contenu));
+        removeContentImages(extractContentImageFiles(previousArticle.Contenu).filter((file) => !keptImages.has(file)));
 
-
-        let updatedSections = contenu.map((section, index) => {
-
-            return {
-                _id: section._id || new mongoose.Types.ObjectId(),
-                titre: section.titre,
-                contenu: sanitizeArticleHtml(section.contenu),
-                image: Object.keys(section.image).length !== 0 ? section.image : images.shift()
-            };
-        });
-
-        let update = {
-            Title: title,
-            Slugs: slugs,
-            Contenu: updatedSections
-        };
-
-        await Article.findByIdAndUpdate(req.params.id, update, { new: false });
-        res.status(200).json({ message: "Article modifié avec succès" });
+        return res.status(200).json({ message: "Article modifié avec succès" });
     } catch (error) {
+        removeArticleImage(req.file?.filename)
+        if (error.name === "CastError") {
+            return res.status(404).json({ message: "Aucun article correspondant retrouvé" })
+        }
         console.error(error);
-        res.status(500).json({ message: "Une erreur inconnue est survenue" });
+        return res.status(500).json({ message: "Une erreur inconnue est survenue" });
     }
 };
 
+
+
+// Upload d'une image insérée dans le corps d'un article depuis CKEditor 4
+// (bouton Image > Téléverser, glisser-déposer ou collage).
+// Réponse au format attendu par CKEditor : { uploaded: 1, fileName, url } ou { uploaded: 0, error: { message } }.
+// CKEditor n'affiche notre message que pour une réponse 2xx : un fichier refusé renvoie donc un 200 avec uploaded: 0.
+exports.uploadContentImage = (req, res) => {
+    uploadContentImage(req, res, (err) => {
+        if (err) {
+            if (err.code === "LIMIT_FILE_SIZE") {
+                return res.status(200).json({ uploaded: 0, error: { message: `L'image ne doit pas dépasser ${MAX_CONTENT_IMAGE_SIZE / (1024 * 1024)} Mo` } });
+            }
+            if (err.code === "INVALID_IMAGE_TYPE") {
+                return res.status(200).json({ uploaded: 0, error: { message: err.message } });
+            }
+            if (err instanceof multer.MulterError) {
+                return res.status(200).json({ uploaded: 0, error: { message: "Envoyez une seule image à la fois" } });
+            }
+            console.error(err);
+            return res.status(500).json({ uploaded: 0, error: { message: "Une erreur est survenue lors de l'envoi de l'image" } });
+        }
+
+        if (!req.file) {
+            return res.status(200).json({ uploaded: 0, error: { message: "Aucune image reçue" } });
+        }
+
+        return res.status(201).json({
+            uploaded: 1,
+            fileName: req.file.filename,
+            url: contentImageUrl(req.file.filename)
+        });
+    });
+};
 
 exports.getSearchResultArticle = async (req, res, next) => {
 
@@ -173,7 +152,7 @@ exports.getSearchResultArticle = async (req, res, next) => {
         const articles = await Article.find({
             $or: [
                 { Title: new RegExp(query, 'i') },
-                { "Slugs": new RegExp(query, 'i') }
+                { Slug: new RegExp(query, 'i') }
             ]
         });
         return res.json(articles)

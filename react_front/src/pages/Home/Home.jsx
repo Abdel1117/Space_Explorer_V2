@@ -40,7 +40,7 @@ const Home = () => {
     const themeSections = CATEGORIES
         .map((theme) => ({
             theme,
-            articles: otherArticles.filter((article) => article.Slugs?.includes(theme))
+            articles: otherArticles.filter((article) => article.Slug === theme)
         }))
         .filter((section) => section.articles.length > 0)
 

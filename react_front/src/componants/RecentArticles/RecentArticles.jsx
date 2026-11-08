@@ -21,16 +21,16 @@ export default function RecentArticles({ articles }) {
                     >
                         <div className='w-16 h-16 md:w-20 md:h-20 flex-shrink-0 rounded-lg overflow-hidden'>
                             <img
-                                src={`${apiUrl}/${article.Contenu?.[0]?.image}`}
+                                src={`${apiUrl}/${encodeURIComponent(article.Image)}`}
                                 alt={article.Title}
                                 loading='lazy'
                                 className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
                             />
                         </div>
                         <div className='min-w-0'>
-                            {article.Slugs?.[0] &&
+                            {article.Slug &&
                                 <span className='block text-violet-500 dark:text-violet-400 text-xs font-semibold uppercase tracking-wide'>
-                                    {article.Slugs[0]}
+                                    {article.Slug}
                                 </span>
                             }
                             <h3 className='font-semibold dark:text-white text-sm leading-snug group-hover:text-violet-500 dark:group-hover:text-violet-400 transition-colors duration-200'>

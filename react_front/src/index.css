@@ -1,9 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body{
-  margin: 0 !important;
-}
+
 .article-content p {
   margin-bottom: 1rem;
 }
@@ -18,3 +16,57 @@ body{
 .article-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
 .article-content blockquote { border-left: 4px solid currentColor; padding-left: 1rem; font-style: italic; margin-bottom: 1rem; }
 .article-content a { text-decoration: underline; }
+
+/* Images insérées via CKEditor (plugin image2), façon Wikipédia.
+   Classes synchronisées avec src/componants/RichTextEditor/editorConfig.js et le sanitizer du back. */
+.article-content { display: flow-root; } /* contient les images flottantes */
+.article-content img { max-width: 100%; height: auto; }
+.article-content p.image-align-center { text-align: center; }
+.article-content p.image-align-center img { margin-left: auto; margin-right: auto; }
+
+.article-content figure.image-captioned {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.5rem 0 1rem;
+  padding: 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.25rem;
+  background-color: #f8fafc;
+}
+.dark .article-content figure.image-captioned { border-color: #475569; background-color: rgba(255, 255, 255, 0.05); }
+.article-content figure.image-captioned img { margin: 0 auto; }
+.article-content figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-align: center;
+  color: #475569;
+}
+.dark .article-content figcaption { color: #cbd5e1; }
+
+/* Centré : commence sous les images flottantes qui précèdent */
+.article-content p.image-align-center,
+.article-content figure.image-align-center { clear: both; }
+.article-content figure.image-align-center { margin-left: auto; margin-right: auto; }
+
+/* Sur petit écran, les images alignées restent pleine largeur ; à partir de sm le texte les entoure.
+   Sélecteurs "balise.classe" pour primer sur figure.image-captioned. */
+.article-content img.image-align-left,
+.article-content img.image-align-right { margin: 0.5rem auto 1rem; }
+
+@media (min-width: 640px) {
+  .article-content img.image-align-left,
+  .article-content figure.image-align-left {
+    float: left;
+    clear: left;
+    max-width: 50%;
+    margin: 0.25rem 1.5rem 1rem 0;
+  }
+  .article-content img.image-align-right,
+  .article-content figure.image-align-right {
+    float: right;
+    clear: right;
+    max-width: 50%;
+    margin: 0.25rem 0 1rem 1.5rem;
+  }
+}

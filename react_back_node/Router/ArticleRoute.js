@@ -1,15 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const articleController = require('../Controller/ArticleController');
-const upload = require("../Functions/FileHandler/imagHandler");
-const validatioonArticleText = require("../Functions/RegexFunction/ValidationArticle");
+const { uploadArticleImage } = require("../Functions/FileHandler/articleImage");
+const { checkArticle } = require("../Functions/RegexFunction/ValidationArticle");
+const requireAdmin = require("../Functions/authChecker/requireAdmin");
 
 /* Article CRUD */
 router.get("/", articleController.getArticle);
 router.get("/article/:id", articleController.getUniqueArticle)
-router.post("/ajoutArticle", upload("Image_article").array('images'), validatioonArticleText.checkArticle, articleController.addArticle);
 router.post("/searchArticle", articleController.getSearchResultArticle)
-router.delete("/deleteArticle/:id", articleController.deleteArticle)
-router.put("/editArticle/:id", upload("Image_article").array('images'), articleController.editArticle)
+
+// Réservé aux administrateurs ; l'authentification est vérifiée avant d'écrire le moindre fichier
+router.post("/ajoutArticle", requireAdmin, uploadArticleImage, checkArticle, articleController.addArticle);
+router.put("/editArticle/:id", requireAdmin, uploadArticleImage, checkArticle, articleController.editArticle)
+router.delete("/deleteArticle/:id", requireAdmin, articleController.deleteArticle)
+
+/* Images insérées dans le corps de l'article depuis CKEditor */
+router.post("/uploadImage", requireAdmin, articleController.uploadContentImage)
 
 module.exports = router
