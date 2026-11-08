@@ -1,4 +1,7 @@
 // testGetRoutes.js
+require("dotenv").config();
+process.env.AUTH_TOKKEN_CODE = process.env.AUTH_TOKKEN_CODE || "test-auth-secret";
+
 const request = require('supertest');
 const fs = require("fs");
 const path = require("path");
