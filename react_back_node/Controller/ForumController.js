@@ -12,7 +12,6 @@ exports.addSujet = (req, res, next) => {
     const tokken = req.headers.authorization;
     const tokkenSplited = tokken.split(' ')[1]
 
-    console.log(tokkenSplited)
     if (!tokkenSplited) { return res.status(401).json({ message: "Une erreur interne c'est produite veuillez ressayer" }) }
     const decode = jwt.verify(tokkenSplited, "RANDOM_TOKEN_SECRET", function (err, decoded) {
         if (err) {
@@ -47,7 +46,6 @@ exports.addSujet = (req, res, next) => {
 }
 
 exports.deleteSujet = (req, res, next) => {
-    console.log("La route de supression d'article")
 
     try {
 

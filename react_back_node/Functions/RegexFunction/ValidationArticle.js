@@ -1,5 +1,12 @@
-const { check, validationResult } = require("express-validator");
+const { check } = require("express-validator");
+const { stripHtml } = require("../Sanitize/sanitizeArticleHtml");
 
+// À garder synchronisé avec react_front/src/componants/ArticleForm/articleRules.js
+const ARTICLE_SLUGS = ["Planète", "Systeme Solaire", "Objet Stélaire", "Etoile", "Météorite"];
+const MIN_ARTICLE_LENGTH = 400;
+const MAX_ARTICLE_LENGTH = 20000;
+
+// Champs envoyés en multipart/form-data : titre, slug, contenu (+ fichier "image")
 exports.checkArticle = [
     check("titre")
         .trim()
@@ -9,40 +16,20 @@ exports.checkArticle = [
         .isLength({ min: 3, max: 50 })
         .withMessage("Veuillez taper un titre qui contient 3 à 50 caractères"),
 
-    check("slugs")
-        .trim()
-        .not()
-        .isEmpty()
-        .withMessage('Veuillez sélectionner au moins un Slug pour l\'article en question'),
+    check("slug")
+        .isIn(ARTICLE_SLUGS)
+        .withMessage("Veuillez choisir une catégorie pour l'article"),
 
-    check('contenu.*.titre')
-        .trim()
-        .not()
-        .isEmpty()
-        .withMessage('Veuillez taper un titre de section')
-        .isLength({ min: 3, max: 40 })
-        .withMessage('Veuillez taper un Titre qui contien au moins 3 caractères et au maxmimum 40 caractères'),
-
-    check('contenu.*.contenu')
-        .trim()
-        .not()
-        .isEmpty()
-        .withMessage('Veuillez taper une section d\'article')
-        .custom(val => {
-
-
-            if (val.length > 4000 || val.length < 400) {
-                throw new Error("Veuillez écrire une section d'article avec au minimum 400 charactères et au maximum 4000 charactères")
+    check("contenu")
+        .custom((val) => {
+            const textLength = stripHtml(val).length;
+            if (textLength < MIN_ARTICLE_LENGTH || textLength > MAX_ARTICLE_LENGTH) {
+                throw new Error(`Veuillez écrire un article de ${MIN_ARTICLE_LENGTH} à ${MAX_ARTICLE_LENGTH} caractères`);
             }
-            return true
+            return true;
         }),
-
-
-    check('contenu.*.image')
-        .trim()
-        .not()
-        .isEmpty()
-        .withMessage('Veuillez insérer une image qui puisse accompagner le paragraphe'),
-
-
 ];
+
+exports.ARTICLE_SLUGS = ARTICLE_SLUGS;
+exports.MIN_ARTICLE_LENGTH = MIN_ARTICLE_LENGTH;
+exports.MAX_ARTICLE_LENGTH = MAX_ARTICLE_LENGTH;

@@ -9,12 +9,15 @@
     "preview": "vite preview",
     "setup": "concurrently \"npm run dev\" \"npm --prefix ../react_back_node start\"",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "postinstall": "node scripts/copy-ckeditor.cjs"
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@stripe/react-stripe-js": "^2.5.1",
     "@stripe/stripe-js": "^3.0.7",
+    "ckeditor4": "4.22.1",
+    "ckeditor4-react": "4.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",

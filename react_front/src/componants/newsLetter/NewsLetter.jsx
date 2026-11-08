@@ -48,7 +48,7 @@ export default function NewsLetter() {
   }
   return (
 
-    <div className='sm:col-span-4 lg:col-span-3 p-5 max-h-[200px] grid content-center bg-slate-400 mb-5 relative'>
+    <div className='p-5 max-h-[200px] grid content-center bg-white dark:bg-[#1a1a2e] rounded-xl shadow-md relative'>
       {error &&
         <Toast_invalide message={error} deletePopUp={deletePopUp} />
       }
@@ -69,9 +69,9 @@ export default function NewsLetter() {
               </>
               :
               <>
-                <h2 className='text-md md:text-xl'>NewsLetter</h2>
+                <h2 className='text-md md:text-xl font-bold dark:text-white'>NewsLetter</h2>
                 <form onSubmit={handleSubmit(handleForm)}>
-                  <label htmlFor="mailNewsletter">Adresse Email</label>
+                  <label htmlFor="mailNewsletter" className='dark:text-white'>Adresse Email</label>
                   <input {...register('mailNewsletter', {
                     required: "Veuillez remplir ce champs",
                     pattern: {

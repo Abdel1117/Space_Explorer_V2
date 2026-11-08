@@ -54,7 +54,7 @@ export default function Table({ articles, articleSelected, handleArticleSelectio
                                     </th>
 
                                     <td className="px-6 py-4">
-                                        {article.Slugs.join(", ")}
+                                        {article.Slug}
 
                                     </td>
 
