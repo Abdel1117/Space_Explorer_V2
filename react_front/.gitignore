@@ -29,5 +29,5 @@ public/ckeditor4
 
 Dockerfile
 docker-compose.yml
-nginx.conf
+/nginx.conf
 
