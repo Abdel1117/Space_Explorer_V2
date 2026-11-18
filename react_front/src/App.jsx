@@ -12,6 +12,7 @@ import { NousContacter } from './pages/NousContacter/NousContacter'
 import { PolitiqueDeConfidentialite } from './pages/PolitiqueDeConfidentialite/PolitiqueDeConfidentialite'
 const Ajouter_Article = lazy(() => import('./pages/Ajouter_Article/Ajouter_Article'))
 const Forum = lazy(() => import('./pages/Forum/Forum'))
+const Avenir = lazy(() => import('./pages/Avenir/Avenir'))
 import { Sujet } from './pages/Forum/Sujet'
 import { Ajout_Sujet } from './pages/Forum/Ajout_Sujet'
 import './App.css'
@@ -94,6 +95,7 @@ function App() {
             <Route path='/article/:id' element={<Article />} />
             <Route path='/Profil/:id' element={<UserDashBoard />} />
             <Route path="/soutenir" element={<NousSoutenir />} />
+            <Route path='/a_venir' element={<Avenir />} />
             <Route element={<PrivateRoutes />} >
               <Route path="/DashBoard" element={<DashBoard />} />
               <Route path='/ajouterArticle' element={<Ajouter_Article />} />

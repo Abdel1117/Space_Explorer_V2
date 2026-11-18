@@ -11,12 +11,25 @@ module.exports = {
 
     extend: {
       animation: {
-        fadeIn: "fadeIn 2s ease-in forwards"
+        fadeIn: "fadeIn 2s ease-in forwards",
+        /* Page "A venir" : rotation des orbites du système solaire */
+        orbit: "orbit 20s linear infinite",
+        "orbit-counter": "orbit-counter 20s linear infinite"
       },
       keyframes: {
         fadeIn: {
           "0%": { opacity: 0 },
           "100%": { opacity: 1 }
+        },
+        orbit: {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" }
+        },
+        /* Annule la rotation de l'orbite et l'inclinaison du plan (62deg, cf. Avenir.jsx)
+           pour que la planète reste ronde et face à l'écran. */
+        "orbit-counter": {
+          from: { transform: "rotate(0deg) rotateX(-62deg)" },
+          to: { transform: "rotate(-360deg) rotateX(-62deg)" }
         }
       },
       backgroundImage: {
